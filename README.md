@@ -2,4 +2,7 @@
 A simple platformer game written in Java.
 
 ## Building
-Install JDK and type ```./gradlew build``` in a terminal (Command Prompt on Windows).
+### Linux
+Install JDK and type ```./gradlew build``` in a terminal.
+### Windows
+Install JDK and type ```gradlew build``` in Command Prompt.
