@@ -1,0 +1,15 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+group = 'juuxel.cubic'
+version =  '1.0'
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.7'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'juuxel.cubic.Cubic'
+    }
+}
