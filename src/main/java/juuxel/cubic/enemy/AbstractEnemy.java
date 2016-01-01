@@ -7,14 +7,14 @@ import juuxel.cubic.reference.GameValues;
 
 import java.awt.*;
 
-public abstract class Enemy extends Creature
+public abstract class AbstractEnemy extends Creature
 {
     public boolean sliding = false, slidable = true, edgeMove = true, living = true;
     public final Image image;
 
     public abstract void move();
 
-    public Enemy(Image image)
+    public AbstractEnemy(Image image)
     {
         this.image = image;
     }

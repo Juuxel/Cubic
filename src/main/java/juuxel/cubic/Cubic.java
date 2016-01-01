@@ -17,7 +17,7 @@ public final class Cubic extends Window
     public static Cubic game;
     public static Player player;
     public static boolean running = true, moveKeyDown, jumpKeyDown;
-    public static final List<Enemy> ENEMIES = new CopyOnWriteArrayList<>();
+    public static final List<AbstractEnemy> ENEMIES = new CopyOnWriteArrayList<>();
     public static int score = 0, deaths = 0, level = 1, lives = 8;
     public static final List<Creature> CREATURES = new CopyOnWriteArrayList<>();
 

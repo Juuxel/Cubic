@@ -61,7 +61,7 @@ public final class Player extends Creature
         if (invincibleTime > 0)
             invincibleTime--;
         else
-            for (Enemy enemy : Cubic.ENEMIES)
+            for (AbstractEnemy enemy : Cubic.ENEMIES)
             {
                 if (Math.abs(x - enemy.x) > 50 || Math.abs(y - enemy.y) > 33) return;
 

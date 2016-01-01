@@ -7,7 +7,7 @@ import juuxel.cubic.graphics.Graphics;
 
 import java.awt.*;
 
-public class NormalEnemy extends Enemy
+public class NormalEnemy extends AbstractEnemy
 {
     public NormalEnemy(Image image)
     {
