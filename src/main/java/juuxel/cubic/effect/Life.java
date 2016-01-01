@@ -2,7 +2,7 @@ package juuxel.cubic.effect;
 
 import juuxel.cubic.Cubic;
 import juuxel.cubic.reference.Images;
-import juuxel.opengg.Graphics;
+import juuxel.cubic.graphics.Graphics;
 
 public final class Life extends Effect
 {

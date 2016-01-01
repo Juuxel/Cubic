@@ -1,6 +1,4 @@
-package juuxel.opengg;
-
-import juuxel.opengg.exception.*;
+package juuxel.cubic.graphics;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,36 +9,12 @@ import java.awt.event.MouseListener;
 
 public class Window
 {
-    private boolean fullscreen = false;
-
     private final OpenGGFrame swingFrame;
 
     public Window(String title)
     {
         swingFrame = new OpenGGFrame(this, title);
         setVisible(true);
-    }
-
-    public Window()
-    {
-        swingFrame = new OpenGGFrame(this);
-    }
-
-    public boolean isFullscreen()
-    {
-        return fullscreen;
-    }
-
-    public void setFullscreen(boolean bool) throws FeatureNotSupportedException
-    {
-        fullscreen = bool;
-
-        GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-
-        if (device.isFullScreenSupported())
-            device.setFullScreenWindow(swingFrame);
-        else
-            throw new FeatureNotSupportedException("full screen");
     }
 
     public Size getSize()
@@ -87,7 +61,6 @@ public class Window
         return swingFrame;
     }
 
-    //TODO Write a wrapper for MouseEvent
     public void onMouseClicked(MouseEvent e)
     {}
 
@@ -104,7 +77,6 @@ public class Window
     {
     }
 
-    //TODO Write a wrapper for KeyEvent (Key codes not required)
     public void onKeyTyped(KeyEvent e)
     {}
 
@@ -124,11 +96,6 @@ public class Window
     {
         private final Window window;
         private final WindowPane pane;
-
-        OpenGGFrame(Window window)
-        {
-            this(window, "OpenGG Game window");
-        }
 
         OpenGGFrame(Window window, String title)
         {

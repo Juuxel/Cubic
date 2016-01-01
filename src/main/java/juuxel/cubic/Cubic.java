@@ -1,10 +1,9 @@
 package juuxel.cubic;
 
-import juuxel.cubic.enemy.AbstractEnemy;
-import juuxel.cubic.enemy.Enemy;
+import juuxel.cubic.enemy.*;
 import juuxel.cubic.reference.Images;
-import juuxel.opengg.Graphics;
-import juuxel.opengg.Window;
+import juuxel.cubic.graphics.Graphics;
+import juuxel.cubic.graphics.Window;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -18,7 +17,7 @@ public final class Cubic extends Window
     public static Cubic game;
     public static Player player;
     public static boolean running = true, moveKeyDown, jumpKeyDown;
-    public static final List<AbstractEnemy> ENEMIES = new CopyOnWriteArrayList<>();
+    public static final List<Enemy> ENEMIES = new CopyOnWriteArrayList<>();
     public static int score = 0, deaths = 0, level = 1, lives = 8;
     public static final List<Creature> CREATURES = new CopyOnWriteArrayList<>();
 
@@ -29,9 +28,10 @@ public final class Cubic extends Window
 
     public static void main(String[] args) throws Exception
     {
+        EnemyLists.initializeLists();
         game = new Cubic();
         player = new Player(Images.PLAYER);
-        ENEMIES.add(new Enemy());
+        ENEMIES.add(EnemyLists.createEnemy(EnemyType.NORMAL));
 
         while (running)
         {
@@ -55,7 +55,8 @@ public final class Cubic extends Window
 
         if (lives <= 0)
         {
-            g.getGraphics2D().drawString("Game Over!", getWidth() / 2, getHeight() / 2);
+            int dx = getWidth() / 2, dy = getHeight() / 2;
+            g.getGraphics2D().drawImage(Images.GAME_OVER, dx - 64, dy - 32, dx + 64, dy + 32, 0, 0, 32, 16, null);
             running = false;
         }
     }
@@ -75,7 +76,7 @@ public final class Cubic extends Window
         {
             int x = i * 32, y = (int) calculateY(32);
 
-            g.getGraphics2D().drawImage(Images.GRASS, x + 32, y - 32, x, y, 1, 1, 8, 8, null);
+            g.getGraphics2D().drawImage(Images.GRASS, x + 32, y - 32, x, y, 0, 0, 8, 8, null);
         }
     }
 

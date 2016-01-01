@@ -2,9 +2,9 @@ package juuxel.cubic.enemy;
 
 import juuxel.cubic.reference.GameValues;
 import juuxel.cubic.reference.Images;
-import juuxel.opengg.Graphics;
+import juuxel.cubic.graphics.Graphics;
 
-public class BouncingEnemy extends Enemy
+public class BouncingEnemy extends NormalEnemy
 {
     public BouncingEnemy()
     {
@@ -25,13 +25,8 @@ public class BouncingEnemy extends Enemy
     {
         super.logic();
 
-        ySpeed -= 0.1;
-
-        if (y <= GameValues.GROUND)
-        {
-            y = GameValues.GROUND;
-            ySpeed = 0;
-        }
+        if (!(y <= GameValues.GROUND))
+            ySpeed -= 0.1;
     }
 
     @Override

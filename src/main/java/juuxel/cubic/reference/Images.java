@@ -14,6 +14,7 @@ public final class Images
     public static final Image LIFE = load("life.png");
     public static final Image LEVEL_UP = load("level_up.png");
     public static final Image DEATH = load("death.png");
+    public static final Image GAME_OVER = load("game_over.png");
 
     private static Image load(String file)
     {

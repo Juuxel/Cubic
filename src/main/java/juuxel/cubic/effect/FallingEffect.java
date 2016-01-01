@@ -2,7 +2,7 @@ package juuxel.cubic.effect;
 
 import juuxel.cubic.Creature;
 import juuxel.cubic.Cubic;
-import juuxel.opengg.Graphics;
+import juuxel.cubic.graphics.Graphics;
 
 import java.awt.*;
 

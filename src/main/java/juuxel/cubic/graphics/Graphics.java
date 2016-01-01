@@ -1,4 +1,4 @@
-package juuxel.opengg;
+package juuxel.cubic.graphics;
 
 import java.awt.*;
 

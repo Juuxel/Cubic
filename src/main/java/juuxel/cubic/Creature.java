@@ -1,6 +1,6 @@
 package juuxel.cubic;
 
-import juuxel.opengg.Graphics;
+import juuxel.cubic.graphics.Graphics;
 
 import java.awt.*;
 import java.util.Random;
@@ -29,7 +29,7 @@ public abstract class Creature
     {
         int dx = calculateXInt(), dy = calculateYInt();
 
-        g.getGraphics2D().drawImage(image, dx - 15, dy - 15, dx + 16, dy + 16, 0, 0, 8, 8, null);
+        g.getGraphics2D().drawImage(image, dx - 16, dy - 16, dx + 16, dy + 16, 0, 0, 8, 8, null);
     }
 
     public abstract void logic();

@@ -1,7 +1,7 @@
 package juuxel.cubic.effect;
 
 import juuxel.cubic.reference.Images;
-import juuxel.opengg.Graphics;
+import juuxel.cubic.graphics.Graphics;
 
 import java.awt.*;
 
