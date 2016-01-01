@@ -8,6 +8,7 @@ import juuxel.cubic.graphics.Window;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static java.awt.event.KeyEvent.*;

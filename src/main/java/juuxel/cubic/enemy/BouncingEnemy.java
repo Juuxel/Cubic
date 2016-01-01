@@ -6,11 +6,6 @@ import juuxel.cubic.graphics.Graphics;
 
 public class BouncingEnemy extends NormalEnemy
 {
-    public BouncingEnemy()
-    {
-        super(Images.BOUNCING_ENEMY);
-    }
-
     @Override
     public void move()
     {

@@ -6,11 +6,12 @@ import juuxel.cubic.graphics.Graphics;
 
 import java.awt.*;
 
-public class FallingEffect extends Creature
+public class Particle extends Creature
 {
     public final Color color;
+    public int lifetime = 0;
 
-    public FallingEffect(Color color, double x, double y)
+    public Particle(Color color, double x, double y)
     {
         this.color = color;
         this.x = x;
@@ -20,9 +21,11 @@ public class FallingEffect extends Creature
     @Override
     public void logic()
     {
-        y -= 2;
+//        y -= 2.5;
 
-        if (y < -50)
+        lifetime++;
+
+        if (lifetime >= 100)
             Cubic.CREATURES.remove(this);
     }
 

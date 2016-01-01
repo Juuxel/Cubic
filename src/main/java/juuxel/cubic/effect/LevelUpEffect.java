@@ -30,9 +30,9 @@ public class LevelUpEffect extends Effect
 
         ++lifetime;
 
-        if (lifetime == 5)
+        if (lifetime == 3)
         {
-            new FallingEffect(EFFECT_COLORS[random.nextInt(EFFECT_COLORS.length)], x, y);
+            new Particle(EFFECT_COLORS[random.nextInt(EFFECT_COLORS.length)], x, y);
             lifetime = 0;
         }
     }

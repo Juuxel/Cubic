@@ -9,17 +9,10 @@ import java.awt.*;
 
 public class NormalEnemy extends AbstractEnemy
 {
-    public NormalEnemy(Image image)
-    {
-        super(image);
-
-        x = Math.random() * Cubic.game.getWidth();
-        y = GameValues.GROUND;
-    }
-
     public NormalEnemy()
     {
-        this(Images.ENEMY);
+        x = Math.random() * Cubic.game.getWidth();
+        y = GameValues.GROUND;
     }
 
     public void draw(Graphics g)

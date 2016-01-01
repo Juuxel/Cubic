@@ -20,6 +20,7 @@ public final class EnemyLists
 
         normalEnemies.add(NormalEnemy::new);
         strangeEnemies.add(BouncingEnemy::new);
+        strangeEnemies.add(BlockEnemy::new);
 
         ENEMY_LISTS.put(EnemyType.NORMAL, normalEnemies);
         ENEMY_LISTS.put(EnemyType.STRANGE, strangeEnemies);

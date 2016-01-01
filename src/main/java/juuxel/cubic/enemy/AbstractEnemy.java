@@ -5,19 +5,11 @@ import juuxel.cubic.Cubic;
 import juuxel.cubic.effect.Life;
 import juuxel.cubic.reference.GameValues;
 
-import java.awt.*;
-
 public abstract class AbstractEnemy extends Creature
 {
-    public boolean sliding = false, slidable = true, edgeMove = true, living = true;
-    public final Image image;
+    public boolean sliding = false, slidable = true, edgeMove = true, living = true, ignoreGround = false;
 
     public abstract void move();
-
-    public AbstractEnemy(Image image)
-    {
-        this.image = image;
-    }
 
     @Override
     public void logic()
@@ -30,27 +22,21 @@ public abstract class AbstractEnemy extends Creature
         x += xSpeed;
         y += ySpeed;
 
-        if (living && y <= GameValues.GROUND)
+        if (!ignoreGround && living && y <= GameValues.GROUND)
         {
             y = GameValues.GROUND;
             ySpeed = 0;
         }
 
-        if (!living && y < -5)
-        {
-            Cubic.ENEMIES.remove(this);
+        if ((!living || ignoreGround) && y < -20)
             Cubic.CREATURES.remove(this);
-
-            if (Cubic.ENEMIES.size() == 0)
-                Cubic.player.levelUp();
-        }
 
         if (Math.abs(xSpeed) < 0.5)
             sliding = false;
 
         if (slidable)
             Cubic.ENEMIES.forEach(enemy -> {
-                if (!(enemy == this) && Math.abs(enemy.x - x) < 32 && Math.abs(enemy.y - y) < 32)
+                if (!(enemy == this) && enemy.slidable && Math.abs(enemy.x - x) < 32 && Math.abs(enemy.y - y) < 32)
                 {
                     boolean bool = enemy.x > x;
 
@@ -75,7 +61,11 @@ public abstract class AbstractEnemy extends Creature
         Cubic.player.ySpeed = 5;
 
         living = false;
-        ySpeed = -3;
+        Cubic.ENEMIES.remove(this);
+        ySpeed = -2;
+
+        if (Cubic.ENEMIES.size() == 0)
+            Cubic.player.levelUp();
 
         if (random.nextInt(10) == 1)
             new Life(x, y);
