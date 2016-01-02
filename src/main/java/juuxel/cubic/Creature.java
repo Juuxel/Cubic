@@ -29,7 +29,7 @@ public abstract class Creature
     {
         int dx = calculateXInt(), dy = calculateYInt();
 
-        g.getGraphics2D().drawImage(image, dx - 16, dy - 16, dx + 16, dy + 16, 0, 0, 8, 8, null);
+        g.drawImage(image, dx - 16, dy - 16, 32, 32);
     }
 
     public abstract void logic();

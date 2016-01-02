@@ -51,8 +51,8 @@ public final class Player extends Creature
         y += ySpeed / 2;
 
         if (x < -10)
-            x = Cubic.game.getSize().getWidth() + 10;
-        if (x > Cubic.game.getSize().getWidth() + 10)
+            x = Cubic.game.getWidth() + 10;
+        if (x > Cubic.game.getWidth() + 10)
             x = -10;
 
         jumpWasPressed = jumpPressed;

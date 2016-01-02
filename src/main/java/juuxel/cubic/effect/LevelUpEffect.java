@@ -5,7 +5,7 @@ import juuxel.cubic.graphics.Graphics;
 
 import java.awt.*;
 
-public class LevelUpEffect extends Effect
+public final class LevelUpEffect extends Effect
 {
     public static final Color[] EFFECT_COLORS = {
         Color.red,

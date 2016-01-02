@@ -21,8 +21,6 @@ public class Particle extends Creature
     @Override
     public void logic()
     {
-//        y -= 2.5;
-
         lifetime++;
 
         if (lifetime >= 100)

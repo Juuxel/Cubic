@@ -20,4 +20,14 @@ public class Graphics
     {
         return new Graphics(graphics2D);
     }
+
+    public void drawString(String str, int x, int y)
+    {
+        graphics2D.drawString(str, x, y);
+    }
+
+    public void drawImage(Image image, int x, int y, int width, int height)
+    {
+        graphics2D.drawImage(image, x, y, width, height, null);
+    }
 }
