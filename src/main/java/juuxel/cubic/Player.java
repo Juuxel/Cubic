@@ -1,6 +1,6 @@
 package juuxel.cubic;
 
-import juuxel.cubic.effect.Death;
+import juuxel.cubic.effect.DeathEffect;
 import juuxel.cubic.effect.LevelUpEffect;
 import juuxel.cubic.enemy.*;
 import juuxel.cubic.reference.GameValues;
@@ -77,7 +77,7 @@ public final class Player extends Creature
         y = 100;
         Cubic.deaths++;
         Cubic.lives--;
-        new Death(x, y);
+        new DeathEffect(x, y);
         invincibleTime = 200;
 
         if (random.nextInt(7) == 1)

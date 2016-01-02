@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'idea'
 
 group = 'juuxel.cubic'
-version =  '1.0'
+version =  '0.2'
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.7'

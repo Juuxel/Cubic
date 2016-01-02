@@ -16,6 +16,8 @@ public final class Images
     public static final Image DEATH = load("death.png");
     public static final Image GAME_OVER = load("game_over.png");
     public static final Image BLOCK = load("block.png");
+    public static final Image LOGO = load("logo.png");
+    public static final Image START_INFO = load("startInfo.png");
 
     private static Image load(String file)
     {

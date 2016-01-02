@@ -2,7 +2,7 @@ package juuxel.cubic.enemy;
 
 import juuxel.cubic.Creature;
 import juuxel.cubic.Cubic;
-import juuxel.cubic.effect.Life;
+import juuxel.cubic.effect.LifeEffect;
 import juuxel.cubic.reference.GameValues;
 
 public abstract class AbstractEnemy extends Creature
@@ -68,6 +68,6 @@ public abstract class AbstractEnemy extends Creature
             Cubic.player.levelUp();
 
         if (random.nextInt(10) == 1)
-            new Life(x, y);
+            new LifeEffect(x, y);
     }
 }
