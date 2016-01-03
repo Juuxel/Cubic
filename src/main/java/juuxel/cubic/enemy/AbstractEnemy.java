@@ -8,6 +8,7 @@ import juuxel.cubic.reference.GameValues;
 public abstract class AbstractEnemy extends Creature
 {
     public boolean sliding = false, slidable = true, edgeMove = true, living = true, ignoreGround = false;
+    protected static final int SLIDE_DISTANCE = 32;
 
     public abstract void move();
 
@@ -36,7 +37,7 @@ public abstract class AbstractEnemy extends Creature
 
         if (slidable)
             Cubic.ENEMIES.forEach(enemy -> {
-                if (!(enemy == this) && enemy.slidable && Math.abs(enemy.x - x) < 32 && Math.abs(enemy.y - y) < 32)
+                if (!(enemy == this) && enemy.slidable && Math.abs(enemy.x - x) < SLIDE_DISTANCE && Math.abs(enemy.y - y) < SLIDE_DISTANCE)
                 {
                     boolean bool = enemy.x > x;
 

@@ -13,6 +13,6 @@ public final class DeathEffect extends Effect
     @Override
     public void draw(Graphics g)
     {
-        drawCreature(g, Images.DEATH);
+        drawCreature(g, Images.DEATH, 16, 16);
     }
 }

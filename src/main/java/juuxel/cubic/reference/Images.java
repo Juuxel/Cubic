@@ -6,7 +6,9 @@ import java.io.IOException;
 
 public final class Images
 {
-    private static final String IMAGE_PREFIX = "/images/";
+    String s = String.format("%c", 'a');
+
+    private static final String IMAGE_PREFIX = "/assets/images/";
     public static final Image PLAYER = load("player.png");
     public static final Image GRASS = load("grass.png");
     public static final Image ENEMY = load("enemy.png");

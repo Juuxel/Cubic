@@ -25,11 +25,16 @@ public abstract class Creature
         x = Math.random() * Cubic.game.getWidth();
     }
 
-    public void drawCreature(Graphics g, Image image)
+    protected void drawCreature(Graphics g, Image image)
+    {
+        drawCreature(g, image, 32, 32);
+    }
+
+    protected void drawCreature(Graphics g, Image image, int width, int height)
     {
         int dx = calculateXInt(), dy = calculateYInt();
 
-        g.drawImage(image, dx - 16, dy - 16, 32, 32);
+        g.drawImage(image, dx - width / 2, dy - height / 2, width, height);
     }
 
     public abstract void logic();
