@@ -30,7 +30,7 @@ public final class Cubic
 
     public static void main(String[] args) throws Exception
     {
-        Localizer.initialize();
+        Translator.initialize();
         EnemyLists.initializeLists();
         game = new Cubic();
         player = new Player(Images.PLAYER);
@@ -67,11 +67,11 @@ public final class Cubic
 
             g.getGraphics2D().drawImage(Images.START_INFO, dx - 32, dy - 32, dx + (256 - 32), dy + 32, 0, 0, 64, 16, null);
             g.getGraphics2D().drawImage(Images.LOGO, 10, 10, 10 + 128, 10 + 64, 0, 0, 32, 16, null);
-            g.drawString(Localizer.format("info.version", Reference.VERSION), 10, 95);
-            g.drawString(Localizer.localize("controls.title"), 10, getHeight() - (offset + 60));
-            g.drawString(Localizer.format("controls.moveLeft", "A"), 10, getHeight() - (offset + 40));
-            g.drawString(Localizer.format("controls.moveRight", "D"), 10, getHeight() - (offset + 20));
-            g.drawString(Localizer.format("controls.jump", Localizer.localize("controls.keys.space")), 10, getHeight() - offset);
+            g.drawString(Translator.format("info.version", Reference.VERSION), 10, 95);
+            g.drawString(Translator.translate("controls.title"), 10, getHeight() - (offset + 60));
+            g.drawString(Translator.format("controls.moveLeft", "A"), 10, getHeight() - (offset + 40));
+            g.drawString(Translator.format("controls.moveRight", "D"), 10, getHeight() - (offset + 20));
+            g.drawString(Translator.format("controls.jump", Translator.translate("controls.keys.space")), 10, getHeight() - offset);
         }
         else
         {
@@ -101,11 +101,11 @@ public final class Cubic
 
     private void drawScore(Graphics g)
     {
-        g.drawString(Localizer.format("game.level", level), 10, 30);
-        g.drawString(Localizer.format("game.scoreToLevelUp", ENEMIES.size()), 10, 50);
-        g.drawString(Localizer.format("game.score", score), 10, 70);
-        g.drawString(Localizer.format("game.deaths", deaths), 10, 90);
-        g.drawString(Localizer.format("game.lives", lives), 10, 110);
+        g.drawString(Translator.format("game.level", level), 10, 30);
+        g.drawString(Translator.format("game.scoreToLevelUp", ENEMIES.size()), 10, 50);
+        g.drawString(Translator.format("game.score", score), 10, 70);
+        g.drawString(Translator.format("game.deaths", deaths), 10, 90);
+        g.drawString(Translator.format("game.lives", lives), 10, 110);
     }
 
     private void drawGround(Graphics g)
