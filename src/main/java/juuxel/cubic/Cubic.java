@@ -12,7 +12,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import static java.awt.event.KeyEvent.*;
 
-public final class Cubic
+public final class Cubic implements KeyListener
 {
     public static Cubic game;
     public static Player player;
@@ -22,6 +22,7 @@ public final class Cubic
     public static final List<Creature> CREATURES = new CopyOnWriteArrayList<>();
 
     private final GameFrame gameFrame;
+    private static byte selectedButton = 0;
 
     private Cubic()
     {
@@ -58,15 +59,16 @@ public final class Cubic
     {
         if (inStartScreen)
         {
-            int dx = getWidth() / 2 - 100, dy = getHeight() / 2 - 6, offset = 85;
+            int dx = getWidth() / 2 - 100, dy = getHeight() / 2 - 50, offset = 85;
 
-            g.getGraphics2D().setColor(new Color(0.5F, 0.9F, 1.0F));
-            g.getGraphics2D().fillRect(0, 0, getWidth(), getHeight());
-            g.getGraphics2D().setColor(Color.black);
+            drawSky(g);
             drawGround(g);
 
-            g.getGraphics2D().drawImage(Images.START_INFO, dx - 32, dy - 32, dx + (256 - 32), dy + 32, 0, 0, 64, 16, null);
-            g.getGraphics2D().drawImage(Images.LOGO, 10, 10, 10 + 128, 10 + 64, 0, 0, 32, 16, null);
+            g.drawImage(Images.CURSOR, dx, dy + selectedButton * 25, 16, 16);
+            g.drawString(Translator.translate("mainMenu.play"), dx + 16, dy + 12);
+            g.drawString(Translator.translate("mainMenu.exit"), dx + 16, dy + 12 + 25);
+
+            g.drawImage(Images.LOGO, 10, 10, 128, 64);
             g.drawString(Translator.format("info.version", Reference.VERSION), 10, 95);
             g.drawString(Translator.translate("controls.title"), 10, getHeight() - (offset + 60));
             g.drawString(Translator.format("controls.moveLeft", "A"), 10, getHeight() - (offset + 40));
@@ -75,10 +77,7 @@ public final class Cubic
         }
         else
         {
-            g.getGraphics2D().setColor(new Color(0.5F, 0.9F, 1.0F));
-            g.getGraphics2D().fillRect(0, 0, getWidth(), getHeight());
-            g.getGraphics2D().setColor(Color.black);
-
+            drawSky(g);
             drawScore(g);
             drawGround(g);
 
@@ -118,10 +117,36 @@ public final class Cubic
         }
     }
 
-    public void onKeyPressed(KeyEvent e)
+    private void drawSky(Graphics g)
+    {
+        g.getGraphics2D().setColor(new Color(128, 218, 235));
+        g.getGraphics2D().fillRect(0, 0, getWidth(), getHeight());
+        g.getGraphics2D().setColor(Color.black);
+    }
+
+    public void keyPressed(KeyEvent e)
     {
         if (inStartScreen)
-            inStartScreen = false;
+        {
+            switch (e.getKeyCode())
+            {
+                case VK_UP:
+                    if (selectedButton != 0)
+                        selectedButton--;
+                    break;
+                case VK_DOWN:
+                    if (selectedButton != 1)
+                        selectedButton++;
+                    break;
+                case VK_SPACE:
+                case VK_ENTER:
+                    if (selectedButton == 0)
+                        inStartScreen = false;
+                    else
+                        exit();
+                    break;
+            }
+        }
         else
             switch (e.getKeyCode())
             {
@@ -139,7 +164,7 @@ public final class Cubic
             }
     }
 
-    public void onKeyReleased(KeyEvent e)
+    public void keyReleased(KeyEvent e)
     {
         switch (e.getKeyCode())
         {
@@ -152,6 +177,9 @@ public final class Cubic
                 break;
         }
     }
+
+    public void keyTyped(KeyEvent e)
+    {}
 
     public int getHeight()
     {
@@ -168,36 +196,20 @@ public final class Cubic
         return game.getHeight() - y1;
     }
 
-    public static final class GameFrame extends JFrame implements KeyListener
+    public static void exit()
     {
-        private final Cubic game;
+        System.exit(0);
+    }
 
+    public static final class GameFrame extends JFrame
+    {
         GameFrame(Cubic game, String title)
         {
             super(title);
-            this.game = game;
             setContentPane(new WindowPane(game));
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             SwingUtilities.invokeLater(() -> setSize(640, 480));
-            addKeyListener(this);
-        }
-
-        @Override
-        public void keyTyped(KeyEvent e)
-        {
-
-        }
-
-        @Override
-        public void keyPressed(KeyEvent e)
-        {
-            game.onKeyPressed(e);
-        }
-
-        @Override
-        public void keyReleased(KeyEvent e)
-        {
-            game.onKeyReleased(e);
+            addKeyListener(game);
         }
     }
 
