@@ -2,12 +2,13 @@ package juuxel.cubic.reference;
 
 import juuxel.cubic.api.ITranslationProvider;
 
+import java.io.IOException;
 import java.util.*;
 
 public class Translator implements ITranslationProvider
 {
-    private static ResourceBundle bundle;
-    private static Locale locale;
+    private static Properties properties;
+    private static String language;
     private static List<String> languages;
     private static final List<ITranslationProvider> TRANSLATION_PROVIDERS = new ArrayList<>();
 
@@ -19,30 +20,52 @@ public class Translator implements ITranslationProvider
         addProvider(new Translator());
 
         languages = new ArrayList<>();
-        loadProviders();
+        reloadProviders();
 
-        locale = Locale.getDefault();
-        bundle = ResourceBundle.getBundle("assets.lang.lang", locale);
+        language = getDefault();
+        properties = new Properties();
+
+        reloadProperties();
     }
 
-    private static void loadProviders()
+    public static void reloadProviders()
     {
+        languages.clear();
         TRANSLATION_PROVIDERS.forEach(provider -> languages.addAll(provider.getTranslations()));
     }
 
-    public static Locale getLocale()
+    public static void reloadProperties()
     {
-        return locale;
+        try
+        {
+            properties.load(Translator.class.getResourceAsStream("/assets/lang/en_US.lang.properties"));
+            properties.load(Translator.class.getResourceAsStream(String.format("/assets/lang/%s.lang.properties", language)));
+        }
+        catch (IOException e)
+        {
+            System.err.println("Language properties couldn't be loaded...");
+            e.printStackTrace();
+        }
     }
 
-    public static void setLocale(Locale locale)
+    private static String getDefault()
     {
-        Translator.locale = locale;
+        return Locale.getDefault().toLanguageTag().replace('-', '_');
+    }
+
+    public static String getLanguage()
+    {
+        return language;
+    }
+
+    public static void setLanguage(String language)
+    {
+        Translator.language = language;
     }
 
     public static String translate(String key)
     {
-        return bundle.getString(key);
+        return properties.getProperty(key);
     }
 
     public static String format(String key, Object... args)
