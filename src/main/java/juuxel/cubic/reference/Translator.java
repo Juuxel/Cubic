@@ -83,4 +83,31 @@ public class Translator implements ITranslationProvider
     {
         return new ArrayList<>(Arrays.asList(Reference.LANGUAGES));
     }
+
+    public static List<String> getLanguages()
+    {
+        return languages;
+    }
+
+    public static List<String> getLanguageNames()
+    {
+        try
+        {
+            ArrayList<String> output = new ArrayList<>();
+            for (String language : getLanguages())
+            {
+                Properties properties = new Properties();
+                properties.load(Translator.class.getResourceAsStream(String.format("/assets/lang/%s.lang.properties", language)));
+                output.add(properties.getProperty("language.name"));
+            }
+
+            return output;
+        }
+        catch (IOException e)
+        {
+            System.err.println("Error in language names:");
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
 }

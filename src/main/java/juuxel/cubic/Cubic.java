@@ -7,6 +7,9 @@ import juuxel.cubic.reference.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -22,7 +25,12 @@ public final class Cubic implements KeyListener
     public static final List<Creature> CREATURES = new CopyOnWriteArrayList<>();
 
     private final GameFrame gameFrame;
-    private static byte selectedButton = 0;
+
+    public static final int START_SCREEN = 0;
+    public static final int OPTIONS = 1;
+    public static final int LANGUAGE_SCREEN = 2;
+
+    private static int selectedButton = 0, selectedScreen = START_SCREEN;
 
     private Cubic()
     {
@@ -59,14 +67,22 @@ public final class Cubic implements KeyListener
     {
         if (inStartScreen)
         {
-            int dx = getWidth() / 2 - 100, dy = getHeight() / 2 - 50, offset = 85;
+            int offset = 85;
 
             drawSky(g);
             drawGround(g);
 
-            g.drawImage(Images.CURSOR, dx, dy + selectedButton * 25, 16, 16);
-            g.drawString(Translator.translate("mainMenu.play"), dx + 16, dy + 12);
-            g.drawString(Translator.translate("mainMenu.exit"), dx + 16, dy + 12 + 25);
+            if (selectedScreen == START_SCREEN)
+                drawList(g, Arrays.asList(Translator.translate("mainMenu.play"), Translator.translate("mainMenu.options"), Translator.translate("mainMenu.exit")));
+            else if (selectedScreen == OPTIONS)
+                drawList(g, Arrays.asList(Translator.translate("mainMenu.back"), Translator.translate("options.languages")));
+            else if (selectedScreen == LANGUAGE_SCREEN)
+            {
+                ArrayList<String> strings = new ArrayList<>();
+                strings.add(Translator.translate("mainMenu.back"));
+                strings.addAll(Translator.getLanguageNames());
+                drawList(g, strings);
+            }
 
             g.drawImage(Images.LOGO, 10, 10, 128, 64);
             g.drawString(Translator.format("info.version", Reference.VERSION), 10, 95);
@@ -124,6 +140,18 @@ public final class Cubic implements KeyListener
         g.getGraphics2D().setColor(Color.black);
     }
 
+    private void drawList(Graphics g, List<String> entries)
+    {
+        int dx = getWidth() / 2 - 75, dy = getHeight() / 2 - 50;
+
+        g.drawImage(Images.CURSOR, dx, dy + selectedButton * 25, 16, 16);
+
+        for (int i = 0; i < entries.size(); i++)
+        {
+            g.drawString(entries.get(i), dx + 16, dy + 12 + i * 25);
+        }
+    }
+
     public void keyPressed(KeyEvent e)
     {
         if (inStartScreen)
@@ -133,17 +161,18 @@ public final class Cubic implements KeyListener
                 case VK_UP:
                     if (selectedButton != 0)
                         selectedButton--;
+                    else
+                        selectedButton = getMaximumIndex(selectedScreen);
                     break;
                 case VK_DOWN:
-                    if (selectedButton != 1)
+                    if (selectedButton != getMaximumIndex(selectedScreen))
                         selectedButton++;
+                    else
+                        selectedButton = 0;
                     break;
                 case VK_SPACE:
                 case VK_ENTER:
-                    if (selectedButton == 0)
-                        inStartScreen = false;
-                    else
-                        exit();
+                    selectButton();
                     break;
             }
         }
@@ -199,6 +228,57 @@ public final class Cubic implements KeyListener
     public static void exit()
     {
         System.exit(0);
+    }
+
+    public static int getMaximumIndex(int screen)
+    {
+        switch (screen)
+        {
+            case START_SCREEN:
+                return 2;
+            case OPTIONS:
+                return 1;
+            case LANGUAGE_SCREEN:
+                return Translator.getLanguages().size();
+            default:
+                return 0;
+        }
+    }
+
+    private static void selectButton()
+    {
+        switch (selectedScreen)
+        {
+            case START_SCREEN:
+                if (selectedButton == 0)
+                    inStartScreen = false;
+                else if (selectedButton == 1)
+                    selectScreen(OPTIONS);
+                else
+                    exit();
+                break;
+            case OPTIONS:
+                if (selectedButton == 0)
+                    selectScreen(START_SCREEN);
+                else if (selectedButton == 1)
+                    selectScreen(LANGUAGE_SCREEN);
+                break;
+            case LANGUAGE_SCREEN:
+                if (selectedButton == 0)
+                    selectScreen(OPTIONS);
+                else
+                {
+                    Translator.setLanguage(Translator.getLanguages().get(selectedButton - 1));
+                    Translator.reloadProperties();
+                }
+                break;
+        }
+    }
+
+    public static void selectScreen(int screen)
+    {
+        selectedScreen = screen;
+        selectedButton = 0;
     }
 
     public static final class GameFrame extends JFrame
