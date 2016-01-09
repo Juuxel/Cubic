@@ -11,7 +11,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -34,7 +33,7 @@ public final class Cubic implements KeyListener
     public static final int CONTROLS = 3;
 
     private static int selectedButton = 0, selectedScreen = START_SCREEN, controlIndex = 0;
-    private static boolean selectingBindings = false;
+    private static boolean selectingBindings = false, optionsChanged = false;
 
     private Cubic()
     {
@@ -72,8 +71,6 @@ public final class Cubic implements KeyListener
     {
         if (inStartScreen)
         {
-            int offset = 85;
-
             drawSky(g);
             drawGround(g);
 
@@ -94,12 +91,6 @@ public final class Cubic implements KeyListener
 
             g.drawImage(Images.LOGO, 10, 10, 128, 64);
             g.drawString(Translator.format("info.version", Reference.VERSION), 10, 95);
-            /*
-            g.drawString(Translator.translate("controls.title"), 10, getHeight() - (offset + 60));
-            g.drawString(Translator.format("controls.moveLeft", Options.getKeyName(Options.moveLeft.getValue())), 10, getHeight() - (offset + 40));
-            g.drawString(Translator.format("controls.moveRight", Options.getKeyName(Options.moveRight.getValue())), 10, getHeight() - (offset + 20));
-            g.drawString(Translator.format("controls.jump", Options.getKeyName(Options.jump.getValue())), 10, getHeight() - offset);
-            */
         }
         else
         {
@@ -210,6 +201,7 @@ public final class Cubic implements KeyListener
 
                 selectingBindings = false;
                 controlIndex = 0;
+                optionsChanged = true;
             }
             else
             {
@@ -313,7 +305,15 @@ public final class Cubic implements KeyListener
                 break;
             case OPTIONS:
                 if (selectedButton == 0)
+                {
+                    if (optionsChanged)
+                    {
+                        Options.reloadAndWriteOptions();
+                        optionsChanged = false;
+                    }
+
                     selectScreen(START_SCREEN);
+                }
                 else if (selectedButton == 1)
                     selectScreen(CONTROLS);
                 else if (selectedButton == 2)
@@ -326,6 +326,7 @@ public final class Cubic implements KeyListener
                 {
                     Translator.setLanguage(selectedButton - 1);
                     Translator.reloadProperties();
+                    optionsChanged = true;
                 }
                 break;
             case CONTROLS:
