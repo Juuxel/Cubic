@@ -82,6 +82,7 @@ public final class Cubic implements KeyListener
                 strings.add(Translator.translate("mainMenu.back"));
                 strings.addAll(Translator.getLanguageNames());
                 drawList(g, strings);
+                drawButtons(g);
             }
 
             g.drawImage(Images.LOGO, 10, 10, 128, 64);
@@ -144,11 +145,23 @@ public final class Cubic implements KeyListener
     {
         int dx = getWidth() / 2 - 75, dy = getHeight() / 2 - 50;
 
-        g.drawImage(Images.CURSOR, dx, dy + selectedButton * 25, 16, 16);
+        g.drawImage(Images.CURSOR, selectedScreen == LANGUAGE_SCREEN ? dx - 16 : dx, dy + selectedButton * 25, 16, 16);
 
         for (int i = 0; i < entries.size(); i++)
         {
             g.drawString(entries.get(i), dx + 16, dy + 12 + i * 25);
+        }
+    }
+
+    private void drawButtons(Graphics g)
+    {
+        for (int i = 0; i < Translator.getLanguages().size(); i++)
+        {
+            int dx = getWidth() / 2 - 75, dy = getHeight() / 2 - 50;
+
+            int selectedIndex = Translator.getLanguageIndex();
+
+            g.drawImage(selectedIndex == i ? Images.SELECTED_BUTTON : Images.BUTTON, dx, dy + (i + 1) * 25, 16, 15);
         }
     }
 
@@ -268,7 +281,7 @@ public final class Cubic implements KeyListener
                     selectScreen(OPTIONS);
                 else
                 {
-                    Translator.setLanguage(Translator.getLanguages().get(selectedButton - 1));
+                    Translator.setLanguage(selectedButton - 1);
                     Translator.reloadProperties();
                 }
                 break;

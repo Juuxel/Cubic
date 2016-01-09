@@ -63,6 +63,11 @@ public class Translator implements ITranslationProvider
         Translator.language = language;
     }
 
+    public static void setLanguage(int index)
+    {
+        setLanguage(languages.get(index));
+    }
+
     public static String translate(String key)
     {
         return properties.getProperty(key);
@@ -109,5 +114,10 @@ public class Translator implements ITranslationProvider
             e.printStackTrace();
             return new ArrayList<>();
         }
+    }
+
+    public static int getLanguageIndex()
+    {
+        return languages.indexOf(language);
     }
 }

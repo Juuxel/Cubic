@@ -18,6 +18,8 @@ public final class Images
     public static final Image BLOCK = load("block.png");
     public static final Image LOGO = load("logo.png");
     public static final Image CURSOR = load("cursor.png");
+    public static final Image BUTTON = load("button.png");
+    public static final Image SELECTED_BUTTON = load("button_selected.png");
 
     private static Image load(String file)
     {
