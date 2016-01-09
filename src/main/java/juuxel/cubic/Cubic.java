@@ -2,6 +2,8 @@ package juuxel.cubic;
 
 import juuxel.cubic.enemy.*;
 import juuxel.cubic.graphics.Graphics;
+import juuxel.cubic.options.KeyBinding;
+import juuxel.cubic.options.Options;
 import juuxel.cubic.reference.*;
 
 import javax.swing.*;
@@ -29,8 +31,10 @@ public final class Cubic implements KeyListener
     public static final int START_SCREEN = 0;
     public static final int OPTIONS = 1;
     public static final int LANGUAGE_SCREEN = 2;
+    public static final int CONTROLS = 3;
 
-    private static int selectedButton = 0, selectedScreen = START_SCREEN;
+    private static int selectedButton = 0, selectedScreen = START_SCREEN, controlIndex = 0;
+    private static boolean selectingBindings = false;
 
     private Cubic()
     {
@@ -40,6 +44,7 @@ public final class Cubic implements KeyListener
     public static void main(String[] args) throws Exception
     {
         Translator.initialize();
+        Options.initialize();
         EnemyLists.initializeLists();
         game = new Cubic();
         player = new Player(Images.PLAYER);
@@ -75,7 +80,7 @@ public final class Cubic implements KeyListener
             if (selectedScreen == START_SCREEN)
                 drawList(g, Arrays.asList(Translator.translate("mainMenu.play"), Translator.translate("mainMenu.options"), Translator.translate("mainMenu.exit")));
             else if (selectedScreen == OPTIONS)
-                drawList(g, Arrays.asList(Translator.translate("mainMenu.back"), Translator.translate("options.languages")));
+                drawList(g, Arrays.asList(Translator.translate("mainMenu.back"), Translator.translate("options.controls"), Translator.translate("options.languages")));
             else if (selectedScreen == LANGUAGE_SCREEN)
             {
                 ArrayList<String> strings = new ArrayList<>();
@@ -84,13 +89,17 @@ public final class Cubic implements KeyListener
                 drawList(g, strings);
                 drawButtons(g);
             }
+            else if (selectedScreen == CONTROLS)
+                drawControlScreen(g);
 
             g.drawImage(Images.LOGO, 10, 10, 128, 64);
             g.drawString(Translator.format("info.version", Reference.VERSION), 10, 95);
+            /*
             g.drawString(Translator.translate("controls.title"), 10, getHeight() - (offset + 60));
-            g.drawString(Translator.format("controls.moveLeft", "A"), 10, getHeight() - (offset + 40));
-            g.drawString(Translator.format("controls.moveRight", "D"), 10, getHeight() - (offset + 20));
-            g.drawString(Translator.format("controls.jump", Translator.translate("controls.keys.space")), 10, getHeight() - offset);
+            g.drawString(Translator.format("controls.moveLeft", Options.getKeyName(Options.moveLeft.getValue())), 10, getHeight() - (offset + 40));
+            g.drawString(Translator.format("controls.moveRight", Options.getKeyName(Options.moveRight.getValue())), 10, getHeight() - (offset + 20));
+            g.drawString(Translator.format("controls.jump", Options.getKeyName(Options.jump.getValue())), 10, getHeight() - offset);
+            */
         }
         else
         {
@@ -165,59 +174,89 @@ public final class Cubic implements KeyListener
         }
     }
 
+    private void drawControlScreen(Graphics g)
+    {
+        ArrayList<String> values = new ArrayList<>();
+        values.add(Translator.translate("mainMenu.back"));
+        values.add(Translator.format("controls.moveLeft", getControlText(Options.moveLeft, 1)));
+        values.add(Translator.format("controls.moveRight", getControlText(Options.moveRight, 2)));
+        values.add(Translator.format("controls.jump", getControlText(Options.jump, 3)));
+        drawList(g, values);
+    }
+
+    private String getControlText(KeyBinding binding, int index)
+    {
+        return controlIndex == index ? Translator.translate("controls.selecting") : Options.getKeyName(binding.getValue());
+    }
+
     public void keyPressed(KeyEvent e)
     {
         if (inStartScreen)
         {
-            switch (e.getKeyCode())
+            if (selectingBindings)
             {
-                case VK_UP:
-                    if (selectedButton != 0)
-                        selectedButton--;
-                    else
-                        selectedButton = getMaximumIndex(selectedScreen);
-                    break;
-                case VK_DOWN:
-                    if (selectedButton != getMaximumIndex(selectedScreen))
-                        selectedButton++;
-                    else
-                        selectedButton = 0;
-                    break;
-                case VK_SPACE:
-                case VK_ENTER:
-                    selectButton();
-                    break;
+                switch (controlIndex)
+                {
+                    case 1:
+                        Options.moveLeft.setValue(e.getKeyCode());
+                        break;
+                    case 2:
+                        Options.moveRight.setValue(e.getKeyCode());
+                        break;
+                    case 3:
+                        Options.jump.setValue(e.getKeyCode());
+                        break;
+                }
+
+                selectingBindings = false;
+                controlIndex = 0;
+            }
+            else
+            {
+                switch (e.getKeyCode())
+                {
+                    case VK_UP:
+                        if (selectedButton != 0)
+                            selectedButton--;
+                        else
+                            selectedButton = getMaximumIndex(selectedScreen);
+                        break;
+                    case VK_DOWN:
+                        if (selectedButton != getMaximumIndex(selectedScreen))
+                            selectedButton++;
+                        else
+                            selectedButton = 0;
+                        break;
+                    case VK_SPACE:
+                    case VK_ENTER:
+                        selectButton();
+                        break;
+                }
             }
         }
         else
-            switch (e.getKeyCode())
+        {
+            if (e.getKeyCode() == Options.moveLeft.getValue())
             {
-                case VK_A:
-                    player.xSpeed = Math.max(-1.75, player.xSpeed - 1.5);
-                    moveKeyDown = true;
-                    break;
-                case VK_D:
-                    player.xSpeed = Math.min(1.75, player.xSpeed + 1.5);
-                    moveKeyDown = true;
-                    break;
-                case VK_SPACE:
-                    jumpKeyDown = true;
-                    break;
+                player.xSpeed = Math.max(-1.75, player.xSpeed - 1.5);
+                moveKeyDown = true;
             }
+            else if (e.getKeyCode() == Options.moveRight.getValue())
+            {
+                player.xSpeed = Math.min(1.75, player.xSpeed + 1.5);
+                moveKeyDown = true;
+            }
+            else if (e.getKeyCode() == Options.jump.getValue())
+                jumpKeyDown = true;
+        }
     }
 
     public void keyReleased(KeyEvent e)
     {
-        switch (e.getKeyCode())
-        {
-            case VK_D:
-            case VK_A:
-                moveKeyDown = false;
-                break;
-            case VK_SPACE:
-                jumpKeyDown = false;
-                break;
-        }
+        if (e.getKeyCode() == Options.moveLeft.getValue() || e.getKeyCode() == Options.moveRight.getValue())
+            moveKeyDown = false;
+        else if (e.getKeyCode() == Options.jump.getValue())
+            jumpKeyDown = false;
     }
 
     public void keyTyped(KeyEvent e)
@@ -250,9 +289,11 @@ public final class Cubic implements KeyListener
             case START_SCREEN:
                 return 2;
             case OPTIONS:
-                return 1;
+                return 2;
             case LANGUAGE_SCREEN:
                 return Translator.getLanguages().size();
+            case CONTROLS:
+                return 3;
             default:
                 return 0;
         }
@@ -274,6 +315,8 @@ public final class Cubic implements KeyListener
                 if (selectedButton == 0)
                     selectScreen(START_SCREEN);
                 else if (selectedButton == 1)
+                    selectScreen(CONTROLS);
+                else if (selectedButton == 2)
                     selectScreen(LANGUAGE_SCREEN);
                 break;
             case LANGUAGE_SCREEN:
@@ -283,6 +326,15 @@ public final class Cubic implements KeyListener
                 {
                     Translator.setLanguage(selectedButton - 1);
                     Translator.reloadProperties();
+                }
+                break;
+            case CONTROLS:
+                if (selectedButton == 0)
+                    selectScreen(OPTIONS);
+                else
+                {
+                    selectingBindings = true;
+                    controlIndex = selectedButton;
                 }
                 break;
         }
