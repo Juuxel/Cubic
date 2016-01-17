@@ -5,6 +5,7 @@ import juuxel.cubic.graphics.Graphics;
 import juuxel.cubic.options.KeyBinding;
 import juuxel.cubic.options.Options;
 import juuxel.cubic.reference.*;
+import juuxel.cubic.util.Translator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -347,7 +348,7 @@ public final class Cubic implements KeyListener
         selectedButton = 0;
     }
 
-    public static final class GameFrame extends JFrame
+    private static final class GameFrame extends JFrame
     {
         GameFrame(Cubic game, String title)
         {

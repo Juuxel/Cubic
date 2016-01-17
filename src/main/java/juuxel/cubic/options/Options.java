@@ -1,6 +1,6 @@
 package juuxel.cubic.options;
 
-import juuxel.cubic.reference.Translator;
+import juuxel.cubic.util.Translator;
 
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -44,10 +44,11 @@ public final class Options
             else
             {
                 properties.load(Files.newBufferedReader(path));
-                Translator.setLanguage((String) properties.get("language"));
                 moveLeft.setValue(Integer.valueOf((String) properties.get("controls.moveLeft")));
                 moveRight.setValue(Integer.valueOf((String) properties.get("controls.moveRight")));
                 jump.setValue(Integer.valueOf((String) properties.get("controls.jump")));
+                Translator.setLanguage((String) properties.get("language"));
+                Translator.reloadProperties();
             }
         }
         catch (IOException e)
@@ -62,6 +63,14 @@ public final class Options
         {
             case VK_SPACE:
                 return Translator.translate("controls.keys.space");
+            case VK_UP:
+                return Translator.translate("controls.keys.up");
+            case VK_LEFT:
+                return Translator.translate("controls.keys.left");
+            case VK_RIGHT:
+                return Translator.translate("controls.keys.right");
+            case VK_DOWN:
+                return Translator.translate("controls.keys.down");
             default:
                 return KeyEvent.getKeyText(code);
         }

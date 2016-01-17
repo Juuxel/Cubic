@@ -1,4 +1,4 @@
-package juuxel.cubic.reference;
+package juuxel.cubic.util;
 
 @FunctionalInterface
 public interface Creator<T>

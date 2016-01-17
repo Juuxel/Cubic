@@ -1,6 +1,6 @@
 package juuxel.cubic.enemy;
 
-import juuxel.cubic.reference.Creator;
+import juuxel.cubic.util.Creator;
 
 import java.util.*;
 import java.util.List;
