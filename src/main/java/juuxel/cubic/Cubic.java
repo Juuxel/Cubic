@@ -2,14 +2,17 @@ package juuxel.cubic;
 
 import juuxel.cubic.enemy.*;
 import juuxel.cubic.graphics.Graphics;
-import juuxel.cubic.options.KeyBinding;
-import juuxel.cubic.options.Options;
+import juuxel.cubic.options.*;
 import juuxel.cubic.reference.*;
-import juuxel.cubic.util.Translator;
+import juuxel.cubic.util.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedWriter;
+import java.io.PrintWriter;
+import java.nio.file.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,11 +37,11 @@ public final class Cubic implements KeyListener
     public static final int CONTROLS = 3;
 
     private static int selectedButton = 0, selectedScreen = START_SCREEN, controlIndex = 0;
-    private static boolean selectingBindings = false, optionsChanged = false;
+    private static boolean selectingBindings = false, optionsChanged = false, firstPaint = true;
 
     private Cubic()
     {
-        (gameFrame = new GameFrame(this, "Cubic")).setVisible(true);
+        (gameFrame = new GameFrame(this, Reference.NAME + " " + Reference.VERSION)).setVisible(true);
     }
 
     public static void main(String[] args) throws Exception
@@ -70,6 +73,14 @@ public final class Cubic implements KeyListener
 
     public void paint(Graphics g)
     {
+        if (firstPaint && Options.font == null)
+        {
+            Options.font = g.getGraphics2D().getFont();
+            firstPaint = false;
+        }
+        else
+            g.getGraphics2D().setFont(Options.font);
+
         if (inStartScreen)
         {
             drawSky(g);
@@ -91,7 +102,7 @@ public final class Cubic implements KeyListener
                 drawControlScreen(g);
 
             g.drawImage(Images.LOGO, 10, 10, 128, 64);
-            g.drawString(Translator.format("info.version", Reference.VERSION), 10, 95);
+            g.drawString(Translator.format("misc.version", Reference.VERSION), 10, 95);
         }
         else
         {

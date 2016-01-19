@@ -210,6 +210,7 @@ public class Translator
                 name = (String) properties.get("name");
                 translations = translationList.contains(",") ? Arrays.asList(translationList.split(",")) : Collections.singletonList(translationList);
                 internal = properties.containsKey("internal") ? Boolean.valueOf((String) properties.get("internal")) : false;
+                stream.close();
             }
             catch (IOException e)
             {
