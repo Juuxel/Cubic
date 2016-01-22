@@ -184,6 +184,7 @@ public final class Cubic implements KeyListener
         values.add(Translator.format("controls.moveLeft", getControlText(Options.moveLeft, 1)));
         values.add(Translator.format("controls.moveRight", getControlText(Options.moveRight, 2)));
         values.add(Translator.format("controls.jump", getControlText(Options.jump, 3)));
+        values.add(Translator.format("controls.screenshot", getControlText(Options.takeScreenshot, 4)));
         drawList(g, values);
     }
 
@@ -194,6 +195,9 @@ public final class Cubic implements KeyListener
 
     public void keyPressed(KeyEvent e)
     {
+        if (!selectingBindings && e.getKeyCode() == Options.takeScreenshot.getValue())
+            GraphicsUtilities.takeScreenshot();
+
         if (inStartScreen)
         {
             if (selectingBindings)
@@ -209,6 +213,8 @@ public final class Cubic implements KeyListener
                     case 3:
                         Options.jump.setValue(e.getKeyCode());
                         break;
+                    case 4:
+                        Options.takeScreenshot.setValue(e.getKeyCode());
                 }
 
                 selectingBindings = false;
@@ -240,17 +246,19 @@ public final class Cubic implements KeyListener
         }
         else
         {
-            if (e.getKeyCode() == Options.moveLeft.getValue())
+            int key = e.getKeyCode();
+
+            if (key == Options.moveLeft.getValue())
             {
                 player.xSpeed = Math.max(-1.75, player.xSpeed - 1.5);
                 moveKeyDown = true;
             }
-            else if (e.getKeyCode() == Options.moveRight.getValue())
+            else if (key == Options.moveRight.getValue())
             {
                 player.xSpeed = Math.min(1.75, player.xSpeed + 1.5);
                 moveKeyDown = true;
             }
-            else if (e.getKeyCode() == Options.jump.getValue())
+            else if (key == Options.jump.getValue())
                 jumpKeyDown = true;
         }
     }
@@ -276,6 +284,11 @@ public final class Cubic implements KeyListener
         return gameFrame.getWidth();
     }
 
+    public GameFrame getGameFrame()
+    {
+        return gameFrame;
+    }
+
     public static double calculateY(double y1)
     {
         return game.getHeight() - y1;
@@ -297,7 +310,7 @@ public final class Cubic implements KeyListener
             case LANGUAGE_SCREEN:
                 return Translator.getLanguages().size();
             case CONTROLS:
-                return 3;
+                return 4;
             default:
                 return 0;
         }
@@ -359,9 +372,9 @@ public final class Cubic implements KeyListener
         selectedButton = 0;
     }
 
-    private static final class GameFrame extends JFrame
+    public static final class GameFrame extends JFrame
     {
-        GameFrame(Cubic game, String title)
+        private GameFrame(Cubic game, String title)
         {
             super(title);
             setContentPane(new WindowPane(game));

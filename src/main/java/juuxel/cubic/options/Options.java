@@ -16,8 +16,11 @@ public final class Options
     public static KeyBinding moveLeft;
     public static KeyBinding moveRight;
     public static KeyBinding jump;
+    public static KeyBinding takeScreenshot;
 
     public static Font font;
+
+    public static boolean captureFrame;
 
     private static Properties properties;
 
@@ -29,13 +32,17 @@ public final class Options
         moveLeft = new KeyBinding("controls.moveLeft", VK_A);
         moveRight = new KeyBinding("controls.moveRight", VK_D);
         jump = new KeyBinding("controls.jump", VK_SPACE);
+        takeScreenshot = new KeyBinding("controls.takeScreenshot", VK_F2);
+        captureFrame = false;
         font = null;
 
         properties = new Properties();
-        properties.put("controls.moveLeft", String.valueOf(VK_A));
-        properties.put("controls.moveRight", String.valueOf(VK_D));
-        properties.put("controls.jump", String.valueOf(VK_SPACE));
+        properties.put("controls.moveLeft", moveLeft.toString());
+        properties.put("controls.moveRight", moveRight.toString());
+        properties.put("controls.jump", jump.toString());
+        properties.put("controls.takeScreenshot", takeScreenshot.toString());
         properties.put("font", "default");
+        properties.put("captureFrame", "false");
         properties.put("language", Translator.getLanguage());
 
         try
@@ -53,6 +60,9 @@ public final class Options
                 moveLeft.setValue(Integer.valueOf(properties.getProperty("controls.moveLeft")));
                 moveRight.setValue(Integer.valueOf(properties.getProperty("controls.moveRight")));
                 jump.setValue(Integer.valueOf(properties.getProperty("controls.jump")));
+                takeScreenshot.setValue(Integer.valueOf(properties.getProperty("controls.takeScreenshot")));
+
+                captureFrame = Boolean.parseBoolean(properties.getProperty("captureFrame"));
 
                 String fontValue = properties.getProperty("font");
 
@@ -111,9 +121,10 @@ public final class Options
 
     public static void reloadAndWriteOptions()
     {
-        properties.put("controls.moveLeft", String.valueOf(moveLeft.getValue()));
-        properties.put("controls.moveRight", String.valueOf(moveRight.getValue()));
-        properties.put("controls.jump", String.valueOf(jump.getValue()));
+        properties.put("controls.moveLeft", moveLeft.toString());
+        properties.put("controls.moveRight", moveRight.toString());
+        properties.put("controls.jump", jump.toString());
+        properties.put("controls.takeScreenshot", takeScreenshot.toString());
         properties.put("language", Translator.getLanguage());
         writeOptions();
     }
