@@ -3,6 +3,7 @@ package juuxel.cubic;
 import juuxel.cubic.effect.DeathEffect;
 import juuxel.cubic.effect.LevelUpEffect;
 import juuxel.cubic.enemy.*;
+import juuxel.cubic.graphics.Sprite;
 import juuxel.cubic.reference.GameValues;
 import juuxel.cubic.graphics.Graphics;
 
@@ -13,11 +14,11 @@ public final class Player extends Creature
 {
     public int jumpsRemaining, invincibleTime = 0;
     public boolean jumpPressed, jumpWasPressed;
-    public final Image image;
+    public final Sprite sprite;
 
-    public Player(Image image) throws IOException
+    public Player(Sprite sprite) throws IOException
     {
-        this.image = image;
+        this.sprite = sprite;
         x = 100;
         y = 100;
         xSpeed = 0;
@@ -28,7 +29,7 @@ public final class Player extends Creature
     public void draw(Graphics g)
     {
         if (invincibleTime % 2 == 0)
-            drawCreature(g, image);
+            drawCreature(g, sprite.getImage());
     }
 
     @Override

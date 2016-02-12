@@ -30,4 +30,9 @@ public class Graphics
     {
         graphics2D.drawImage(image, x, y, width, height, null);
     }
+
+    public void drawImage(Sprite sprite, int x, int y, int width, int height)
+    {
+        drawImage(sprite.getImage(), x, y, width, height);
+    }
 }

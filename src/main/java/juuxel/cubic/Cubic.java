@@ -2,6 +2,7 @@ package juuxel.cubic;
 
 import juuxel.cubic.enemy.*;
 import juuxel.cubic.graphics.Graphics;
+import juuxel.cubic.graphics.ISpriteHandler;
 import juuxel.cubic.options.*;
 import juuxel.cubic.reference.*;
 import juuxel.cubic.util.*;
@@ -28,6 +29,7 @@ public final class Cubic implements KeyListener
     public static final List<AbstractEnemy> ENEMIES = new CopyOnWriteArrayList<>();
     public static int score = 0, deaths = 0, level = 1, lives = 8;
     public static final List<Creature> CREATURES = new CopyOnWriteArrayList<>();
+    public static final List<ISpriteHandler> SPRITE_HANDLERS = new ArrayList<>();
 
     private final GameFrame gameFrame;
 
@@ -322,7 +324,10 @@ public final class Cubic implements KeyListener
         {
             case START_SCREEN:
                 if (selectedButton == 0)
+                {
+                    SPRITE_HANDLERS.forEach(ISpriteHandler::onSpriteBake);
                     inStartScreen = false;
+                }
                 else if (selectedButton == 1)
                     selectScreen(OPTIONS);
                 else
