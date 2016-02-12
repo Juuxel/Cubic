@@ -28,4 +28,10 @@ public class NormalEnemy extends AbstractEnemy
         else if (Cubic.player.x > x)
             xSpeed = Math.min(1, xSpeed + 1);
     }
+
+    @Override
+    protected int getScoreBase()
+    {
+        return 50;
+    }
 }

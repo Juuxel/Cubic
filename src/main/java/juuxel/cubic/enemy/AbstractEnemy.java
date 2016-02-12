@@ -58,7 +58,7 @@ public abstract class AbstractEnemy extends Creature
     @Override
     public void kill()
     {
-        Cubic.score++;
+        Cubic.score += getScore();
         Cubic.player.ySpeed = 5;
 
         living = false;
@@ -70,5 +70,17 @@ public abstract class AbstractEnemy extends Creature
 
         if (random.nextInt(10) == 1)
             new LifeEffect(x, y);
+    }
+
+    public int getScore()
+    {
+        return getScoreBase() + getScoreAddition() * (Cubic.level - 1);
+    }
+
+    protected abstract int getScoreBase();
+
+    protected int getScoreAddition()
+    {
+        return getScoreBase();
     }
 }

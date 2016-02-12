@@ -29,4 +29,16 @@ public class BouncingEnemy extends NormalEnemy
     {
         drawCreature(g, Images.BOUNCING_ENEMY);
     }
+
+    @Override
+    protected int getScoreBase()
+    {
+        return 75;
+    }
+
+    @Override
+    protected int getScoreAddition()
+    {
+        return 25;
+    }
 }
