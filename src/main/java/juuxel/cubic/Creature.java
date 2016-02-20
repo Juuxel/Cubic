@@ -1,6 +1,7 @@
 package juuxel.cubic;
 
 import juuxel.cubic.graphics.Graphics;
+import juuxel.cubic.graphics.Sprite;
 
 import java.awt.*;
 import java.util.Random;
@@ -35,6 +36,11 @@ public abstract class Creature
         int dx = calculateXInt(), dy = calculateYInt();
 
         g.drawImage(image, dx - width / 2, dy - height / 2, width, height);
+    }
+
+    protected void drawCreature(Graphics g, Sprite sprite)
+    {
+        drawCreature(g, sprite.getImage());
     }
 
     public abstract void logic();

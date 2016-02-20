@@ -4,13 +4,15 @@ import juuxel.cubic.reference.Images;
 
 import java.awt.*;
 
-public class SimpleSprite extends Sprite
+public class SpriteDefault extends Sprite
 {
     private final Image image;
 
-    public SimpleSprite(String texture)
+    public SpriteDefault(String texture)
     {
-        image = Images.load(texture + ".png");
+        super(texture);
+
+        image = Images.load(getTexture() + ".png");
     }
 
     @Override

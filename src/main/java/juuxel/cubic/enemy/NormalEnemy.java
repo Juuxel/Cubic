@@ -5,8 +5,6 @@ import juuxel.cubic.reference.GameValues;
 import juuxel.cubic.reference.Images;
 import juuxel.cubic.graphics.Graphics;
 
-import java.awt.*;
-
 public class NormalEnemy extends AbstractEnemy
 {
     public NormalEnemy()
@@ -17,7 +15,7 @@ public class NormalEnemy extends AbstractEnemy
 
     public void draw(Graphics g)
     {
-        drawCreature(g, Images.ENEMY);
+        drawCreature(g, Images.enemy);
     }
 
     @Override

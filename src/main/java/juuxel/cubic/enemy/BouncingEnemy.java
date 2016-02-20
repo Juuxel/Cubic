@@ -27,7 +27,7 @@ public class BouncingEnemy extends NormalEnemy
     @Override
     public void draw(Graphics g)
     {
-        drawCreature(g, Images.BOUNCING_ENEMY);
+        drawCreature(g, Images.bouncingEnemy);
     }
 
     @Override

@@ -3,6 +3,7 @@ package juuxel.cubic;
 import juuxel.cubic.enemy.*;
 import juuxel.cubic.graphics.Graphics;
 import juuxel.cubic.graphics.ISpriteHandler;
+import juuxel.cubic.graphics.SpriteLoader;
 import juuxel.cubic.options.*;
 import juuxel.cubic.reference.*;
 import juuxel.cubic.util.*;
@@ -10,10 +11,6 @@ import juuxel.cubic.util.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.BufferedWriter;
-import java.io.PrintWriter;
-import java.nio.file.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,11 +45,10 @@ public final class Cubic implements KeyListener
 
     public static void main(String[] args) throws Exception
     {
-        Translator.initialize();
-        Options.initialize();
-        EnemyLists.initializeLists();
+        coreInit();
+        contentInit();
         game = new Cubic();
-        player = new Player(Images.PLAYER);
+        player = new Player(Images.player);
         ENEMIES.add(EnemyLists.createEnemy(EnemyType.NORMAL));
 
         while (inStartScreen)
@@ -61,6 +57,22 @@ public final class Cubic implements KeyListener
         }
 
         run();
+    }
+
+    /* Initialize the core components of Cubic. (Translator, options, sprite system)
+     * Mods will also have this method.
+     */
+    private static void coreInit() throws Exception
+    {
+        Translator.initialize();
+        Options.initialize();
+        SpriteLoader.initialize();
+    }
+
+    private static void contentInit()
+    {
+        EnemyLists.initializeLists();
+        Images.initialize();
     }
 
     public static void run() throws Exception

@@ -29,7 +29,7 @@ public final class Player extends Creature
     public void draw(Graphics g)
     {
         if (invincibleTime % 2 == 0)
-            drawCreature(g, sprite.getImage());
+            drawCreature(g, sprite);
     }
 
     @Override

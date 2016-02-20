@@ -10,10 +10,10 @@ import java.io.IOException;
 public final class Images
 {
     private static final String IMAGE_PREFIX = "/assets/images/";
-    public static final Sprite PLAYER = SpriteLoader.load("player");
+    public static Sprite player;
+    public static Sprite enemy;
+    public static Sprite bouncingEnemy;
     public static final Image GRASS = load("grass.png");
-    public static final Image ENEMY = load("enemy.png");
-    public static final Image BOUNCING_ENEMY = load("bouncing_enemy.png");
     public static final Image LIFE = load("life.png");
     public static final Image LEVEL_UP = load("level_up.png");
     public static final Image DEATH = load("death.png");
@@ -34,9 +34,16 @@ public final class Images
         catch (IOException e)
         {
             image = null;
-            System.err.printf("Error in loading image \"%s\", setting to null%n", file);
+            System.err.printf("Error in loading image '%s', setting to null%n", file);
         }
 
         return image;
+    }
+
+    public static void initialize()
+    {
+        player = SpriteLoader.load("player");
+        enemy = SpriteLoader.load("enemy");
+        bouncingEnemy = SpriteLoader.load("bouncing_enemy");
     }
 }

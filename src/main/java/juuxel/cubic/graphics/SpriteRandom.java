@@ -6,13 +6,15 @@ import juuxel.cubic.util.Randomizer;
 
 import java.awt.*;
 
-public class RandomSprite extends Sprite implements ISpriteHandler
+public class SpriteRandom extends Sprite implements ISpriteHandler
 {
     private Image image;
     private final Image[] images;
 
-    public RandomSprite(String texture)
+    public SpriteRandom(String texture)
     {
+        super(texture);
+
         Cubic.SPRITE_HANDLERS.add(this);
 
         try
