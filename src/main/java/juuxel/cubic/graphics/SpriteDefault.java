@@ -3,14 +3,15 @@ package juuxel.cubic.graphics;
 import juuxel.cubic.reference.Images;
 
 import java.awt.*;
+import java.util.Properties;
 
 public class SpriteDefault extends Sprite
 {
     private final Image image;
 
-    public SpriteDefault(String texture)
+    public SpriteDefault(Properties properties)
     {
-        super(texture);
+        super(properties);
 
         image = Images.load(getTexture() + ".png");
     }

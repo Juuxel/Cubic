@@ -5,21 +5,22 @@ import juuxel.cubic.reference.Images;
 import juuxel.cubic.util.Randomizer;
 
 import java.awt.*;
+import java.util.Properties;
 
 public class SpriteRandom extends Sprite implements ISpriteHandler
 {
     private Image image;
     private final Image[] images;
 
-    public SpriteRandom(String texture)
+    public SpriteRandom(Properties properties)
     {
-        super(texture);
+        super(properties);
 
         Cubic.SPRITE_HANDLERS.add(this);
 
         try
         {
-            String[] textureNames = texture.split(", ");
+            String[] textureNames = getTexture().split(", ");
             images = new Image[textureNames.length];
 
             for (int i = 0; i < textureNames.length; i++)

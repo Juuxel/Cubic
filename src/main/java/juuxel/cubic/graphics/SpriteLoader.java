@@ -36,9 +36,7 @@ public class SpriteLoader
                 {
                     try
                     {
-                        String texture = props.getProperty("textures");
-                        System.out.println("[DEBUG] " + texture); // TODO Debug
-                        return entry.getValue().getConstructor(String.class).newInstance(texture);
+                        return entry.getValue().getConstructor(Properties.class).newInstance(props);
                     }
                     catch (Throwable e)
                     {

@@ -25,6 +25,11 @@ public final class EnemyLists
         ENEMY_LISTS.put(EnemyType.STRANGE, strangeEnemies);
     }
 
+    public static void registerEnemy(EnemyType type, Creator<AbstractEnemy> creator)
+    {
+        ENEMY_LISTS.get(type).add(creator);
+    }
+
     public static AbstractEnemy createEnemy(EnemyType type)
     {
         List<Creator<AbstractEnemy>> list = ENEMY_LISTS.get(type);

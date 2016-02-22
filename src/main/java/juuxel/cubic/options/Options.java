@@ -22,6 +22,8 @@ public final class Options
 
     public static boolean captureFrame;
 
+    public static String mods;
+
     private static Properties properties;
 
     private Options()
@@ -35,6 +37,7 @@ public final class Options
         takeScreenshot = new KeyBinding("controls.takeScreenshot", VK_F2);
         captureFrame = false;
         font = null;
+        mods = "";
 
         properties = new Properties();
         properties.put("controls.moveLeft", moveLeft.toString());
@@ -44,12 +47,13 @@ public final class Options
         properties.put("font", "default");
         properties.put("captureFrame", "false");
         properties.put("language", Translator.getLanguage());
+        properties.put("mods", "");
 
         try
         {
             Path path = Paths.get("options.properties");
 
-            if (!Files.exists(path))
+            if (Files.notExists(path))
             {
                 Files.createFile(path);
                 writeOptions();
@@ -89,6 +93,8 @@ public final class Options
                         ? Font.createFont(Font.TRUETYPE_FONT, Files.newInputStream(Paths.get(fontName))).deriveFont(16F)
                         : new Font(fontName, Font.PLAIN, 16);
                 }
+
+                mods = properties.getProperty("mods");
 
                 Translator.setLanguage(properties.getProperty("language"));
                 Translator.reloadProperties();

@@ -4,6 +4,7 @@ import juuxel.cubic.enemy.*;
 import juuxel.cubic.graphics.Graphics;
 import juuxel.cubic.graphics.ISpriteHandler;
 import juuxel.cubic.graphics.SpriteLoader;
+import juuxel.cubic.mod.ModLoader;
 import juuxel.cubic.options.*;
 import juuxel.cubic.reference.*;
 import juuxel.cubic.util.*;
@@ -38,9 +39,11 @@ public final class Cubic implements KeyListener
     private static int selectedButton = 0, selectedScreen = START_SCREEN, controlIndex = 0;
     private static boolean selectingBindings = false, optionsChanged = false, firstPaint = true;
 
+    private static ModLoader modLoader;
+
     private Cubic()
     {
-        (gameFrame = new GameFrame(this, Reference.NAME + " " + Reference.VERSION)).setVisible(true);
+        (gameFrame = new GameFrame(this, GameInfo.NAME + " " + GameInfo.VERSION)).setVisible(true);
     }
 
     public static void main(String[] args) throws Exception
@@ -64,15 +67,19 @@ public final class Cubic implements KeyListener
      */
     private static void coreInit() throws Exception
     {
+        modLoader = new ModLoader();
         Translator.initialize();
         Options.initialize();
         SpriteLoader.initialize();
+        modLoader.init();
+        modLoader.coreInit();
     }
 
     private static void contentInit()
     {
         EnemyLists.initializeLists();
         Images.initialize();
+        modLoader.contentInit();
     }
 
     public static void run() throws Exception
@@ -116,7 +123,7 @@ public final class Cubic implements KeyListener
                 drawControlScreen(g);
 
             g.drawImage(Images.LOGO, 10, 10, 128, 64);
-            g.drawString(Translator.format("misc.version", Reference.VERSION), 10, 95);
+            g.drawString(Translator.format("misc.version", GameInfo.VERSION), 10, 95);
         }
         else
         {
