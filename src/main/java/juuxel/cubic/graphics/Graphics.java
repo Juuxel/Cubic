@@ -21,6 +21,11 @@ public class Graphics
         return new Graphics(graphics2D);
     }
 
+    public static Graphics fromAWTGraphics(java.awt.Graphics graphics)
+    {
+        return fromGraphics2D((Graphics2D) graphics);
+    }
+
     public void drawString(String str, int x, int y)
     {
         graphics2D.drawString(str, x, y);
