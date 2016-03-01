@@ -1,5 +1,0 @@
-- More enemies
-  - Enemies that just go in a straight line (no AI)
-  - Flying enemies that "dive" (birds?)
-- Ability to start a new game without restarting
-- Life count as HEART SYMBOL x AMOUNT instead of just the amount

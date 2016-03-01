@@ -10,3 +10,6 @@ A simple platformer game written in Java.
 Install JDK and run ```./gradlew build``` in a terminal.
 ### Windows
 Install JDK and run ```gradlew build``` in Command Prompt.
+
+## Other
+- [Ideas](https://gist.github.com/Juuxel/e671f472a1437255cdd5/9d4933cb1e0366ac3e068f8ef55cfb13a5864cd7)

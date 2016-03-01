@@ -403,7 +403,7 @@ public final class Cubic implements KeyListener
             super(title);
             setContentPane(new WindowPane(game));
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            SwingUtilities.invokeLater(() -> setSize(640, 480));
+            setSize(640, 480);
             addKeyListener(game);
         }
     }
@@ -421,7 +421,7 @@ public final class Cubic implements KeyListener
         public void paintComponent(java.awt.Graphics g)
         {
             super.paintComponent(g);
-            game.paint(Graphics.fromGraphics2D((Graphics2D) g));
+            game.paint(Graphics.fromAWTGraphics(g));
         }
     }
 }
