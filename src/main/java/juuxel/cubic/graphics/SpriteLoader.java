@@ -8,16 +8,16 @@ import java.util.Properties;
 
 public class SpriteLoader
 {
-    private static final Map<String, Class<? extends Sprite>> SPRITES = new HashMap<>();
+    private static final Map<String, SpriteCreator> SPRITE_CREATORS = new HashMap<>();
 
-    public static Map<String, Class<? extends Sprite>> getSprites()
+    public static Map<String, SpriteCreator> getSpriteCreators()
     {
-        return Collections.unmodifiableMap(SPRITES);
+        return Collections.unmodifiableMap(SPRITE_CREATORS);
     }
 
-    public static void registerSprite(String functionId, Class<? extends Sprite> spriteClass)
+    public static void registerSprite(String functionId, SpriteCreator creator)
     {
-        SPRITES.put(functionId, spriteClass);
+        SPRITE_CREATORS.put(functionId, creator);
     }
 
     public static Sprite load(String file)
@@ -30,19 +30,11 @@ public class SpriteLoader
 
             String function = props.getProperty("function");
 
-            for (Map.Entry<String, Class<? extends Sprite>> entry : SPRITES.entrySet())
+            for (Map.Entry<String, SpriteCreator> entry : SPRITE_CREATORS.entrySet())
             {
                 if (entry.getKey().equals(function))
                 {
-                    try
-                    {
-                        return entry.getValue().getConstructor(Properties.class).newInstance(props);
-                    }
-                    catch (Throwable e)
-                    {
-                        System.err.printf("Error in initializing sprite class '%s':%n", entry.getValue().getName());
-                        e.printStackTrace();
-                    }
+                    return entry.getValue().create(props);
                 }
             }
 
@@ -58,7 +50,14 @@ public class SpriteLoader
 
     public static void initialize()
     {
-        registerSprite("default", SpriteDefault.class);
-        registerSprite("random", SpriteRandom.class);
+        registerSprite("default", SpriteDefault::new);
+        registerSprite("random", SpriteRandom::new);
+        registerSprite("multi", SpriteMulti::new);
+    }
+
+    @FunctionalInterface
+    public interface SpriteCreator
+    {
+        Sprite create(Properties props);
     }
 }

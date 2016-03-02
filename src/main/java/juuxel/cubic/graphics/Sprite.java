@@ -3,16 +3,15 @@ package juuxel.cubic.graphics;
 import java.awt.*;
 import java.util.Properties;
 
-/* Sprites always should have a constructor of MySprite(java.util.Properties) */
 public abstract class Sprite
 {
     private final String texture;
-    private final Properties properties;
+    private final Properties props;
 
-    public Sprite(Properties properties)
+    public Sprite(Properties props)
     {
-        this.properties = properties;
-        this.texture = properties.getProperty("textures");
+        this.props = props;
+        this.texture = props.getProperty("textures");
     }
 
     public abstract Image getImage();
@@ -22,8 +21,8 @@ public abstract class Sprite
         return texture;
     }
 
-    public Properties getProperties()
+    public Properties getProps()
     {
-        return properties;
+        return props;
     }
 }

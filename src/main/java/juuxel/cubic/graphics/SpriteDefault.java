@@ -9,9 +9,9 @@ public class SpriteDefault extends Sprite
 {
     private final Image image;
 
-    public SpriteDefault(Properties properties)
+    public SpriteDefault(Properties props)
     {
-        super(properties);
+        super(props);
 
         image = Images.load(getTexture() + ".png");
     }

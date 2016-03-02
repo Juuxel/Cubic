@@ -51,6 +51,7 @@ public final class Cubic implements KeyListener
         coreInit();
         contentInit();
         game = new Cubic();
+        SPRITE_HANDLERS.forEach(ISpriteHandler::onSpriteBake);
         player = new Player(Images.player);
         ENEMIES.add(EnemyLists.createEnemy(EnemyType.NORMAL));
 
@@ -63,7 +64,6 @@ public final class Cubic implements KeyListener
     }
 
     /* Initialize the core components of Cubic. (Translator, options, sprite system)
-     * Mods will also have this method.
      */
     private static void coreInit() throws Exception
     {
@@ -123,7 +123,7 @@ public final class Cubic implements KeyListener
                 drawControlScreen(g);
 
             g.drawImage(Images.LOGO, 10, 10, 128, 64);
-            g.drawString(Translator.format("misc.version", GameInfo.VERSION), 10, 95);
+            drawVersion(g);
         }
         else
         {
@@ -207,6 +207,16 @@ public final class Cubic implements KeyListener
         values.add(Translator.format("controls.jump", getControlText(Options.jump, 3)));
         values.add(Translator.format("controls.screenshot", getControlText(Options.takeScreenshot, 4)));
         drawList(g, values);
+    }
+
+    private void drawVersion(Graphics g)
+    {
+        char[] version = GameInfo.VERSION.toString().toCharArray();
+
+        for (int i = 0; i < version.length; i++)
+        {
+            g.drawImage(Images.numbers.get(version[i]), 10 + i * 8, 95, 8, 16);
+        }
     }
 
     private String getControlText(KeyBinding binding, int index)
@@ -344,7 +354,6 @@ public final class Cubic implements KeyListener
             case START_SCREEN:
                 if (selectedButton == 0)
                 {
-                    SPRITE_HANDLERS.forEach(ISpriteHandler::onSpriteBake);
                     inStartScreen = false;
                 }
                 else if (selectedButton == 1)

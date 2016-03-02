@@ -12,9 +12,9 @@ public class SpriteRandom extends Sprite implements ISpriteHandler
     private Image image;
     private final Image[] images;
 
-    public SpriteRandom(Properties properties)
+    public SpriteRandom(Properties props)
     {
-        super(properties);
+        super(props);
 
         Cubic.SPRITE_HANDLERS.add(this);
 
