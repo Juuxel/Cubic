@@ -24,7 +24,6 @@ public final class Images
     public static Sprite player;
     public static Sprite enemy;
     public static Sprite bouncingEnemy;
-    public static Sprite dash;
     public static Sprite dot;
     public static Sprite number0;
     public static Sprite number1;
@@ -39,6 +38,13 @@ public final class Images
     public static Sprite life;
     public static Sprite levelUp;
     public static Sprite death;
+    public static Sprite score;
+    public static Sprite level;
+    public static Sprite levelUpIcon;
+    public static Sprite heart;
+    public static Sprite comma;
+    public static Sprite space;
+    public static Sprite slash;
 
     public static Map<Character, Sprite> numbers;
 
@@ -64,7 +70,6 @@ public final class Images
         player = SpriteLoader.load("player");
         enemy = SpriteLoader.load("enemy");
         bouncingEnemy = SpriteLoader.load("bouncing_enemy");
-        dash = SpriteLoader.load("dash");
         dot = SpriteLoader.load("dot");
         number0 = SpriteLoader.load("numbers/number_0");
         number1 = SpriteLoader.load("numbers/number_1");
@@ -79,6 +84,13 @@ public final class Images
         life = SpriteLoader.load("life");
         levelUp = SpriteLoader.load("level_up");
         death = SpriteLoader.load("death");
+        score = SpriteLoader.load("icons/score");
+        level = SpriteLoader.load("icons/level");
+        levelUpIcon = SpriteLoader.load("icons/level_up");
+        heart = SpriteLoader.load("icons/heart");
+        comma = SpriteLoader.load("numbers/comma");
+        space = SpriteLoader.load("numbers/space");
+        slash = SpriteLoader.load("numbers/slash");
 
         initializeNumberMap();
     }
@@ -87,7 +99,6 @@ public final class Images
     {
         HashMap<Character, Sprite> numberMap = new HashMap<>();
 
-        numberMap.put('-', dash);
         numberMap.put('.', dot);
         numberMap.put('0', number0);
         numberMap.put('1', number1);
@@ -99,6 +110,10 @@ public final class Images
         numberMap.put('7', number7);
         numberMap.put('8', number8);
         numberMap.put('9', number9);
+        numberMap.put(',', comma);
+        numberMap.put(' ', space);
+        numberMap.put('\u00A0', space);
+        numberMap.put('/', slash);
 
         numbers = Collections.unmodifiableMap(numberMap);
     }

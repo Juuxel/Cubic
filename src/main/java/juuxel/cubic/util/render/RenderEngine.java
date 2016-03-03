@@ -8,6 +8,8 @@ import juuxel.cubic.options.Options;
 import juuxel.cubic.util.Translator;
 
 import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Paint;
 import java.util.*;
 
 import static juuxel.cubic.Cubic.START_SCREEN;
@@ -17,6 +19,9 @@ import static juuxel.cubic.Cubic.CONTROLS;
 
 public class RenderEngine
 {
+    public static final Color SKY = new Color(0x80daeb);
+    public static final Color SKY2 = new Color(0x7ceeeb);
+
     private boolean firstPaint = true;
 
     private RenderEngine()
@@ -76,11 +81,15 @@ public class RenderEngine
 
     private void drawScore(Graphics g)
     {
-        g.drawString(Translator.format("game.level", Cubic.level), 10, 30);
-        g.drawString(Translator.format("game.scoreToLevelUp", Cubic.ENEMIES.size()), 10, 50);
-        g.drawString(Translator.format("game.score", Cubic.score), 10, 70);
-        g.drawString(Translator.format("game.deaths", Cubic.deaths), 10, 90);
-        g.drawString(Translator.format("game.lives", Cubic.lives), 10, 110);
+        g.drawImage(Images.score, 5, 10, 16, 16);
+        g.drawImage(Images.level, 5, 30, 16, 16);
+        g.drawImage(Images.levelUpIcon, 5, 50, 16, 16);
+        g.drawImage(Images.heart, 5, 70, 16, 16);
+
+        drawNumberString(g, String.format(Translator.getLocale(), "%,d", Cubic.score), 30, 10);
+        drawNumberString(g, String.format(Translator.getLocale(), "%,d", Cubic.level), 30, 30);
+        drawNumberString(g, String.format(Translator.getLocale(), "%,d / %,d", Cubic.ENEMIES.size(), Cubic.level), 30, 50);
+        drawNumberString(g, String.format(Translator.getLocale(), "%,d", Cubic.lives), 30, 70);
     }
 
     private void drawGround(Graphics g)
@@ -95,9 +104,12 @@ public class RenderEngine
 
     private void drawSky(Graphics g)
     {
-        g.getGraphics2D().setColor(new Color(128, 218, 235));
+        Paint paint = g.getGraphics2D().getPaint();
+
+        g.getGraphics2D().setPaint(new GradientPaint(0, 0, SKY, 0, Cubic.game.getHeight(), SKY2));
         g.getGraphics2D().fillRect(0, 0, Cubic.game.getWidth(), Cubic.game.getHeight());
-        g.getGraphics2D().setColor(Color.black);
+
+        g.getGraphics2D().setPaint(paint);
     }
 
     private void drawList(Graphics g, java.util.List<String> entries)
@@ -142,6 +154,16 @@ public class RenderEngine
         for (int i = 0; i < version.length; i++)
         {
             g.drawImage(Images.numbers.get(version[i]), 10 + i * 8, 95, 8, 16);
+        }
+    }
+
+    private void drawNumberString(Graphics g, String s, int x, int y)
+    {
+        char[] chars = s.toCharArray();
+
+        for (int i = 0; i < chars.length; i++)
+        {
+            g.drawImage(Images.numbers.get(chars[i]), x + i * 10, y, 8, 16);
         }
     }
 

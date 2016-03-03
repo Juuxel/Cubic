@@ -174,7 +174,12 @@ public class Translator
                 return provider;
         }
 
-        throw new RuntimeException(String.format("Provider for language %s not found", language));
+        throw new RuntimeException(String.format("Provider for language %s not found!%n", language));
+    }
+
+    public static Locale getLocale()
+    {
+        return Locale.forLanguageTag(language);
     }
 
     private static class FileProvider implements ITranslationProvider
