@@ -1,7 +1,5 @@
 package juuxel.cubic.util;
 
-import juuxel.cubic.api.ITranslationProvider;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.*;
@@ -141,7 +139,7 @@ public class Translator
 
     private static void loadFileProviders()
     {
-        Path path = Paths.get("mods");
+        Path path = Paths.get("translations");
 
         if (Files.exists(path))
         {
