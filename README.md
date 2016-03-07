@@ -1,6 +1,7 @@
 # Cubic
 A simple platformer game written in Java.
-##### Latest version: [0.3.0 Beta 1](https://github.com/Juuxel/Cubic/releases/tag/v0.3.0-beta1).
+
+**Latest version: [0.3.0 Beta 1](https://github.com/Juuxel/Cubic/releases/tag/v0.3.0-beta1)**
 
 ## Links
 - [Releases](https://github.com/Juuxel/Cubic/releases)
