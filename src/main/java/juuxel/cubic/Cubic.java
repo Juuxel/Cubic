@@ -88,7 +88,7 @@ public final class Cubic implements KeyListener
     {
         while (running)
         {
-            CREATURES.forEach(Creature::logic);
+            CREATURES.forEach(Creature::executeLogic);
             game.repaint();
             Thread.sleep(5);
         }

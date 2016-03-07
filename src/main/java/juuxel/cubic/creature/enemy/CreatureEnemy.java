@@ -3,33 +3,28 @@ package juuxel.cubic.creature.enemy;
 import juuxel.cubic.creature.Creature;
 import juuxel.cubic.Cubic;
 import juuxel.cubic.creature.fx.CreatureEffectLife;
-import juuxel.cubic.lib.GameValues;
 
 public abstract class CreatureEnemy extends Creature
 {
-    public boolean sliding = false, slidable = true, edgeMove = true, living = true, ignoreGround = false;
+    public boolean sliding = false, slidable = true, edgeMove = true;
     protected static final int SLIDE_DISTANCE = 32;
+
+    public CreatureEnemy()
+    {
+        setCollisionEnabled(true);
+    }
 
     public abstract void move();
 
     @Override
-    public void logic()
+    protected void logic()
     {
         if (!sliding)
             move();
         else
             xSpeed *= 0.97;
 
-        x += xSpeed;
-        y += ySpeed;
-
-        if (!ignoreGround && living && y <= GameValues.GROUND)
-        {
-            y = GameValues.GROUND;
-            ySpeed = 0;
-        }
-
-        if ((!living || ignoreGround) && y < -20)
+        if (!isCollisionEnabled() && y < -20)
             Cubic.CREATURES.remove(this);
 
         if (Math.abs(xSpeed) < 0.5)
@@ -61,15 +56,18 @@ public abstract class CreatureEnemy extends Creature
         Cubic.score += getScore();
         Cubic.player.ySpeed = 5;
 
-        living = false;
         Cubic.ENEMIES.remove(this);
         ySpeed = -2;
+        setCollisionEnabled(false);
 
         if (Cubic.ENEMIES.size() == 0)
             Cubic.player.levelUp();
 
         if (random.nextInt(10) == 1)
+        {
             new CreatureEffectLife(x, y);
+            Cubic.lives++;
+        }
     }
 
     public int getScore()

@@ -1,6 +1,7 @@
 package juuxel.cubic.creature;
 
 import juuxel.cubic.Cubic;
+import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.util.render.Graphics;
 import juuxel.cubic.util.sprite.Sprite;
 
@@ -10,17 +11,20 @@ import java.util.Random;
 public abstract class Creature
 {
     public final int id;
-    public double x, y, xSpeed, ySpeed;
+    public double x, y, xSpeed = 0, ySpeed = 0;
     protected final Random random = new Random();
     public int spriteWidth = 32, spriteHeight = 32;
 
     private Sprite sprite;
+    private boolean collisionEnabled;
+    protected int speedModifierX = 1, speedModifierY = 1;
 
     public Creature()
     {
         id = Cubic.CREATURES.size();
         Cubic.CREATURES.add(this);
         Cubic.CREATURE_LISTENERS.forEach(listener -> listener.onCreatureCreated(this));
+        setCollisionEnabled(false);
     }
 
     public double calculateY()
@@ -45,7 +49,29 @@ public abstract class Creature
         drawCreature(g, sprite.getImage(this), spriteWidth, spriteHeight);
     }
 
-    public abstract void logic();
+    public final void executeLogic()
+    {
+        x += xSpeed / speedModifierX;
+
+        if (isCollisionEnabled())
+        {
+            double yNew = y + ySpeed / speedModifierY;
+
+            if (yNew < GameValues.GROUND)
+                yNew = GameValues.GROUND;
+
+            y = yNew;
+
+            if (onGround())
+                ySpeed = 0;
+        }
+        else
+            y += ySpeed / speedModifierY;
+
+        logic();
+    }
+
+    protected abstract void logic();
 
     public int calculateXInt()
     {
@@ -78,5 +104,20 @@ public abstract class Creature
     public void setSprite(Sprite sprite)
     {
         this.sprite = sprite;
+    }
+
+    public boolean onGround()
+    {
+        return y <= GameValues.GROUND;
+    }
+
+    public boolean isCollisionEnabled()
+    {
+        return collisionEnabled;
+    }
+
+    public void setCollisionEnabled(boolean collisionEnabled)
+    {
+        this.collisionEnabled = collisionEnabled;
     }
 }

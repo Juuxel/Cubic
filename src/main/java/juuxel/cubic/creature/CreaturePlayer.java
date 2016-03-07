@@ -5,7 +5,6 @@ import juuxel.cubic.creature.fx.CreatureEffectDeath;
 import juuxel.cubic.creature.fx.CreatureEffectLevelUp;
 import juuxel.cubic.creature.enemy.*;
 import juuxel.cubic.lib.Images;
-import juuxel.cubic.util.sprite.Sprite;
 import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.util.render.Graphics;
 
@@ -13,16 +12,16 @@ import java.io.IOException;
 
 public final class CreaturePlayer extends Creature
 {
-    public int jumpsRemaining, invincibleTime = 0;
+    public int invincibleTime = 0;
     public boolean jumpPressed, jumpWasPressed;
 
     public CreaturePlayer() throws IOException
     {
+        setCollisionEnabled(true);
         setSprite(Images.player);
         x = 100;
         y = 100;
-        xSpeed = 0;
-        ySpeed = 0;
+        speedModifierY = 2;
     }
 
     @Override
@@ -33,23 +32,19 @@ public final class CreaturePlayer extends Creature
     }
 
     @Override
-    public void logic()
+    protected void logic()
     {
         ySpeed -= 0.1;
 
-        if (y <= GameValues.GROUND)
+        if (onGround())
         {
             ySpeed = 0;
             y = GameValues.GROUND;
-            jumpsRemaining = 2;
 
-            if (jumpPressed && !jumpWasPressed && jumpsRemaining-- > 0) ySpeed = 7;
+            if (jumpPressed && !jumpWasPressed) ySpeed = 7;
 
             if (xSpeed != 0 && !Cubic.moveKeyDown) xSpeed *= 0.97;
         }
-
-        x += xSpeed;
-        y += ySpeed / 2;
 
         if (x < -10)
             x = Cubic.game.getWidth() + 10;
@@ -64,6 +59,8 @@ public final class CreaturePlayer extends Creature
 
         for (CreatureEnemy enemy : Cubic.ENEMIES)
         {
+            // TODO Replace with Creature.onCollidedWith(Creature, Side)
+
             if (Math.abs(x - enemy.x) > 50 || Math.abs(y - enemy.y) > 33) return;
 
             if (enemy.y + 20 < y) enemy.kill();

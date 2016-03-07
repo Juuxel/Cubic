@@ -24,11 +24,11 @@ public final class CreatureEffectLevelUp extends CreatureEffect
     }
 
     @Override
-    public void logic()
+    protected void logic()
     {
         super.logic();
 
-        ++lifetime;
+        lifetime++;
 
         if (lifetime == 3)
         {

@@ -18,8 +18,8 @@ public final class Images
     public static final Image GAME_OVER = load("game_over.png");
     public static final Image LOGO = load("logo.png");
     public static final Image CURSOR = load("cursor.png");
-    public static final Image BUTTON = load("button.png");
-    public static final Image SELECTED_BUTTON = load("button_selected.png");
+    public static final Image BUTTON = load("radio_button.png");
+    public static final Image SELECTED_BUTTON = load("radio_button_selected.png");
 
     public static Sprite player;
     public static Sprite enemy;

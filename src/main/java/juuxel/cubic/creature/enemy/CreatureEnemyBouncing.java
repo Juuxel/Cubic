@@ -1,6 +1,5 @@
 package juuxel.cubic.creature.enemy;
 
-import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.lib.Images;
 import juuxel.cubic.util.render.Graphics;
 
@@ -16,11 +15,11 @@ public class CreatureEnemyBouncing extends CreatureEnemyNormal
     }
 
     @Override
-    public void logic()
+    protected void logic()
     {
         super.logic();
 
-        if (!(y <= GameValues.GROUND))
+        if (!onGround())
             ySpeed -= 0.1;
     }
 

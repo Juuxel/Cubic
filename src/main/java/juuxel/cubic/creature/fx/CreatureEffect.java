@@ -15,12 +15,9 @@ public abstract class CreatureEffect extends Creature
     }
 
     @Override
-    public void logic()
+    protected void logic()
     {
-        x += xSpeed;
-        y += ySpeed;
         ySpeed -= 0.1;
-
 
         if (y < -50)
             Cubic.CREATURES.remove(this);
