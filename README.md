@@ -5,7 +5,7 @@ A simple platformer game written in Java.
 
 ## Links
 - [Releases](https://github.com/Juuxel/Cubic/releases)
-- [Ideas](https://gist.github.com/Juuxel/e671f472a1437255cdd5/9d4933cb1e0366ac3e068f8ef55cfb13a5864cd7)
+- [Ideas](https://gist.github.com/Juuxel/3c44d5d79964dc85ed78)
 
 ## Screenshots
 ![Start screen](./images/startScreen.png)
