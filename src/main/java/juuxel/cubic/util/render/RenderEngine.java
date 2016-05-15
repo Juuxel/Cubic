@@ -29,7 +29,13 @@ public class RenderEngine
 
     public static RenderEngine INSTANCE = new RenderEngine();
 
-    public void paint(Graphics g)
+    public static void repaint()
+    {
+        // TODO Implement FPS limit
+        Cubic.game.repaint();
+    }
+
+    public void repaint(Graphics g)
     {
         if (firstPaint && Options.font == null)
         {
@@ -99,6 +105,7 @@ public class RenderEngine
             int x = i * 32, y = (int) Cubic.calculateY(32);
 
             g.drawImage(Images.GRASS, x, y - 32, 32, 32);
+            g.drawImage(Images.GRASS_OVERLAY, x, y - 32, 32, 32);
         }
     }
 
@@ -132,7 +139,7 @@ public class RenderEngine
 
             int selectedIndex = Translator.getLanguageIndex();
 
-            g.drawImage(selectedIndex == i ? Images.SELECTED_BUTTON : Images.BUTTON, dx, dy + (i + 1) * 25, 16, 15);
+            g.drawImage(selectedIndex == i ? Images.radioButtonSelected : Images.radioButton, dx, dy + (i + 1) * 25, 16, 15);
         }
     }
 

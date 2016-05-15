@@ -4,7 +4,7 @@ import juuxel.cubic.lib.Images;
 
 import java.awt.*;
 
-public final class CreatureEffectLevelUp extends CreatureEffect
+public final class EffectLevelUp extends Effect
 {
     public static final Color[] EFFECT_COLORS = {
         Color.red,
@@ -17,7 +17,7 @@ public final class CreatureEffectLevelUp extends CreatureEffect
 
     public int lifetime = 0;
 
-    public CreatureEffectLevelUp(double x, double y)
+    public EffectLevelUp(double x, double y)
     {
         super(x, y);
         setSprite(Images.levelUp);
@@ -32,7 +32,7 @@ public final class CreatureEffectLevelUp extends CreatureEffect
 
         if (lifetime == 3)
         {
-            new CreatureParticle(EFFECT_COLORS[random.nextInt(EFFECT_COLORS.length)], x, y);
+            new Particle(EFFECT_COLORS[random.nextInt(EFFECT_COLORS.length)], x, y);
             lifetime = 0;
         }
     }

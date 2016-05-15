@@ -1,8 +1,8 @@
 package juuxel.cubic.creature;
 
 import juuxel.cubic.Cubic;
-import juuxel.cubic.creature.fx.CreatureEffectDeath;
-import juuxel.cubic.creature.fx.CreatureEffectLevelUp;
+import juuxel.cubic.creature.fx.EffectDeath;
+import juuxel.cubic.creature.fx.EffectLevelUp;
 import juuxel.cubic.creature.enemy.*;
 import juuxel.cubic.lib.Images;
 import juuxel.cubic.lib.GameValues;
@@ -10,12 +10,12 @@ import juuxel.cubic.util.render.Graphics;
 
 import java.io.IOException;
 
-public final class CreaturePlayer extends Creature
+public final class Player extends Creature
 {
     public int invincibleTime = 0;
     public boolean jumpPressed, jumpWasPressed;
 
-    public CreaturePlayer() throws IOException
+    public Player() throws IOException
     {
         setCollisionEnabled(true);
         setSprite(Images.player);
@@ -57,7 +57,7 @@ public final class CreaturePlayer extends Creature
         if (invincibleTime > 0)
             invincibleTime--;
 
-        for (CreatureEnemy enemy : Cubic.ENEMIES)
+        for (Enemy enemy : Cubic.ENEMIES)
         {
             // TODO Replace with Creature.onCollidedWith(Creature, Side)
 
@@ -75,7 +75,7 @@ public final class CreaturePlayer extends Creature
         y = 100;
         Cubic.deaths++;
         Cubic.lives--;
-        new CreatureEffectDeath(x, y);
+        new EffectDeath(x, y);
         invincibleTime = 200;
     }
 
@@ -84,7 +84,7 @@ public final class CreaturePlayer extends Creature
         Cubic.level++;
         Cubic.lives++;
 
-        new CreatureEffectLevelUp(x, y);
+        new EffectLevelUp(x, y);
 
         for (int i = 0; i < Cubic.level; i++)
             Cubic.ENEMIES.add(EnemyLists.createEnemy(EnemyType.NORMAL));

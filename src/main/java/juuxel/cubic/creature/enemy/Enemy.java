@@ -2,14 +2,14 @@ package juuxel.cubic.creature.enemy;
 
 import juuxel.cubic.creature.Creature;
 import juuxel.cubic.Cubic;
-import juuxel.cubic.creature.fx.CreatureEffectLife;
+import juuxel.cubic.creature.fx.EffectLife;
 
-public abstract class CreatureEnemy extends Creature
+public abstract class Enemy extends Creature
 {
     public boolean sliding = false, slidable = true, edgeMove = true;
     protected static final int SLIDE_DISTANCE = 32;
 
-    public CreatureEnemy()
+    public Enemy()
     {
         setCollisionEnabled(true);
     }
@@ -65,7 +65,7 @@ public abstract class CreatureEnemy extends Creature
 
         if (random.nextInt(10) == 1)
         {
-            new CreatureEffectLife(x, y);
+            new EffectLife(x, y);
             Cubic.lives++;
         }
     }

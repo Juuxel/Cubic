@@ -1,17 +1,21 @@
 package juuxel.cubic.mod;
 
 import juuxel.cubic.options.Options;
+import juuxel.cubic.util.Strings;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public final class ModLoader
 {
     private final List<IModExtended> mods;
+    private final List<String> additionalMods;
 
-    public ModLoader()
+    public ModLoader(List<String> additionalMods)
     {
         mods = new ArrayList<>();
+        this.additionalMods = additionalMods;
     }
 
     public void init()
@@ -20,7 +24,8 @@ public final class ModLoader
 
         if ("".equals(modString)) return;
 
-        String[] modClassNames = modString.contains(", ") ? modString.split(", ") : new String[] { modString };
+        List<String> modClassNames = new ArrayList<>(Arrays.asList(Strings.commaSplit(modString)));
+        modClassNames.addAll(additionalMods);
 
         for (String name : modClassNames)
         {

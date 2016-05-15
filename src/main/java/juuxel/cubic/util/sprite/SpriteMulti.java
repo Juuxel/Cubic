@@ -2,7 +2,6 @@ package juuxel.cubic.util.sprite;
 
 import juuxel.cubic.Cubic;
 import juuxel.cubic.lib.Images;
-import juuxel.cubic.util.render.ISpriteHandler;
 
 import java.awt.*;
 import java.awt.image.CropImageFilter;
@@ -27,7 +26,7 @@ public class SpriteMulti extends Sprite implements ISpriteHandler
     }
 
     @Override
-    public void onSpriteBake()
+    public void onSpriteCreate()
     {
         Properties props = getProps();
 

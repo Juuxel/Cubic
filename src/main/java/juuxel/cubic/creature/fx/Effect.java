@@ -3,9 +3,9 @@ package juuxel.cubic.creature.fx;
 import juuxel.cubic.creature.Creature;
 import juuxel.cubic.Cubic;
 
-public abstract class CreatureEffect extends Creature
+public abstract class Effect extends Creature
 {
-    public CreatureEffect(double x, double y)
+    public Effect(double x, double y)
     {
         this.x = x;
         this.y = y;

@@ -2,9 +2,9 @@ package juuxel.cubic.creature.fx;
 
 import juuxel.cubic.lib.Images;
 
-public final class CreatureEffectLife extends CreatureEffect
+public final class EffectLife extends Effect
 {
-    public CreatureEffectLife(double x, double y)
+    public EffectLife(double x, double y)
     {
         super(x, y);
 

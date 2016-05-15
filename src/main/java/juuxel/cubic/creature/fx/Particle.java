@@ -6,12 +6,12 @@ import juuxel.cubic.util.render.Graphics;
 
 import java.awt.*;
 
-public class CreatureParticle extends Creature
+public class Particle extends Creature
 {
     public final Color color;
     public int lifetime = 0;
 
-    public CreatureParticle(Color color, double x, double y)
+    public Particle(Color color, double x, double y)
     {
         this.color = color;
         this.x = x;

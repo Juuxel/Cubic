@@ -1,13 +1,15 @@
 package juuxel.cubic.util;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.*;
 import java.util.*;
 
 public class Translator
 {
-    private static Properties properties;
+    private static java.util.Properties properties;
     private static String language;
     private static List<String> languages;
     private static final List<ITranslationProvider> TRANSLATION_PROVIDERS = new ArrayList<>();
@@ -19,15 +21,15 @@ public class Translator
     {
         loadFileProviders();
 
-        FileProvider provider = new FileProvider();
-        provider.loadTranslation(Translator.class.getResourceAsStream("/assets/lang/providerInfo.properties"), "/assets/lang/");
+        InputStreamProvider provider = new InputStreamProvider();
+        provider.loadTranslation(Translator.class.getResourceAsStream("/data/lang/provider.properties"), "/data/lang/");
         addProvider(provider);
 
         languages = new ArrayList<>();
         reloadProviders();
 
         language = getDefault();
-        properties = new Properties();
+        properties = new java.util.Properties();
 
         reloadProperties();
     }
@@ -48,7 +50,7 @@ public class Translator
     {
         try
         {
-            properties.load(Translator.class.getResourceAsStream("/assets/lang/en_US.lang.properties"));
+            properties.load(Translator.class.getResourceAsStream("/data/lang/en_US.lang.properties"));
 
             ITranslationProvider provider = getProviderForLanguage(language);
 
@@ -113,7 +115,7 @@ public class Translator
             {
                 ITranslationProvider provider = getProviderForLanguage(language1);
 
-                Properties properties = new Properties();
+                java.util.Properties properties = new java.util.Properties();
                 properties.load(provider.isInternal()
                     ? Translator.class.getResourceAsStream(provider.getLocation() + String.format("%s.lang.properties", language1))
                     : Files.newInputStream(Paths.get(provider.getLocation(), String.format("%s.lang.properties", language1)))
@@ -148,12 +150,12 @@ public class Translator
                 stream.forEach(path1 -> {
                     if (Files.isDirectory(path1))
                     {
-                        Path languagePath = Paths.get(path1.toString(), "assets", "lang");
+                        Path languagePath = Paths.get(path1.toString(), "data", "lang");
 
                         if (Files.exists(languagePath))
                         {
-                            FileProvider provider = new FileProvider();
-                            provider.loadTranslation(Paths.get(languagePath.toString(), "providerInfo.properties"));
+                            InputStreamProvider provider = new InputStreamProvider();
+                            provider.loadTranslation(Paths.get(languagePath.toString(), "provider.properties"));
                             TRANSLATION_PROVIDERS.add(provider);
                         }
                     }
@@ -174,7 +176,7 @@ public class Translator
                 return provider;
         }
 
-        throw new RuntimeException(String.format("Provider for language %s not found!%n", language));
+        throw new RuntimeException(String.format("Provider for language %s not found!", language));
     }
 
     public static Locale getLocale()
@@ -182,7 +184,7 @@ public class Translator
         return Locale.forLanguageTag(language);
     }
 
-    private static class FileProvider implements ITranslationProvider
+    private static class InputStreamProvider implements ITranslationProvider
     {
         private List<String> translations;
         private String name;
@@ -209,10 +211,10 @@ public class Translator
             try
             {
                 properties.load(stream);
-                String translationList = ((String) properties.get("languages")).replaceAll(" ", "");
-                name = (String) properties.get("name");
-                translations = translationList.contains(",") ? Arrays.asList(translationList.split(",")) : Collections.singletonList(translationList);
-                internal = properties.containsKey("internal") ? Boolean.valueOf((String) properties.get("internal")) : false;
+                String languageArray = properties.getProperty("languages");
+                name = properties.getProperty("name");
+                translations = Arrays.asList(Strings.commaSplit(languageArray));
+                internal = properties.containsKey("internal") ? Boolean.valueOf(properties.getProperty("internal")) : false;
                 stream.close();
             }
             catch (IOException e)

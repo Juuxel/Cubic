@@ -24,6 +24,8 @@ public final class Options
 
     public static String mods;
 
+    //public static int fps;
+
     private static Properties properties;
 
     private Options()
@@ -38,6 +40,7 @@ public final class Options
         captureFrame = false;
         font = null;
         mods = "";
+        //fps = 60;
 
         properties = new Properties();
         properties.put("controls.moveLeft", moveLeft.toString());
@@ -48,6 +51,7 @@ public final class Options
         properties.put("captureFrame", "false");
         properties.put("language", Translator.getLanguage());
         properties.put("mods", "");
+        //properties.put("fps", "60");
 
         try
         {
@@ -95,6 +99,8 @@ public final class Options
                 }
 
                 mods = properties.getProperty("mods");
+
+                //fps = Integer.parseInt(properties.getProperty("fps"));
 
                 Translator.setLanguage(properties.getProperty("language"));
                 Translator.reloadProperties();

@@ -26,7 +26,7 @@ public class SpriteLoader
         {
             Properties props = new Properties();
 
-            props.load(SpriteLoader.class.getResourceAsStream("/assets/sprites/" + sprite + ".sprite"));
+            props.load(SpriteLoader.class.getResourceAsStream("/data/sprites/" + sprite + ".sprite"));
 
             String function = props.getProperty("function");
 

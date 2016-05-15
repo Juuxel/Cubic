@@ -2,9 +2,9 @@ package juuxel.cubic.creature.fx;
 
 import juuxel.cubic.lib.Images;
 
-public final class CreatureEffectDeath extends CreatureEffect
+public final class EffectDeath extends Effect
 {
-    public CreatureEffectDeath(double x, double y)
+    public EffectDeath(double x, double y)
     {
         super(x, y);
         spriteWidth = spriteHeight = 16;

@@ -1,5 +1,6 @@
 package juuxel.cubic.util.render;
 
+import juuxel.cubic.Cubic;
 import juuxel.cubic.util.sprite.Sprite;
 
 import java.awt.*;
@@ -40,6 +41,6 @@ public class Graphics
 
     public void drawImage(Sprite sprite, int x, int y, int width, int height)
     {
-        drawImage(sprite.getImage(this), x, y, width, height);
+        drawImage(sprite.getImage(Cubic.game), x, y, width, height);
     }
 }

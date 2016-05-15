@@ -5,9 +5,9 @@ import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.lib.Images;
 import juuxel.cubic.util.render.Graphics;
 
-public class CreatureEnemyNormal extends CreatureEnemy
+public class EnemyNormal extends Enemy
 {
-    public CreatureEnemyNormal()
+    public EnemyNormal()
     {
         x = Math.random() * Cubic.game.getWidth();
         y = GameValues.GROUND;

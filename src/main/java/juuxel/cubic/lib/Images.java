@@ -12,14 +12,13 @@ import java.util.Map;
 
 public final class Images
 {
-    private static final String IMAGE_PREFIX = "/assets/images/";
+    private static final String IMAGE_PREFIX = "/data/images/";
 
     public static final Image GRASS = load("grass.png");
+    public static final Image GRASS_OVERLAY = load("grass_overlay.png");
     public static final Image GAME_OVER = load("game_over.png");
     public static final Image LOGO = load("logo.png");
     public static final Image CURSOR = load("cursor.png");
-    public static final Image BUTTON = load("radio_button.png");
-    public static final Image SELECTED_BUTTON = load("radio_button_selected.png");
 
     public static Sprite player;
     public static Sprite enemy;
@@ -45,6 +44,8 @@ public final class Images
     public static Sprite comma;
     public static Sprite space;
     public static Sprite slash;
+    public static Sprite radioButton;
+    public static Sprite radioButtonSelected;
 
     public static Map<Character, Sprite> numbers;
 
@@ -91,6 +92,8 @@ public final class Images
         comma = SpriteLoader.load("numbers/comma");
         space = SpriteLoader.load("numbers/space");
         slash = SpriteLoader.load("numbers/slash");
+        radioButton = SpriteLoader.load("gui/radio_button");
+        radioButtonSelected = SpriteLoader.load("gui/radio_button_selected");
 
         initializeNumberMap();
     }

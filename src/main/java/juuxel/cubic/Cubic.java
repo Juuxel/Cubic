@@ -1,20 +1,21 @@
 package juuxel.cubic;
 
 import juuxel.cubic.creature.Creature;
-import juuxel.cubic.creature.CreaturePlayer;
+import juuxel.cubic.creature.Player;
 import juuxel.cubic.creature.enemy.*;
 import juuxel.cubic.mod.ModLoader;
 import juuxel.cubic.options.*;
 import juuxel.cubic.lib.*;
 import juuxel.cubic.util.*;
 import juuxel.cubic.util.render.Graphics;
-import juuxel.cubic.util.render.ISpriteHandler;
+import juuxel.cubic.util.sprite.ISpriteHandler;
 import juuxel.cubic.util.render.RenderEngine;
 import juuxel.cubic.util.sprite.SpriteLoader;
 
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -23,9 +24,9 @@ import static java.awt.event.KeyEvent.*;
 public final class Cubic implements KeyListener
 {
     public static Cubic game;
-    public static CreaturePlayer player;
+    public static Player player;
     public static boolean inStartScreen = true, running = true, moveKeyDown, jumpKeyDown;
-    public static final List<CreatureEnemy> ENEMIES = new CopyOnWriteArrayList<>();
+    public static final List<Enemy> ENEMIES = new CopyOnWriteArrayList<>();
     public static int score = 0, deaths = 0, level = 1, lives = 8;
     public static final List<Creature> CREATURES = new CopyOnWriteArrayList<>();
     public static final List<ISpriteHandler> SPRITE_HANDLERS = new ArrayList<>();
@@ -42,6 +43,7 @@ public final class Cubic implements KeyListener
     private static boolean selectingBindings = false, optionsChanged = false;
 
     private static ModLoader modLoader;
+    private static final List<String> ADDITIONAL_MODS = new ArrayList<>();
 
     private Cubic()
     {
@@ -50,26 +52,50 @@ public final class Cubic implements KeyListener
 
     public static void main(String[] args) throws Exception
     {
+        processArgs(args);
+
         coreInit();
         contentInit();
         game = new Cubic();
-        SPRITE_HANDLERS.forEach(ISpriteHandler::onSpriteBake);
-        player = new CreaturePlayer();
+        SPRITE_HANDLERS.forEach(ISpriteHandler::onSpriteCreate);
+        player = new Player();
         ENEMIES.add(EnemyLists.createEnemy(EnemyType.NORMAL));
 
         while (inStartScreen)
         {
-            game.repaint();
+            RenderEngine.repaint();
         }
 
         run();
+    }
+
+    private static void processArgs(String[] args)
+    {
+        String lastArg = null;
+
+        for (int i = 0; i < args.length; i++)
+        {
+            if (args[i].equals("-h") || args[i].equals("--help"))
+            {
+                System.out.println("Usage: cubic [-h | --help] [-m | --mods <mods>]");
+                System.out.println("Options:");
+                System.out.println("-h, --help          Prints this message and exits.");
+                System.out.println("-m, --mods <mods>   Adds additional mods to the mod loader.");
+                System.exit(0);
+            }
+
+            if (i != 0 && (lastArg.equals("--mods") || lastArg.equals("-m")))
+                ADDITIONAL_MODS.addAll(Arrays.asList(Strings.commaSplit(args[i])));
+
+            lastArg = args[i];
+        }
     }
 
     /* Initialize the core components of Cubic. (Translator, options, sprite system)
      */
     private static void coreInit() throws Exception
     {
-        modLoader = new ModLoader();
+        modLoader = new ModLoader(ADDITIONAL_MODS);
         Translator.initialize();
         Options.initialize();
         SpriteLoader.initialize();
@@ -89,7 +115,7 @@ public final class Cubic implements KeyListener
         while (running)
         {
             CREATURES.forEach(Creature::executeLogic);
-            game.repaint();
+            RenderEngine.repaint();
             Thread.sleep(5);
         }
     }
@@ -313,7 +339,7 @@ public final class Cubic implements KeyListener
         public void paintComponent(java.awt.Graphics g)
         {
             super.paintComponent(g);
-            RenderEngine.INSTANCE.paint(Graphics.fromAWTGraphics(g));
+            RenderEngine.INSTANCE.repaint(Graphics.fromAWTGraphics(g));
         }
     }
 }
