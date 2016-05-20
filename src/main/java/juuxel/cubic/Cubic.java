@@ -8,6 +8,7 @@ import juuxel.cubic.options.*;
 import juuxel.cubic.lib.*;
 import juuxel.cubic.util.*;
 import juuxel.cubic.util.render.Graphics;
+import juuxel.cubic.util.render.Screenshooter;
 import juuxel.cubic.util.sprite.ISpriteHandler;
 import juuxel.cubic.util.render.RenderEngine;
 import juuxel.cubic.util.sprite.SpriteLoader;
@@ -15,7 +16,7 @@ import juuxel.cubic.util.sprite.SpriteLoader;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -43,7 +44,6 @@ public final class Cubic implements KeyListener
     private static boolean selectingBindings = false, optionsChanged = false;
 
     private static ModLoader modLoader;
-    private static final List<String> ADDITIONAL_MODS = new ArrayList<>();
 
     private Cubic()
     {
@@ -71,23 +71,15 @@ public final class Cubic implements KeyListener
 
     private static void processArgs(String[] args)
     {
-        String lastArg = null;
-
-        for (int i = 0; i < args.length; i++)
+        for (String arg : args)
         {
-            if (args[i].equals("-h") || args[i].equals("--help"))
+            if (arg.equals("-h") || arg.equals("--help"))
             {
                 System.out.println("Usage: cubic [-h | --help] [-m | --mods <mods>]");
                 System.out.println("Options:");
                 System.out.println("-h, --help          Prints this message and exits.");
-                System.out.println("-m, --mods <mods>   Adds additional mods to the mod loader.");
                 System.exit(0);
             }
-
-            if (i != 0 && (lastArg.equals("--mods") || lastArg.equals("-m")))
-                ADDITIONAL_MODS.addAll(Arrays.asList(Strings.commaSplit(args[i])));
-
-            lastArg = args[i];
         }
     }
 
@@ -95,7 +87,7 @@ public final class Cubic implements KeyListener
      */
     private static void coreInit() throws Exception
     {
-        modLoader = new ModLoader(ADDITIONAL_MODS);
+        modLoader = new ModLoader();
         Translator.initialize();
         Options.initialize();
         SpriteLoader.initialize();
@@ -128,7 +120,7 @@ public final class Cubic implements KeyListener
     public void keyPressed(KeyEvent e)
     {
         if (!selectingBindings && e.getKeyCode() == Options.takeScreenshot.getValue())
-            GraphicsUtilities.takeScreenshot();
+            Screenshooter.takeScreenshot();
 
         if (inStartScreen)
         {
@@ -219,11 +211,6 @@ public final class Cubic implements KeyListener
     public GameFrame getGameFrame()
     {
         return gameFrame;
-    }
-
-    public static double calculateY(double y1)
-    {
-        return game.getHeight() - y1;
     }
 
     public static void exit()

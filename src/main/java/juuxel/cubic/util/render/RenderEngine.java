@@ -5,6 +5,7 @@ import juuxel.cubic.lib.GameInfo;
 import juuxel.cubic.lib.Images;
 import juuxel.cubic.options.KeyBinding;
 import juuxel.cubic.options.Options;
+import juuxel.cubic.util.IBasicFunctions;
 import juuxel.cubic.util.Translator;
 
 import java.awt.Color;
@@ -17,7 +18,7 @@ import static juuxel.cubic.Cubic.OPTIONS;
 import static juuxel.cubic.Cubic.LANGUAGE_SCREEN;
 import static juuxel.cubic.Cubic.CONTROLS;
 
-public class RenderEngine
+public class RenderEngine implements IBasicFunctions
 {
     public static final Color SKY = new Color(0x80daeb);
     public static final Color SKY2 = new Color(0x7ceeeb);
@@ -102,7 +103,7 @@ public class RenderEngine
     {
         for (int i = 0; i < Cubic.game.getWidth() / 32 + 1; i++)
         {
-            int x = i * 32, y = (int) Cubic.calculateY(32);
+            int x = i * 32, y = (int) calculateY(32);
 
             g.drawImage(Images.GRASS, x, y - 32, 32, 32);
             g.drawImage(Images.GRASS_OVERLAY, x, y - 32, 32, 32);

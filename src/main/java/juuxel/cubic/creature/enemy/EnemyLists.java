@@ -1,22 +1,20 @@
 package juuxel.cubic.creature.enemy;
 
-import juuxel.cubic.util.Creator;
-
 import java.util.*;
-import java.util.List;
+import java.util.function.Supplier;
 
 public final class EnemyLists
 {
     private EnemyLists()
     {}
 
-    private static final Map<EnemyType, List<Creator<Enemy>>> ENEMY_LISTS = new HashMap<>();
+    private static final Map<EnemyType, List<Supplier<Enemy>>> ENEMY_LISTS = new HashMap<>();
     private static final Random RANDOM = new Random();
 
     public static void initializeLists()
     {
-        List<Creator<Enemy>> normalEnemies = new ArrayList<>();
-        List<Creator<Enemy>> strangeEnemies = new ArrayList<>();
+        List<Supplier<Enemy>> normalEnemies = new ArrayList<>();
+        List<Supplier<Enemy>> strangeEnemies = new ArrayList<>();
 
         normalEnemies.add(EnemyNormal::new);
         strangeEnemies.add(EnemyBouncing::new);
@@ -25,15 +23,15 @@ public final class EnemyLists
         ENEMY_LISTS.put(EnemyType.STRANGE, strangeEnemies);
     }
 
-    public static void registerEnemy(EnemyType type, Creator<Enemy> creator)
+    public static void registerEnemy(EnemyType type, Supplier<Enemy> supplier)
     {
-        ENEMY_LISTS.get(type).add(creator);
+        ENEMY_LISTS.get(type).add(supplier);
     }
 
     public static Enemy createEnemy(EnemyType type)
     {
-        List<Creator<Enemy>> list = ENEMY_LISTS.get(type);
+        List<Supplier<Enemy>> list = ENEMY_LISTS.get(type);
 
-        return list.get(RANDOM.nextInt(list.size())).create();
+        return list.get(RANDOM.nextInt(list.size())).get();
     }
 }

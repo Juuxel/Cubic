@@ -6,6 +6,7 @@ import juuxel.cubic.creature.fx.EffectLevelUp;
 import juuxel.cubic.creature.enemy.*;
 import juuxel.cubic.lib.Images;
 import juuxel.cubic.lib.GameValues;
+import juuxel.cubic.util.Direction;
 import juuxel.cubic.util.render.Graphics;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ public final class Player extends Creature
     public Player() throws IOException
     {
         setCollisionEnabled(true);
+        setFlippingEnabled(true);
         setSprite(Images.player);
         x = 100;
         y = 100;

@@ -1,70 +1,49 @@
 package juuxel.cubic.mod;
 
 import juuxel.cubic.options.Options;
+import juuxel.cubic.util.IBasicFunctions;
 import juuxel.cubic.util.Strings;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.jar.Attributes;
+import java.util.jar.Manifest;
 
-public final class ModLoader
+public final class ModLoader implements IBasicFunctions
 {
-    private final List<IModExtended> mods;
-    private final List<String> additionalMods;
+    private final List<ModContainer> mods;
 
-    public ModLoader(List<String> additionalMods)
+    public ModLoader()
     {
         mods = new ArrayList<>();
-        this.additionalMods = additionalMods;
     }
 
     public void init()
     {
-        String modString = Options.mods;
+        detectJarMods();
 
-        if ("".equals(modString)) return;
-
-        List<String> modClassNames = new ArrayList<>(Arrays.asList(Strings.commaSplit(modString)));
-        modClassNames.addAll(additionalMods);
-
-        for (String name : modClassNames)
-        {
-            try
-            {
-                Class<?> modClass = Class.forName(name);
-
-                IModExtended mod;
-
-                if (implementsInterface(modClass, IModExtended.class))
-                    mod = modClass.asSubclass(IModExtended.class).newInstance();
-                else if (implementsInterface(modClass, IMod.class) && modClass.isAnnotationPresent(Mod.class))
-                    mod = new IModExtended.ModImpl(modClass.asSubclass(IMod.class).newInstance(), modClass.getAnnotation(Mod.class));
-                else
-                {
-                    System.err.printf("Class '%s' is not a valid mod class. %n", name);
-                    continue;
-                }
-
-                System.out.printf("Initializing mod %d: %n", mods.size());
-                System.out.printf("ID: %32s %n", mod.getId());
-                System.out.printf("Name: %30s %n", mod.getName());
-                System.out.printf("Author: %28s %n", mod.getAuthor());
-                System.out.printf("Version: %27s %n", mod.getVersion());
-
-                mods.add(mod);
-            }
-            catch (Throwable e)
-            {
-                System.err.printf("Error in initializing mod '%s'. %n", name);
-                e.printStackTrace();
-            }
-        }
+        mods.forEach(mod -> {
+            System.out.printf("Mod %d:%n", mods.indexOf(mod));
+            System.out.printf("    ID: %32s%n", mod.getId());
+            System.out.printf("    Name: %30s%n", mod.getName());
+            System.out.printf("    Author: %28s%n", mod.getAuthor());
+            System.out.printf("    Version: %27s%n", mod.getVersion());
+        });
     }
 
     public void coreInit()
     {
         mods.forEach(mod -> {
-            System.out.printf("Initializing core components for mod %s. %n", mod.getId());
+            System.out.printf("Initializing core components for mod %s.%n", mod.getId());
             mod.coreInit();
         });
     }
@@ -72,9 +51,85 @@ public final class ModLoader
     public void contentInit()
     {
         mods.forEach(mod -> {
-            System.out.printf("Initializing contents for mod %s. %n", mod.getId());
+            System.out.printf("Initializing contents for mod %s.%n", mod.getId());
             mod.contentInit();
         });
+    }
+
+    private void detectJarMods()
+    {
+        try
+        {
+            Path modDir = Paths.get("mods");
+
+            if (Files.notExists(modDir))
+            {
+                Files.createDirectories(modDir);
+
+                return;
+            }
+
+            DirectoryStream<Path> stream = Files.newDirectoryStream(modDir);
+
+            for (Path p : stream)
+            {
+                if (p.toString().endsWith(".jar"))
+                {
+                    System.out.printf("Reading jar '%s' for mods.%n", p.getFileName());
+
+                    URLClassLoader jarLoader = newURLLoader(p);
+
+                    URL url = jarLoader.findResource("META-INF/MANIFEST.MF");
+                    Manifest manifest = new Manifest(url.openStream());
+                    Attributes a = manifest.getMainAttributes();
+                    String modClass = a.getValue("Mod-Class");
+
+                    ModContainer container = createContainer(Class.forName(modClass, true, jarLoader));
+
+                    if (container != null)
+                        mods.add(container);
+                }
+            }
+        }
+        catch (IOException | ClassNotFoundException | RuntimeException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private URLClassLoader newURLLoader(Path path) throws IOException
+    {
+        return new URLClassLoader(new URL[] { path.toUri().toURL() }, getClass().getClassLoader());
+    }
+
+    private ModContainer createContainer(Class<?> modClass)
+    {
+        try
+        {
+            if (implementsInterface(modClass, IMod.class))
+            {
+                ModContainer mod;
+
+                Class<? extends IMod> iModClass = modClass.asSubclass(IMod.class);
+
+                if (modClass.isAnnotationPresent(Mod.class))
+                    mod = new ModContainer(iModClass.newInstance(), modClass.getAnnotation(Mod.class));
+                else
+                    mod = new ModContainer(iModClass.newInstance());
+
+                return mod;
+            }
+            else
+            {
+                System.err.printf("Class '%s' is not a valid mod class.%n", modClass.getName());
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     private static boolean implementsInterface(Class<?> c, Class<?> i)
@@ -86,5 +141,47 @@ public final class ModLoader
         }
 
         return false;
+    }
+
+    public static class ModContainer
+    {
+        private final String id, name, version, author;
+        private final IMod mod;
+
+        ModContainer(IMod mod)
+        {
+            this.mod = mod;
+            id = mod.getClass().getName();
+            name = mod.getClass().getSimpleName();
+            version = "";
+            author = "";
+        }
+
+        ModContainer(IMod mod, Mod annotation)
+        {
+            this.mod = mod;
+            id = annotation.id();
+            name = annotation.name();
+            version = annotation.version();
+            author = annotation.author();
+        }
+
+        void coreInit()
+        { mod.coreInit(); }
+
+        void contentInit()
+        { mod.contentInit(); }
+
+        public String getId()
+        { return id; }
+
+        public String getName()
+        { return name; }
+
+        public String getVersion()
+        { return version; }
+
+        public String getAuthor()
+        { return author; }
     }
 }

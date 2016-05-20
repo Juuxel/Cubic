@@ -22,8 +22,6 @@ public final class Options
 
     public static boolean captureFrame;
 
-    public static String mods;
-
     //public static int fps;
 
     private static Properties properties;
@@ -39,7 +37,6 @@ public final class Options
         takeScreenshot = new KeyBinding("controls.takeScreenshot", VK_F2);
         captureFrame = false;
         font = null;
-        mods = "";
         //fps = 60;
 
         properties = new Properties();
@@ -50,7 +47,6 @@ public final class Options
         properties.put("font", "default");
         properties.put("captureFrame", "false");
         properties.put("language", Translator.getLanguage());
-        properties.put("mods", "");
         //properties.put("fps", "60");
 
         try
@@ -97,8 +93,6 @@ public final class Options
                         ? Font.createFont(Font.TRUETYPE_FONT, Files.newInputStream(Paths.get(fontName))).deriveFont(16F)
                         : new Font(fontName, Font.PLAIN, 16);
                 }
-
-                mods = properties.getProperty("mods");
 
                 //fps = Integer.parseInt(properties.getProperty("fps"));
 

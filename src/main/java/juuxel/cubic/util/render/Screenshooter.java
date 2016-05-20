@@ -1,4 +1,4 @@
-package juuxel.cubic.util;
+package juuxel.cubic.util.render;
 
 import juuxel.cubic.Cubic;
 import juuxel.cubic.options.Options;
@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import java.nio.file.*;
 import java.time.LocalDateTime;
 
-public class GraphicsUtilities
+public class Screenshooter
 {
     public static BufferedImage getScreenshot(Component component)
     {
@@ -34,7 +34,7 @@ public class GraphicsUtilities
     {
         LocalDateTime time = LocalDateTime.now();
         String file = String.format(
-            "screenshot_%d-%d-%d_%d.%d.%d.png",
+            "screenshot_%d-%d-%d_%d-%d-%d.png",
             time.getYear(),
             time.getMonthValue(),
             time.getDayOfMonth(),

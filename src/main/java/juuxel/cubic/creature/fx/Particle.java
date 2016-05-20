@@ -33,7 +33,7 @@ public class Particle extends Creature
         Color oldColor = g.getGraphics2D().getColor();
 
         g.getGraphics2D().setColor(color);
-        g.getGraphics2D().fillRect(calculateXInt(), calculateYInt(), 5, 5);
+        g.getGraphics2D().fillRect((int) x, (int) calculateY(), 5, 5);
 
         g.getGraphics2D().setColor(oldColor);
     }

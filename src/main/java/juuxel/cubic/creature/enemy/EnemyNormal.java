@@ -21,9 +21,9 @@ public class EnemyNormal extends Enemy
     @Override
     public void move()
     {
-        if (Cubic.player.x < x)
+        if (Cubic.player.getX() < x)
             xSpeed = Math.max(-1, xSpeed - 1);
-        else if (Cubic.player.x > x)
+        else if (Cubic.player.getX() > x)
             xSpeed = Math.min(1, xSpeed + 1);
     }
 

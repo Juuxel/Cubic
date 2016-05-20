@@ -1,15 +1,13 @@
 package juuxel.cubic.util;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.file.*;
 import java.util.*;
 
 public class Translator
 {
-    private static java.util.Properties properties;
+    private static Properties properties;
     private static String language;
     private static List<String> languages;
     private static final List<ITranslationProvider> TRANSLATION_PROVIDERS = new ArrayList<>();
@@ -29,7 +27,7 @@ public class Translator
         reloadProviders();
 
         language = getDefault();
-        properties = new java.util.Properties();
+        properties = new Properties();
 
         reloadProperties();
     }
@@ -115,7 +113,7 @@ public class Translator
             {
                 ITranslationProvider provider = getProviderForLanguage(language1);
 
-                java.util.Properties properties = new java.util.Properties();
+                Properties properties = new Properties();
                 properties.load(provider.isInternal()
                     ? Translator.class.getResourceAsStream(provider.getLocation() + String.format("%s.lang.properties", language1))
                     : Files.newInputStream(Paths.get(provider.getLocation(), String.format("%s.lang.properties", language1)))
@@ -184,7 +182,7 @@ public class Translator
         return Locale.forLanguageTag(language);
     }
 
-    private static class InputStreamProvider implements ITranslationProvider
+    private static class InputStreamProvider implements ITranslationProvider, IBasicFunctions
     {
         private List<String> translations;
         private String name;
@@ -213,7 +211,7 @@ public class Translator
                 properties.load(stream);
                 String languageArray = properties.getProperty("languages");
                 name = properties.getProperty("name");
-                translations = Arrays.asList(Strings.commaSplit(languageArray));
+                translations = Arrays.asList(commaSplit(languageArray));
                 internal = properties.containsKey("internal") ? Boolean.valueOf(properties.getProperty("internal")) : false;
                 stream.close();
             }
