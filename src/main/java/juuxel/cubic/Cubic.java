@@ -16,7 +16,6 @@ import juuxel.cubic.util.sprite.SpriteLoader;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
