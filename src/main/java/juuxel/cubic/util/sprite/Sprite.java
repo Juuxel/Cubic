@@ -16,13 +16,12 @@ public abstract class Sprite
 
     public abstract Image getImage(Object o);
 
+    public Image getImage()
+    { return getImage(this); }
+
     public String getTexture()
-    {
-        return texture;
-    }
+    { return texture; }
 
     public Properties getProps()
-    {
-        return props;
-    }
+    { return props; }
 }

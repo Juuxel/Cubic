@@ -14,8 +14,6 @@ public final class Images
 {
     private static final String IMAGE_PREFIX = "/data/images/";
 
-    public static final Image GRASS = load("grass.png");
-    public static final Image GRASS_OVERLAY = load("grass_overlay.png");
     public static final Image GAME_OVER = load("game_over.png");
     public static final Image LOGO = load("logo.png");
     public static final Image CURSOR = load("cursor.png");
@@ -46,6 +44,8 @@ public final class Images
     public static Sprite slash;
     public static Sprite radioButton;
     public static Sprite radioButtonSelected;
+    public static Sprite grass;
+    public static Sprite bricks;
 
     public static Map<Character, Sprite> numbers;
 
@@ -94,6 +94,8 @@ public final class Images
         slash = SpriteLoader.load("numbers/slash");
         radioButton = SpriteLoader.load("gui/radio_button");
         radioButtonSelected = SpriteLoader.load("gui/radio_button_selected");
+        grass = SpriteLoader.load("tiles/grass");
+        bricks = SpriteLoader.load("tiles/bricks");
 
         initializeNumberMap();
     }

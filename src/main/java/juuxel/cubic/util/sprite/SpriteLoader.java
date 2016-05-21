@@ -5,17 +5,18 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.function.Function;
 
 public class SpriteLoader
 {
-    private static final Map<String, SpriteCreator> SPRITE_CREATORS = new HashMap<>();
+    private static final Map<String, Function<Properties, Sprite>> SPRITE_CREATORS = new HashMap<>();
 
-    public static Map<String, SpriteCreator> getSpriteCreators()
+    public static Map<String, Function<Properties, Sprite>> getSpriteCreators()
     {
         return Collections.unmodifiableMap(SPRITE_CREATORS);
     }
 
-    public static void registerSprite(String functionId, SpriteCreator creator)
+    public static void registerSprite(String functionId, Function<Properties, Sprite> creator)
     {
         SPRITE_CREATORS.put(functionId, creator);
     }
@@ -30,11 +31,11 @@ public class SpriteLoader
 
             String function = props.getProperty("function");
 
-            for (Map.Entry<String, SpriteCreator> entry : SPRITE_CREATORS.entrySet())
+            for (Map.Entry<String, Function<Properties, Sprite>> entry : SPRITE_CREATORS.entrySet())
             {
                 if (entry.getKey().equals(function))
                 {
-                    return entry.getValue().create(props);
+                    return entry.getValue().apply(props);
                 }
             }
 
@@ -53,11 +54,6 @@ public class SpriteLoader
         registerSprite("default", SpriteDefault::new);
         registerSprite("random", SpriteRandom::new);
         registerSprite("multi", SpriteMulti::new);
-    }
-
-    @FunctionalInterface
-    public interface SpriteCreator
-    {
-        Sprite create(Properties props);
+        registerSprite("layered", SpriteLayered::new);
     }
 }

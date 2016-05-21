@@ -49,7 +49,7 @@ public class RenderEngine implements IBasicFunctions
         if (Cubic.inStartScreen)
         {
             drawSky(g);
-            drawGround(g);
+            drawLevel(g);
 
             if (Cubic.getSelectedScreen() == START_SCREEN)
                 drawList(g, Arrays.asList(Translator.translate("mainMenu.play"), Translator.translate("mainMenu.options"), Translator.translate("mainMenu.exit")));
@@ -73,7 +73,7 @@ public class RenderEngine implements IBasicFunctions
         {
             drawSky(g);
             drawScore(g);
-            drawGround(g);
+            drawLevel(g);
 
             Cubic.CREATURES.forEach(creature -> creature.draw(g));
 
@@ -99,15 +99,9 @@ public class RenderEngine implements IBasicFunctions
         drawNumberString(g, String.format(Translator.getLocale(), "%,d", Cubic.lives), 30, 70);
     }
 
-    private void drawGround(Graphics g)
+    private void drawLevel(Graphics g)
     {
-        for (int i = 0; i < Cubic.game.getWidth() / 32 + 1; i++)
-        {
-            int x = i * 32, y = (int) calculateY(32);
-
-            g.drawImage(Images.GRASS, x, y - 32, 32, 32);
-            g.drawImage(Images.GRASS_OVERLAY, x, y - 32, 32, 32);
-        }
+        Cubic.gameLevel.draw(g);
     }
 
     private void drawSky(Graphics g)

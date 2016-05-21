@@ -2,6 +2,7 @@ package juuxel.cubic.util.sprite;
 
 import juuxel.cubic.Cubic;
 import juuxel.cubic.creature.Creature;
+import juuxel.cubic.util.IBasicFunctions;
 import juuxel.cubic.util.ICreatureListener;
 import juuxel.cubic.util.Randomizer;
 
@@ -10,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-public class SpriteRandom extends Sprite implements ICreatureListener
+public class SpriteRandom extends Sprite implements ICreatureListener, IBasicFunctions
 {
     private final Map<Object, Sprite> spriteMap = new HashMap<>();
     private final Sprite[] subsprites;
@@ -21,7 +22,7 @@ public class SpriteRandom extends Sprite implements ICreatureListener
 
         Cubic.CREATURE_LISTENERS.add(this);
 
-        String[] spriteNames = getTexture().split(", *");
+        String[] spriteNames = commaSplit(getTexture());
         subsprites = new Sprite[spriteNames.length];
 
         for (int i = 0; i < spriteNames.length; i++)

@@ -5,6 +5,11 @@ import juuxel.cubic.util.render.Graphics;
 
 public class EnemyBouncing extends EnemyNormal
 {
+    public EnemyBouncing()
+    {
+        slidable = false;
+    }
+
     @Override
     public void move()
     {

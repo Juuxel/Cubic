@@ -3,6 +3,7 @@ package juuxel.cubic;
 import juuxel.cubic.creature.Creature;
 import juuxel.cubic.creature.Player;
 import juuxel.cubic.creature.enemy.*;
+import juuxel.cubic.level.Level;
 import juuxel.cubic.mod.ModLoader;
 import juuxel.cubic.options.*;
 import juuxel.cubic.lib.*;
@@ -25,6 +26,7 @@ public final class Cubic implements KeyListener
 {
     public static Cubic game;
     public static Player player;
+    public static Level gameLevel;
     public static boolean inStartScreen = true, running = true, moveKeyDown, jumpKeyDown;
     public static final List<Enemy> ENEMIES = new CopyOnWriteArrayList<>();
     public static int score = 0, deaths = 0, level = 1, lives = 8;
@@ -56,6 +58,7 @@ public final class Cubic implements KeyListener
         coreInit();
         contentInit();
         game = new Cubic();
+        gameLevel = Level.getNewLevel();
         SPRITE_HANDLERS.forEach(ISpriteHandler::onSpriteCreate);
         player = new Player();
         ENEMIES.add(EnemyLists.createEnemy(EnemyType.NORMAL));
@@ -74,7 +77,7 @@ public final class Cubic implements KeyListener
         {
             if (arg.equals("-h") || arg.equals("--help"))
             {
-                System.out.println("Usage: cubic [-h | --help] [-m | --mods <mods>]");
+                System.out.println("Usage: cubic [-h | --help]");
                 System.out.println("Options:");
                 System.out.println("-h, --help          Prints this message and exits.");
                 System.exit(0);
@@ -90,6 +93,7 @@ public final class Cubic implements KeyListener
         Translator.initialize();
         Options.initialize();
         SpriteLoader.initialize();
+        Level.registerDefaults();
         modLoader.init();
         modLoader.coreInit();
     }

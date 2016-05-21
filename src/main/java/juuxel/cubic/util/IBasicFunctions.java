@@ -33,7 +33,7 @@ public interface IBasicFunctions
     default String[] commaSplit(String str)
     {
         if (str.contains(","))
-            return str.split(",");
+            return str.split(", *");
 
         return new String[] { str };
     }
