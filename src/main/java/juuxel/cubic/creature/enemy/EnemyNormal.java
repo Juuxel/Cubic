@@ -3,7 +3,7 @@ package juuxel.cubic.creature.enemy;
 import juuxel.cubic.Cubic;
 import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.lib.Images;
-import juuxel.cubic.util.render.Graphics;
+import juuxel.cubic.render.Graphics;
 
 public class EnemyNormal extends Enemy
 {

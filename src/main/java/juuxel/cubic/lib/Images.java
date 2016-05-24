@@ -1,10 +1,11 @@
 package juuxel.cubic.lib;
 
-import juuxel.cubic.util.sprite.Sprite;
-import juuxel.cubic.util.sprite.SpriteLoader;
+import juuxel.cubic.render.sprite.Sprite;
+import juuxel.cubic.render.sprite.SpriteLoader;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -49,9 +50,9 @@ public final class Images
 
     public static Map<Character, Sprite> numbers;
 
-    public static Image load(String file)
+    public static BufferedImage load(String file)
     {
-        Image image;
+        BufferedImage image;
 
         try
         {

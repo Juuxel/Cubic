@@ -1,19 +1,29 @@
-package juuxel.cubic.util.sprite;
+package juuxel.cubic.render.sprite;
 
 import juuxel.cubic.util.IBasicFunctions;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
+/**
+ * A sprite consisting of multiple sprite layers.
+ */
 public class SpriteLayered extends Sprite implements IBasicFunctions
 {
-    private final BufferedImage image;
+    private final Map<Object, Image> imageMap;
 
     public SpriteLayered(Properties props)
     {
         super(props);
 
+        imageMap = new HashMap<>();
+    }
+
+    private Image addToMap(Object o)
+    {
         String[] subspriteNames = commaSplit(getTexture());
         Sprite[] subsprites = new Sprite[subspriteNames.length];
         int width = 0, height = 0;
@@ -25,7 +35,7 @@ public class SpriteLayered extends Sprite implements IBasicFunctions
             height = Math.max(width, sprite.getImage().getHeight(null));
         }
 
-        image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
         for (Sprite sprite : subsprites)
         {
@@ -33,11 +43,18 @@ public class SpriteLayered extends Sprite implements IBasicFunctions
 
             g.drawImage(sprite.getImage(), 0, 0, image.getWidth(), image.getHeight(), null);
         }
+
+        imageMap.put(o, image);
+
+        return image;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Image getImage(Object o)
     {
-        return image;
+        return imageMap.containsKey(o) ? imageMap.get(o) : addToMap(o);
     }
 }

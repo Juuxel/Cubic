@@ -2,7 +2,7 @@ package juuxel.cubic.creature.fx;
 
 import juuxel.cubic.creature.Creature;
 import juuxel.cubic.Cubic;
-import juuxel.cubic.util.render.Graphics;
+import juuxel.cubic.render.Graphics;
 
 import java.awt.*;
 

@@ -9,8 +9,26 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Mod
 {
+    /**
+     * The ID of this mod.
+     *
+     * @return the ID
+     */
     String id();
-    String name() default "";
+
+    /**
+     * The author of this mod.
+     * Defaults to an empty string.
+     *
+     * @return the author
+     */
     String author() default "";
+
+    /**
+     * The version of this mod.
+     * Defaults to "1.0.0".
+     *
+     * @return the version
+     */
     String version() default "1.0.0";
 }

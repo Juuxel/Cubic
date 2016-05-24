@@ -8,11 +8,10 @@ import juuxel.cubic.mod.ModLoader;
 import juuxel.cubic.options.*;
 import juuxel.cubic.lib.*;
 import juuxel.cubic.util.*;
-import juuxel.cubic.util.render.Graphics;
-import juuxel.cubic.util.render.Screenshooter;
-import juuxel.cubic.util.sprite.ISpriteHandler;
-import juuxel.cubic.util.render.RenderEngine;
-import juuxel.cubic.util.sprite.SpriteLoader;
+import juuxel.cubic.render.Graphics;
+import juuxel.cubic.render.Screenshooter;
+import juuxel.cubic.render.RenderEngine;
+import juuxel.cubic.render.sprite.SpriteLoader;
 
 import javax.swing.*;
 import java.awt.event.*;
@@ -31,7 +30,6 @@ public final class Cubic implements KeyListener
     public static final List<Enemy> ENEMIES = new CopyOnWriteArrayList<>();
     public static int score = 0, deaths = 0, level = 1, lives = 8;
     public static final List<Creature> CREATURES = new CopyOnWriteArrayList<>();
-    public static final List<ISpriteHandler> SPRITE_HANDLERS = new ArrayList<>();
     public static final List<ICreatureListener> CREATURE_LISTENERS = new ArrayList<>();
 
     private final GameFrame gameFrame;
@@ -59,7 +57,6 @@ public final class Cubic implements KeyListener
         contentInit();
         game = new Cubic();
         gameLevel = Level.getNewLevel();
-        SPRITE_HANDLERS.forEach(ISpriteHandler::onSpriteCreate);
         player = new Player();
         ENEMIES.add(EnemyLists.createEnemy(EnemyType.NORMAL));
 
@@ -92,7 +89,7 @@ public final class Cubic implements KeyListener
         modLoader = new ModLoader();
         Translator.initialize();
         Options.initialize();
-        SpriteLoader.initialize();
+        SpriteLoader.registerDefaults();
         Level.registerDefaults();
         modLoader.init();
         modLoader.coreInit();

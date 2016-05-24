@@ -1,4 +1,4 @@
-package juuxel.cubic.util.render;
+package juuxel.cubic.render;
 
 import juuxel.cubic.Cubic;
 import juuxel.cubic.options.Options;
@@ -10,8 +10,17 @@ import java.awt.image.BufferedImage;
 import java.nio.file.*;
 import java.time.LocalDateTime;
 
+/**
+ * This class performs operations related to screenshots.
+ */
 public class Screenshooter
 {
+    /**
+     * Gets an image of the component.
+     *
+     * @param component the component
+     * @return image of the component
+     */
     public static BufferedImage getScreenshot(Component component)
     {
         if (!Options.captureFrame && component instanceof JFrame)
@@ -30,6 +39,11 @@ public class Screenshooter
         return image;
     }
 
+    /**
+     * Takes a screenshot of the game frame and
+     * saves it to the screenshots directory inside
+     * running directory.
+     */
     public static void takeScreenshot()
     {
         LocalDateTime time = LocalDateTime.now();

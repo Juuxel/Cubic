@@ -4,8 +4,8 @@ import juuxel.cubic.Cubic;
 import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.util.Direction;
 import juuxel.cubic.util.IBasicFunctions;
-import juuxel.cubic.util.render.Graphics;
-import juuxel.cubic.util.sprite.Sprite;
+import juuxel.cubic.render.Graphics;
+import juuxel.cubic.render.sprite.Sprite;
 
 import java.awt.*;
 import java.util.Random;

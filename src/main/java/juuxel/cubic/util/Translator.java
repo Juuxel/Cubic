@@ -5,6 +5,9 @@ import java.io.InputStream;
 import java.nio.file.*;
 import java.util.*;
 
+/**
+ * Gets localized strings for localization keys.
+ */
 public class Translator
 {
     private static Properties properties;

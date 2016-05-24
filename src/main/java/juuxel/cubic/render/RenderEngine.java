@@ -1,4 +1,4 @@
-package juuxel.cubic.util.render;
+package juuxel.cubic.render;
 
 import juuxel.cubic.Cubic;
 import juuxel.cubic.lib.GameInfo;

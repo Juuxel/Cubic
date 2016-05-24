@@ -1,11 +1,8 @@
 package juuxel.cubic.mod;
 
-import juuxel.cubic.options.Options;
 import juuxel.cubic.util.IBasicFunctions;
-import juuxel.cubic.util.Strings;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.DirectoryStream;
@@ -13,7 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
@@ -34,7 +30,6 @@ public final class ModLoader implements IBasicFunctions
         mods.forEach(mod -> {
             System.out.printf("Mod %d:%n", mods.indexOf(mod));
             System.out.printf("    ID: %32s%n", mod.getId());
-            System.out.printf("    Name: %30s%n", mod.getName());
             System.out.printf("    Author: %28s%n", mod.getAuthor());
             System.out.printf("    Version: %27s%n", mod.getVersion());
         });
@@ -145,14 +140,13 @@ public final class ModLoader implements IBasicFunctions
 
     public static class ModContainer
     {
-        private final String id, name, version, author;
+        private final String id, version, author;
         private final IMod mod;
 
         ModContainer(IMod mod)
         {
             this.mod = mod;
             id = mod.getClass().getName();
-            name = mod.getClass().getSimpleName();
             version = "";
             author = "";
         }
@@ -161,7 +155,6 @@ public final class ModLoader implements IBasicFunctions
         {
             this.mod = mod;
             id = annotation.id();
-            name = annotation.name();
             version = annotation.version();
             author = annotation.author();
         }
@@ -174,9 +167,6 @@ public final class ModLoader implements IBasicFunctions
 
         public String getId()
         { return id; }
-
-        public String getName()
-        { return name; }
 
         public String getVersion()
         { return version; }

@@ -31,10 +31,10 @@ public final class Options
 
     public static void initialize() throws IOException, FontFormatException
     {
-        moveLeft = new KeyBinding("controls.moveLeft", VK_A);
-        moveRight = new KeyBinding("controls.moveRight", VK_D);
-        jump = new KeyBinding("controls.jump", VK_SPACE);
-        takeScreenshot = new KeyBinding("controls.takeScreenshot", VK_F2);
+        moveLeft = new KeyBinding(VK_A);
+        moveRight = new KeyBinding(VK_D);
+        jump = new KeyBinding(VK_SPACE);
+        takeScreenshot = new KeyBinding(VK_F2);
         captureFrame = false;
         font = null;
         //fps = 60;

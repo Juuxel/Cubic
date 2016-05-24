@@ -1,4 +1,4 @@
-package juuxel.cubic.util.sprite;
+package juuxel.cubic.render.sprite;
 
 import juuxel.cubic.Cubic;
 import juuxel.cubic.creature.Creature;
@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * A sprite which chooses a random subsprite for every object.
+ */
 public class SpriteRandom extends Sprite implements ICreatureListener, IBasicFunctions
 {
     private final Map<Object, Sprite> spriteMap = new HashMap<>();
@@ -31,12 +34,18 @@ public class SpriteRandom extends Sprite implements ICreatureListener, IBasicFun
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Image getImage(Object o)
     {
         return spriteMap.get(o).getImage(o);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onCreatureCreated(Creature creature)
     {

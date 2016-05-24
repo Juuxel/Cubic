@@ -1,34 +1,21 @@
-package juuxel.cubic.util.sprite;
+package juuxel.cubic.render.sprite;
 
-import juuxel.cubic.Cubic;
 import juuxel.cubic.lib.Images;
 
 import java.awt.*;
-import java.awt.image.CropImageFilter;
-import java.awt.image.FilteredImageSource;
+import java.awt.image.BufferedImage;
 import java.util.Properties;
 
-public class SpriteMulti extends Sprite implements ISpriteHandler
+/**
+ * A sprite loaded from a bigger sheet image.
+ */
+public class SpriteMulti extends Sprite
 {
     private Image image;
 
     public SpriteMulti(Properties props)
     {
         super(props);
-
-        Cubic.SPRITE_HANDLERS.add(this);
-    }
-
-    @Override
-    public Image getImage(Object o)
-    {
-        return image;
-    }
-
-    @Override
-    public void onSpriteCreate()
-    {
-        Properties props = getProps();
 
         int x = Integer.valueOf(props.getProperty("xPos"));
         int y = Integer.valueOf(props.getProperty("yPos"));
@@ -43,8 +30,16 @@ public class SpriteMulti extends Sprite implements ISpriteHandler
         if (props.containsKey("size"))
             width = height = Integer.valueOf(props.getProperty("size"));
 
-        Image spriteSheet = Images.load(getTexture() + ".png");
+        BufferedImage spriteSheet = Images.load(getTexture() + ".png");
+        image = spriteSheet.getSubimage(x * width, y * height, width, height);
+    }
 
-        image = Cubic.game.getGameFrame().createImage(new FilteredImageSource(spriteSheet.getSource(), new CropImageFilter(x * width, y * height, width, height)));
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Image getImage(Object o)
+    {
+        return image;
     }
 }

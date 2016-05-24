@@ -1,10 +1,13 @@
-package juuxel.cubic.util.sprite;
+package juuxel.cubic.render.sprite;
 
 import juuxel.cubic.lib.Images;
 
 import java.awt.*;
 import java.util.Properties;
 
+/**
+ * A simple sprite containing one image.
+ */
 public class SpriteDefault extends Sprite
 {
     private final Image image;
@@ -16,6 +19,9 @@ public class SpriteDefault extends Sprite
         image = Images.load(getTexture() + ".png");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Image getImage(Object o)
     {
