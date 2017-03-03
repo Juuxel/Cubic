@@ -9,8 +9,8 @@ public class EnemyNormal extends Enemy
 {
     public EnemyNormal()
     {
-        x = Math.random() * Cubic.game.getWidth();
-        y = GameValues.GROUND;
+        setX(Math.random() * Cubic.game.getWidth());
+        setY(GameValues.GROUND);
     }
 
     public void draw(Graphics g)
@@ -21,10 +21,10 @@ public class EnemyNormal extends Enemy
     @Override
     public void move()
     {
-        if (Cubic.player.getX() < x)
-            xSpeed = Math.max(-1, xSpeed - 1);
-        else if (Cubic.player.getX() > x)
-            xSpeed = Math.min(1, xSpeed + 1);
+        if (Cubic.player.getX() < getX())
+            setXSpeed(Math.max(-1, getXSpeed() - 1));
+        else if (Cubic.player.getX() > getX())
+            setXSpeed(Math.min(1, getXSpeed() + 1));
     }
 
     @Override

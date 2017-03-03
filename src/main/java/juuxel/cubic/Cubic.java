@@ -2,19 +2,24 @@ package juuxel.cubic;
 
 import juuxel.cubic.creature.Creature;
 import juuxel.cubic.creature.Player;
-import juuxel.cubic.creature.enemy.*;
+import juuxel.cubic.creature.enemy.Enemy;
+import juuxel.cubic.creature.enemy.EnemyLists;
+import juuxel.cubic.creature.enemy.EnemyType;
 import juuxel.cubic.level.Level;
+import juuxel.cubic.lib.GameInfo;
+import juuxel.cubic.lib.Images;
 import juuxel.cubic.mod.ModLoader;
-import juuxel.cubic.options.*;
-import juuxel.cubic.lib.*;
-import juuxel.cubic.util.*;
+import juuxel.cubic.options.Options;
 import juuxel.cubic.render.Graphics;
-import juuxel.cubic.render.Screenshooter;
 import juuxel.cubic.render.RenderEngine;
+import juuxel.cubic.render.Screenshooter;
 import juuxel.cubic.render.sprite.SpriteLoader;
+import juuxel.cubic.util.ICreatureListener;
+import juuxel.cubic.util.Translator;
 
 import javax.swing.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -174,12 +179,12 @@ public final class Cubic implements KeyListener
 
             if (key == Options.moveLeft.getValue())
             {
-                player.xSpeed = Math.max(-1.75, player.xSpeed - 1.5);
+                player.setXSpeed(Math.max(-1.75, player.getXSpeed() - 1.5));
                 moveKeyDown = true;
             }
             else if (key == Options.moveRight.getValue())
             {
-                player.xSpeed = Math.min(1.75, player.xSpeed + 1.5);
+                player.setXSpeed(Math.min(1.75, player.getXSpeed() + 1.5));
                 moveKeyDown = true;
             }
             else if (key == Options.jump.getValue())

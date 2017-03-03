@@ -32,7 +32,7 @@ public final class EffectLevelUp extends Effect
 
         if (lifetime == 3)
         {
-            new Particle(EFFECT_COLORS[random.nextInt(EFFECT_COLORS.length)], x, y);
+            new Particle(EFFECT_COLORS[getRandom().nextInt(EFFECT_COLORS.length)], getX(), getY());
             lifetime = 0;
         }
     }

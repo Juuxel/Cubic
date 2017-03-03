@@ -7,7 +7,8 @@ public final class EffectDeath extends Effect
     public EffectDeath(double x, double y)
     {
         super(x, y);
-        spriteWidth = spriteHeight = 16;
+        setSpriteWidth(16);
+        setSpriteHeight(16);
         setSprite(Images.death);
     }
 }

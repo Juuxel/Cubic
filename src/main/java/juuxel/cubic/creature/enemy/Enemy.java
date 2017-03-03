@@ -22,31 +22,33 @@ public abstract class Enemy extends Creature
         if (!sliding)
             move();
         else
-            xSpeed *= 0.97;
+            setXSpeed(getXSpeed() * 0.97);
 
-        if (!isCollisionEnabled() && y < -20)
+        if (!isCollisionEnabled() && getY() < -20)
             Cubic.CREATURES.remove(this);
 
-        if (Math.abs(xSpeed) < 0.5)
+        if (Math.abs(getXSpeed()) < 0.5)
             sliding = false;
 
         if (slidable)
             Cubic.ENEMIES.forEach(enemy -> {
-                if (!(enemy == this) && enemy.slidable && Math.abs(enemy.x - x) < SLIDE_DISTANCE && Math.abs(enemy.y - y) < SLIDE_DISTANCE)
+                if (!(enemy == this) && enemy.slidable
+                        && Math.abs(enemy.getX() - getX()) < SLIDE_DISTANCE
+                        && Math.abs(enemy.getY() - getY()) < SLIDE_DISTANCE)
                 {
-                    boolean bool = enemy.x > x;
+                    boolean bool = enemy.getX() > getX();
 
-                    enemy.xSpeed += bool ? 1.25 : -1.25;
-                    xSpeed += bool ? -1.25 : 1.25;
+                    enemy.setXSpeed(getXSpeed() + (bool ? 1.25 : -1.25));
+                    setXSpeed(getXSpeed() + (bool ? -1.25 : 1.25));
                     sliding = true;
                 }
             });
 
-        if (x < -10)
-            if (edgeMove) x = Cubic.game.getWidth() + 10;
+        if (getX() < -10)
+            if (edgeMove) setX(Cubic.game.getWidth() + 10);
             else Cubic.CREATURES.remove(this);
-        if (x > Cubic.game.getWidth() + 10)
-            if (edgeMove) x = -10;
+        if (getX() > Cubic.game.getWidth() + 10)
+            if (edgeMove) setX(-10);
             else Cubic.CREATURES.remove(this);
     }
 
@@ -54,18 +56,18 @@ public abstract class Enemy extends Creature
     public void kill()
     {
         Cubic.score += getScore();
-        Cubic.player.ySpeed = 5;
+        Cubic.player.setYSpeed(5);
 
         Cubic.ENEMIES.remove(this);
-        ySpeed = -2;
+        setYSpeed(-2);
         setCollisionEnabled(false);
 
         if (Cubic.ENEMIES.size() == 0)
             Cubic.player.levelUp();
 
-        if (random.nextInt(10) == 1)
+        if (getRandom().nextInt(10) == 1)
         {
-            new EffectLife(x, y);
+            new EffectLife(getX(), getY());
             Cubic.lives++;
         }
     }

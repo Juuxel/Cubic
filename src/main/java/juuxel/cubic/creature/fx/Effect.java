@@ -1,25 +1,25 @@
 package juuxel.cubic.creature.fx;
 
-import juuxel.cubic.creature.Creature;
 import juuxel.cubic.Cubic;
+import juuxel.cubic.creature.Creature;
 
 public abstract class Effect extends Creature
 {
     public Effect(double x, double y)
     {
-        this.x = x;
-        this.y = y;
+        setX(x);
+        setY(y);
 
-        ySpeed = 7;
-        xSpeed = random.nextBoolean() ? -1 : 1;
+        setYSpeed(7);
+        setXSpeed(getRandom().nextBoolean() ? -1 : 1);
     }
 
     @Override
     protected void logic()
     {
-        ySpeed -= 0.1;
+        setYSpeed(getYSpeed() - 0.1); // -= 0.1
 
-        if (y < -50)
+        if (getY() < -50)
             Cubic.CREATURES.remove(this);
     }
 }

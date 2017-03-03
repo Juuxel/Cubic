@@ -14,8 +14,8 @@ public class Particle extends Creature
     public Particle(Color color, double x, double y)
     {
         this.color = color;
-        this.x = x;
-        this.y = y;
+        this.setX(x);
+        this.setY(y);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class Particle extends Creature
         Color oldColor = g.getGraphics2D().getColor();
 
         g.getGraphics2D().setColor(color);
-        g.getGraphics2D().fillRect((int) x, (int) calculateY(), 5, 5);
+        g.getGraphics2D().fillRect((int) getX(), (int) calculateY(), 5, 5);
 
         g.getGraphics2D().setColor(oldColor);
     }

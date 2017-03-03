@@ -15,8 +15,8 @@ public class EnemyBouncing extends EnemyNormal
     {
         super.move();
 
-        if (ySpeed == 0)
-            ySpeed = 2.75;
+        if (getYSpeed() == 0)
+            setYSpeed(2.75);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class EnemyBouncing extends EnemyNormal
         super.logic();
 
         if (!onGround())
-            ySpeed -= 0.1;
+            setYSpeed(getYSpeed() - 0.1); // TODO Figure out a way to do -=
     }
 
     @Override

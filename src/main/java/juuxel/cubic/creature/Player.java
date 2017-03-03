@@ -20,9 +20,9 @@ public final class Player extends Creature
         setCollisionEnabled(true);
         setFlippingEnabled(true);
         setSprite(Images.player);
-        x = 100;
-        y = 100;
-        speedModifierY = 2;
+        setX(100);
+        setY(100);
+        setSpeedModifierY(2);
     }
 
     @Override
@@ -35,22 +35,22 @@ public final class Player extends Creature
     @Override
     protected void logic()
     {
-        ySpeed -= 0.1;
+        setYSpeed(getYSpeed() - 0.1);
 
         if (onGround())
         {
-            ySpeed = 0;
-            y = GameValues.GROUND;
+            setYSpeed(0);
+            setY(GameValues.GROUND);
 
-            if (jumpPressed && !jumpWasPressed) ySpeed = 7;
+            if (jumpPressed && !jumpWasPressed) setYSpeed(7);
 
-            if (xSpeed != 0 && !Cubic.moveKeyDown) xSpeed *= 0.97;
+            if (getXSpeed() != 0 && !Cubic.moveKeyDown) setXSpeed(getXSpeed() * 0.97);
         }
 
-        if (x < -10)
-            x = Cubic.game.getWidth() + 10;
-        if (x > Cubic.game.getWidth() + 10)
-            x = -10;
+        if (getX() < -10)
+            setX(Cubic.game.getWidth() + 10);
+        if (getX() > Cubic.game.getWidth() + 10)
+            setX(-10);
 
         jumpWasPressed = jumpPressed;
         jumpPressed = Cubic.jumpKeyDown;
@@ -62,9 +62,9 @@ public final class Player extends Creature
         {
             // TODO Replace with Creature.onCollidedWith(Creature, Side)
 
-            if (Math.abs(x - enemy.x) > 50 || Math.abs(y - enemy.y) > 33) return;
+            if (Math.abs(getX() - enemy.getX()) > 50 || Math.abs(getY() - enemy.getY()) > 33) return;
 
-            if (enemy.y + 20 < y) enemy.kill();
+            if (enemy.getY() + 20 < getY()) enemy.kill();
             else if (invincibleTime == 0) kill();
         }
     }
@@ -73,10 +73,10 @@ public final class Player extends Creature
     public void kill()
     {
         super.kill();
-        y = 100;
+        setY(100);
         Cubic.deaths++;
         Cubic.lives--;
-        new EffectDeath(x, y);
+        new EffectDeath(getX(), getY());
         invincibleTime = 200;
     }
 
@@ -85,7 +85,7 @@ public final class Player extends Creature
         Cubic.level++;
         Cubic.lives++;
 
-        new EffectLevelUp(x, y);
+        new EffectLevelUp(getX(), getY());
 
         for (int i = 0; i < Cubic.level; i++)
             Cubic.ENEMIES.add(EnemyLists.createEnemy(EnemyType.NORMAL));
