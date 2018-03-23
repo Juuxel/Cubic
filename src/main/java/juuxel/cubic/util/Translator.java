@@ -185,7 +185,7 @@ public class Translator
         return Locale.forLanguageTag(language);
     }
 
-    private static class InputStreamProvider implements ITranslationProvider, IBasicFunctions
+    private static class InputStreamProvider implements ITranslationProvider
     {
         private List<String> translations;
         private String name;
@@ -214,7 +214,7 @@ public class Translator
                 properties.load(stream);
                 String languageArray = properties.getProperty("languages");
                 name = properties.getProperty("name");
-                translations = Arrays.asList(commaSplit(languageArray));
+                translations = Arrays.asList(Utils.commaSplit(languageArray));
                 internal = properties.containsKey("internal") ? Boolean.valueOf(properties.getProperty("internal")) : false;
                 stream.close();
             }

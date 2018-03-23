@@ -22,7 +22,8 @@ public interface ITranslationProvider
     String getName();
 
     /**
-     * Returns true if this provider should be loaded from the classpath.
+     * Returns true if this provider should be loaded from the classpath,
+     * false if it should be loaded from the file system.
      *
      * @return a boolean
      */
