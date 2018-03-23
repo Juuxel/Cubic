@@ -17,6 +17,7 @@ public class MainMenu extends CPanel
         add(Box.createVerticalStrut(20));
 
         add(new CLabel(new ImageIcon(Images.LOGO.getScaledInstance(128, 64, Image.SCALE_FAST))));
+        add(Box.createVerticalStrut(5));
         add(new CLabel(Translator.format("mainMenu.version", GameInfo.VERSION)));
         add(Box.createVerticalGlue());
 

@@ -2,15 +2,15 @@ package juuxel.cubic.render;
 
 import juuxel.cubic.Cubic;
 import juuxel.cubic.lib.GameInfo;
+import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.lib.Images;
 import juuxel.cubic.options.KeyBinding;
 import juuxel.cubic.options.Options;
 import juuxel.cubic.util.Translator;
 
-import java.awt.Color;
-import java.awt.GradientPaint;
-import java.awt.Paint;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 import static juuxel.cubic.Cubic.START_SCREEN;
 import static juuxel.cubic.Cubic.OPTIONS;
@@ -79,7 +79,11 @@ public class RenderEngine
             if (Cubic.lives <= 0)
             {
                 int dx = Cubic.game.getWidth() / 2, dy = Cubic.game.getHeight() / 2;
-                g.getGraphics2D().drawImage(Images.GAME_OVER, dx - 64, dy - 32, dx + 64, dy + 32, 0, 0, 32, 16, null);
+                Graphics2D g2D = g.getGraphics2D();
+                g2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
+                g2D.setFont(GameValues.FONT.deriveFont(36F));
+                g2D.drawString(Translator.translate("game.gameOver"), dx - 120, dy - 36);
+
                 Cubic.running = false;
             }
         }

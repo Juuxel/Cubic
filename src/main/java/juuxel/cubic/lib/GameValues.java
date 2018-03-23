@@ -16,7 +16,7 @@ public final class GameValues
 
         try
         {
-            f = Font.createFont(Font.TRUETYPE_FONT, GameValues.class.getResourceAsStream("/data/fonts/Connection.otf"))
+            f = Font.createFont(Font.TRUETYPE_FONT, GameValues.class.getResourceAsStream("/data/fonts/Pusab.otf"))
                     .deriveFont(16F);
         }
         catch (FontFormatException | IOException e)

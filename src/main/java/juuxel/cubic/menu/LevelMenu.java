@@ -20,7 +20,7 @@ public class LevelMenu extends CPanel
 
         Level.LEVELS.forEach(level -> {
             CButton button = new CButton(level.getName());
-            button.setFont(GameValues.FONT.deriveFont(Font.BOLD, 24F));
+            button.setFont(GameValues.FONT.deriveFont(24F));
 
             button.addActionListener(e -> {
                 Cubic.gameLevel = level;
