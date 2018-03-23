@@ -16,7 +16,7 @@ import java.util.function.Supplier;
  */
 public abstract class Level
 {
-    private static final Set<Supplier<Level>> SUPPLIERS = new HashSet<>();
+    public static final Set<Level> LEVELS = new HashSet<>();
 
     private Sprite ground;
 
@@ -59,34 +59,41 @@ public abstract class Level
     {}
 
     /**
+     * Gets the name of this level.
+     *
+     * @return the name
+     */
+    public abstract String getName();
+
+    /**
      * An internal method to register Cubic's default levels.
      * Mods, please don't call this.
      */
     public static void registerDefaults()
     {
-        registerLevelSupplier(LevelGrassyLands::new);
-        registerLevelSupplier(LevelBrickCity::new);
+        registerLevel(new LevelGrassyLands());
+        registerLevel(new LevelBrickCity());
     }
 
     /**
-     * Registers a new Level Supplier to the game.
+     * Registers a new Level to the game.
      * This method should be called on the coreInit phase.
      *
-     * @param supplier the new supplier
+     * @param level the new level
      */
-    public static void registerLevelSupplier(Supplier<Level> supplier)
+    public static void registerLevel(Level level)
     {
-        SUPPLIERS.add(supplier);
+        LEVELS.add(level);
     }
 
     /**
-     * Gets a new level object from the supplier list.
+     * Gets a random level object from the supplier list.
      *
      * @return a Level
-     * @see #registerLevelSupplier(Supplier) registerLevelSupplier
+     * @see #registerLevel(Level) registerLevelSupplier
      */
-    public static Level getNewLevel()
+    public static Level getRandomLevel()
     {
-        return Randomizer.getRandomObject(SUPPLIERS).get();
+        return Randomizer.getRandomObject(LEVELS);
     }
 }

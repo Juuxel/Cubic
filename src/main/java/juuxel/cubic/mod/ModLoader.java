@@ -1,7 +1,5 @@
 package juuxel.cubic.mod;
 
-import juuxel.cubic.util.IBasicFunctions;
-
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -14,7 +12,7 @@ import java.util.List;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
-public final class ModLoader implements IBasicFunctions
+public final class ModLoader
 {
     private final List<ModContainer> mods;
 

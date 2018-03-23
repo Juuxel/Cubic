@@ -6,8 +6,9 @@ import juuxel.cubic.lib.Images;
 import juuxel.cubic.util.Translator;
 
 import javax.swing.*;
+import java.awt.Image;
 
-public class MainMenu extends JPanel
+public class MainMenu extends CPanel
 {
     public MainMenu()
     {
@@ -15,13 +16,13 @@ public class MainMenu extends JPanel
 
         add(Box.createVerticalStrut(20));
 
-        add(new JLabel(new ImageIcon(Images.LOGO)));
-        add(new JLabel(Translator.format("mainMenu.version", GameInfo.VERSION)));
+        add(new CLabel(new ImageIcon(Images.LOGO.getScaledInstance(128, 64, Image.SCALE_FAST))));
+        add(new CLabel(Translator.format("mainMenu.version", GameInfo.VERSION)));
         add(Box.createVerticalGlue());
 
-        JButton playButton = new JButton(Translator.translate("mainMenu.play"));
-        JButton optionsButton = new JButton(Translator.translate("mainMenu.options"));
-        JButton quitButton = new JButton(Translator.translate("mainMenu.exit"));
+        CButton playButton = new CButton(Translator.translate("mainMenu.play"));
+        CButton optionsButton = new CButton(Translator.translate("mainMenu.options"));
+        CButton quitButton = new CButton(Translator.translate("mainMenu.exit"));
 
         playButton.addActionListener(e -> Cubic.selectScreen("LevelMenu"));
         optionsButton.addActionListener(e -> Cubic.selectScreen("OptionsMenu"));

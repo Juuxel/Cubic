@@ -45,6 +45,7 @@ public final class Player extends Creature
             if (jumpPressed && !jumpWasPressed) ySpeed = 7;
 
             if (xSpeed != 0 && !Cubic.moveKeyDown) xSpeed *= 0.97;
+            else if (Cubic.moveKeyDown) Cubic.moveKeyDown = false;
         }
 
         if (x < -10)
@@ -92,5 +93,15 @@ public final class Player extends Creature
 
         if (Cubic.level % 5 == 0)
             Cubic.ENEMIES.add(EnemyLists.createEnemy(EnemyType.STRANGE));
+    }
+
+    public void moveLeft()
+    {
+        xSpeed = Math.max(-1.75, xSpeed - 1.5);
+    }
+
+    public void moveRight()
+    {
+        xSpeed = Math.min(1.75, xSpeed + 1.5);
     }
 }

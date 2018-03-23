@@ -98,12 +98,12 @@ public class RenderEngine
         drawNumberString(g, String.format(Translator.getLocale(), "%,d", Cubic.lives), 30, 70);
     }
 
-    private void drawLevel(Graphics g)
+    public void drawLevel(Graphics g)
     {
         Cubic.gameLevel.draw(g);
     }
 
-    private void drawSky(Graphics g)
+    public void drawSky(Graphics g)
     {
         Paint paint = g.getGraphics2D().getPaint();
 

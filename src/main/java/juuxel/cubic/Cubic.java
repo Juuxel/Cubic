@@ -25,7 +25,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 import static java.awt.event.KeyEvent.*;
 
-public final class Cubic implements KeyListener
+public final class Cubic
 {
     public static Cubic game;
     public static Player player;
@@ -38,6 +38,7 @@ public final class Cubic implements KeyListener
 
     private final GameFrame gameFrame;
     private final WindowPane windowPane;
+    private final GamePane gamePane;
 
     public static final int START_SCREEN = 0;
     public static final int OPTIONS = 1;
@@ -51,7 +52,8 @@ public final class Cubic implements KeyListener
 
     private Cubic()
     {
-        windowPane = new WindowPane();
+        gamePane = new GamePane();
+        windowPane = new WindowPane(this);
         (gameFrame = new GameFrame(this, GameInfo.NAME + " " + GameInfo.VERSION)).setVisible(true);
     }
 
@@ -62,7 +64,6 @@ public final class Cubic implements KeyListener
         coreInit();
         contentInit();
         game = new Cubic();
-        gameLevel = Level.getNewLevel();
         player = new Player();
         ENEMIES.add(EnemyLists.createEnemy(EnemyType.NORMAL));
 
@@ -96,7 +97,9 @@ public final class Cubic implements KeyListener
         Translator.initialize();
         Options.initialize();
         SpriteLoader.registerDefaults();
+        Images.initialize();
         Level.registerDefaults();
+        gameLevel = Level.getRandomLevel();
         modLoader.init();
         modLoader.coreInit();
     }
@@ -104,7 +107,6 @@ public final class Cubic implements KeyListener
     private static void contentInit()
     {
         EnemyLists.initializeLists();
-        Images.initialize();
         modLoader.contentInit();
     }
 
@@ -123,87 +125,6 @@ public final class Cubic implements KeyListener
         gameFrame.repaint();
     }
 
-    public void keyPressed(KeyEvent e)
-    {
-        if (!selectingBindings && e.getKeyCode() == Options.takeScreenshot.getValue())
-            Screenshooter.takeScreenshot();
-
-        if (inStartScreen)
-        {
-            if (selectingBindings)
-            {
-                switch (controlIndex)
-                {
-                    case 1:
-                        Options.moveLeft.setValue(e.getKeyCode());
-                        break;
-                    case 2:
-                        Options.moveRight.setValue(e.getKeyCode());
-                        break;
-                    case 3:
-                        Options.jump.setValue(e.getKeyCode());
-                        break;
-                    case 4:
-                        Options.takeScreenshot.setValue(e.getKeyCode());
-                }
-
-                selectingBindings = false;
-                controlIndex = 0;
-                optionsChanged = true;
-            }
-            else
-            {
-                switch (e.getKeyCode())
-                {
-                    case VK_UP:
-                        if (selectedButton != 0)
-                            selectedButton--;
-                        else
-                            selectedButton = getMaximumIndex(selectedScreen);
-                        break;
-                    case VK_DOWN:
-                        if (selectedButton != getMaximumIndex(selectedScreen))
-                            selectedButton++;
-                        else
-                            selectedButton = 0;
-                        break;
-                    case VK_SPACE:
-                    case VK_ENTER:
-                        selectButton();
-                        break;
-                }
-            }
-        }
-        else
-        {
-            int key = e.getKeyCode();
-
-            if (key == Options.moveLeft.getValue())
-            {
-                player.xSpeed = Math.max(-1.75, player.xSpeed - 1.5);
-                moveKeyDown = true;
-            }
-            else if (key == Options.moveRight.getValue())
-            {
-                player.xSpeed = Math.min(1.75, player.xSpeed + 1.5);
-                moveKeyDown = true;
-            }
-            else if (key == Options.jump.getValue())
-                jumpKeyDown = true;
-        }
-    }
-
-    public void keyReleased(KeyEvent e)
-    {
-        if (e.getKeyCode() == Options.moveLeft.getValue() || e.getKeyCode() == Options.moveRight.getValue())
-            moveKeyDown = false;
-        else if (e.getKeyCode() == Options.jump.getValue())
-            jumpKeyDown = false;
-    }
-
-    public void keyTyped(KeyEvent e)
-    {}
-
     public int getHeight()
     {
         return gameFrame.getHeight();
@@ -219,14 +140,9 @@ public final class Cubic implements KeyListener
         return gameFrame;
     }
 
-    public WindowPane getWindowPane()
+    public GamePane getGamePane()
     {
-        return windowPane;
-    }
-
-    public static void exit()
-    {
-        System.exit(0);
+        return gamePane;
     }
 
     @Deprecated
@@ -244,58 +160,6 @@ public final class Cubic implements KeyListener
                 return 4;
             default:
                 return 0;
-        }
-    }
-
-    private static void selectButton()
-    {
-        switch (selectedScreen)
-        {
-            case START_SCREEN:
-                if (selectedButton == 0)
-                {
-                    inStartScreen = false;
-                }
-                else if (selectedButton == 1)
-                    selectScreen(OPTIONS);
-                else
-                    exit();
-                break;
-            case OPTIONS:
-                if (selectedButton == 0)
-                {
-                    if (optionsChanged)
-                    {
-                        Options.reloadAndWriteOptions();
-                        optionsChanged = false;
-                    }
-
-                    selectScreen(START_SCREEN);
-                }
-                else if (selectedButton == 1)
-                    selectScreen(CONTROLS);
-                else if (selectedButton == 2)
-                    selectScreen(LANGUAGE_SCREEN);
-                break;
-            case LANGUAGE_SCREEN:
-                if (selectedButton == 0)
-                    selectScreen(OPTIONS);
-                else
-                {
-                    Translator.setLanguage(selectedButton - 1);
-                    Translator.reloadProperties();
-                    optionsChanged = true;
-                }
-                break;
-            case CONTROLS:
-                if (selectedButton == 0)
-                    selectScreen(OPTIONS);
-                else
-                {
-                    selectingBindings = true;
-                    controlIndex = selectedButton;
-                }
-                break;
         }
     }
 
@@ -339,7 +203,6 @@ public final class Cubic implements KeyListener
             setContentPane(game.windowPane);
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             setSize(640, 480);
-            addKeyListener(game);
         }
     }
 
@@ -347,25 +210,76 @@ public final class Cubic implements KeyListener
     {
         private final CardLayout layout;
 
-        private WindowPane()
+        private WindowPane(Cubic game)
         {
             layout = new CardLayout();
             setLayout(layout);
             add(new MainMenu(), "MainMenu");
             add(new OptionsMenu(), "OptionsMenu");
             add(new LevelMenu(), "LevelMenu");
-            add(new GamePane(), "Game");
+            add(game.gamePane, "Game");
             layout.show(this, "MainMenu");
+        }
+
+        @Override
+        protected void paintComponent(java.awt.Graphics g)
+        {
+            super.paintComponent(g);
+
+            RenderEngine.INSTANCE.drawSky(Graphics.fromAWTGraphics(g));
+            RenderEngine.INSTANCE.drawLevel(Graphics.fromAWTGraphics(g));
         }
     }
 
-    private static class GamePane extends JPanel
+    public static class GamePane extends JPanel
     {
+        private GamePane()
+        {
+            addKeyListener(new Keyboard());
+            setFocusable(true);
+        }
+
         @Override
         public void paintComponent(java.awt.Graphics g)
         {
             super.paintComponent(g);
             RenderEngine.INSTANCE.repaint(Graphics.fromAWTGraphics(g));
         }
+    }
+
+    private static class Keyboard extends KeyAdapter
+    {
+        public void keyPressed(KeyEvent e)
+        {
+            if (!selectingBindings && e.getKeyCode() == Options.takeScreenshot.getValue())
+                Screenshooter.takeScreenshot();
+
+            if (!inStartScreen)
+            {
+                int key = e.getKeyCode();
+
+                if (key == Options.moveLeft.getValue())
+                {
+                    player.moveLeft();
+                    moveKeyDown = true;
+                }
+                else if (key == Options.moveRight.getValue())
+                {
+                    player.moveRight();
+                    moveKeyDown = true;
+                }
+                else if (key == Options.jump.getValue())
+                    jumpKeyDown = true;
+            }
+        }
+
+        public void keyReleased(KeyEvent e)
+        {
+            if (e.getKeyCode() == Options.moveLeft.getValue() || e.getKeyCode() == Options.moveRight.getValue())
+                moveKeyDown = false;
+            else if (e.getKeyCode() == Options.jump.getValue())
+                jumpKeyDown = false;
+        }
+
     }
 }
