@@ -1,10 +1,10 @@
 package juuxel.cubic.level;
 
 import juuxel.cubic.Cubic;
-import juuxel.cubic.util.IBasicFunctions;
-import juuxel.cubic.util.Randomizer;
 import juuxel.cubic.render.Graphics;
 import juuxel.cubic.render.sprite.Sprite;
+import juuxel.cubic.util.Randomizer;
+import juuxel.cubic.util.Utils;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,7 +14,7 @@ import java.util.function.Supplier;
  * A Level is a "world" for Cubic. It sets the ground look,
  * decorations and other details of the current game.
  */
-public abstract class Level implements IBasicFunctions
+public abstract class Level
 {
     private static final Set<Supplier<Level>> SUPPLIERS = new HashSet<>();
 
@@ -42,7 +42,7 @@ public abstract class Level implements IBasicFunctions
     {
         for (int i = 0; i < Cubic.game.getWidth() / 32 + 1; i++)
         {
-            int x = i * 32, y = (int) calculateY(32);
+            int x = i * 32, y = (int) Utils.yOnScreen(32);
 
             g.drawImage(ground, x, y - 32, 32, 32);
         }

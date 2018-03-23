@@ -5,12 +5,9 @@ import juuxel.cubic.Cubic;
 /**
  * Includes basic functions for classes to implement.
  */
-public interface IBasicFunctions
+public final class Utils
 {
-    /**
-     * IBasicFunctions object for usage in static methods.
-     */
-    IBasicFunctions DEFAULT = new DefaultImpl();
+    private Utils() {}
 
     /**
      * Inverts the given parameter with the game's window height.
@@ -18,7 +15,7 @@ public interface IBasicFunctions
      * @param d the number to be inverted
      * @return inverted number
      */
-    default double calculateY(double d)
+    public static double yOnScreen(double d)
     {
         return Cubic.game.getHeight() - d;
     }
@@ -30,18 +27,11 @@ public interface IBasicFunctions
      * @param str the string to be split
      * @return the split string
      */
-    default String[] commaSplit(String str)
+    public static String[] commaSplit(String str)
     {
         if (str.contains(","))
             return str.split(", *");
 
         return new String[] { str };
-    }
-
-    // PLEASE DON'T TOUCH
-    class DefaultImpl implements IBasicFunctions
-    {
-        private DefaultImpl()
-        {}
     }
 }

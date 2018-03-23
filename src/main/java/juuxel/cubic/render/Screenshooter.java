@@ -40,9 +40,8 @@ public class Screenshooter
     }
 
     /**
-     * Takes a screenshot of the game frame and
-     * saves it to the screenshots directory inside
-     * running directory.
+     * Takes a screenshot of the game frame and saves it to the screenshots directory inside
+     * the run directory.
      */
     public static void takeScreenshot()
     {

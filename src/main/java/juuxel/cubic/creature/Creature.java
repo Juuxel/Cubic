@@ -2,15 +2,15 @@ package juuxel.cubic.creature;
 
 import juuxel.cubic.Cubic;
 import juuxel.cubic.lib.GameValues;
-import juuxel.cubic.util.Direction;
-import juuxel.cubic.util.IBasicFunctions;
 import juuxel.cubic.render.Graphics;
 import juuxel.cubic.render.sprite.Sprite;
+import juuxel.cubic.util.Direction;
+import juuxel.cubic.util.Utils;
 
 import java.awt.*;
 import java.util.Random;
 
-public abstract class Creature implements IBasicFunctions
+public abstract class Creature
 {
     public final int id;
     protected double x, y;
@@ -32,15 +32,15 @@ public abstract class Creature implements IBasicFunctions
         setFlippingEnabled(false);
     }
 
-    public double calculateY()
-    { return calculateY(y); }
+    public double yOnScreen()
+    { return Utils.yOnScreen(y); }
 
     public void kill()
     {}
 
     private void drawCreature(Graphics g, Image image, int width, int height)
     {
-        int dx = (int) x, dy = (int) calculateY();
+        int dx = (int) x, dy = (int) yOnScreen();
 
         if (direction == Direction.RIGHT)
             g.drawImage(image, dx - width / 2, dy - height / 2, width, height);

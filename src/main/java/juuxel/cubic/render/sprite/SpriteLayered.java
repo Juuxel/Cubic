@@ -1,6 +1,6 @@
 package juuxel.cubic.render.sprite;
 
-import juuxel.cubic.util.IBasicFunctions;
+import juuxel.cubic.util.Utils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -11,7 +11,7 @@ import java.util.Properties;
 /**
  * A sprite consisting of multiple sprite layers.
  */
-public class SpriteLayered extends Sprite implements IBasicFunctions
+public class SpriteLayered extends Sprite
 {
     private final Map<Object, Image> imageMap;
 
@@ -24,7 +24,7 @@ public class SpriteLayered extends Sprite implements IBasicFunctions
 
     private Image addToMap(Object o)
     {
-        String[] subspriteNames = commaSplit(getTexture());
+        String[] subspriteNames = Utils.commaSplit(getTexture());
         Sprite[] subsprites = new Sprite[subspriteNames.length];
         int width = 0, height = 0;
 
