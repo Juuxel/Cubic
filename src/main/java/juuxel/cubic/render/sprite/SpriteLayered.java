@@ -53,8 +53,8 @@ public class SpriteLayered extends Sprite
      * {@inheritDoc}
      */
     @Override
-    public Image getImage(Object o)
+    public Image getImage(Object owner)
     {
-        return imageMap.containsKey(o) ? imageMap.get(o) : addToMap(o);
+        return imageMap.containsKey(owner) ? imageMap.get(owner) : addToMap(owner);
     }
 }

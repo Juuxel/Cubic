@@ -23,7 +23,7 @@ public class SpriteDefault extends Sprite
      * {@inheritDoc}
      */
     @Override
-    public Image getImage(Object o)
+    public Image getImage(Object owner)
     {
         return image;
     }

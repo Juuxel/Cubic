@@ -12,7 +12,6 @@ import java.util.Random;
 
 public abstract class Creature
 {
-    public final int id;
     protected double x, y;
     public double xSpeed = 0, ySpeed = 0;
     protected final Random random = new Random();
@@ -25,7 +24,6 @@ public abstract class Creature
 
     public Creature()
     {
-        id = Cubic.CREATURES.size();
         Cubic.CREATURES.add(this);
         Cubic.CREATURE_LISTENERS.forEach(listener -> listener.onCreatureCreated(this));
         setCollisionEnabled(false);

@@ -19,8 +19,7 @@ import juuxel.cubic.render.sprite.SpriteLoader;
 import javax.swing.*;
 import java.awt.CardLayout;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import static java.awt.event.KeyEvent.*;
@@ -45,9 +44,6 @@ public final class Cubic
     public static final int LANGUAGE_SCREEN = 2;
     public static final int CONTROLS = 3;
 
-    private static int selectedButton = 0, selectedScreen = START_SCREEN, controlIndex = 0;
-    private static boolean selectingBindings = false, optionsChanged = false;
-
     private static ModLoader modLoader;
 
     private Cubic()
@@ -55,6 +51,7 @@ public final class Cubic
         gamePane = new GamePane();
         windowPane = new WindowPane(this);
         (gameFrame = new GameFrame(this, GameInfo.NAME + " " + GameInfo.VERSION)).setVisible(true);
+        gamePane.requestFocusInWindow();
     }
 
     public static void main(String[] args) throws Exception
@@ -64,15 +61,6 @@ public final class Cubic
         coreInit();
         contentInit();
         game = new Cubic();
-        player = new Player();
-        ENEMIES.add(EnemyLists.createEnemy(EnemyType.NORMAL));
-
-        while (inStartScreen)
-        {
-            RenderEngine.repaint();
-        }
-
-        run();
     }
 
     private static void processArgs(String[] args)
@@ -110,14 +98,30 @@ public final class Cubic
         modLoader.contentInit();
     }
 
-    public static void run() throws Exception
+    public static void newGame(Level level)
     {
-        while (running)
-        {
-            CREATURES.forEach(Creature::executeLogic);
-            RenderEngine.repaint();
-            Thread.sleep(5);
-        }
+        score = 0;
+        deaths = 0;
+        Cubic.level = 1;
+        lives = 8;
+        CREATURES.clear();
+        ENEMIES.clear();
+        player = new Player();
+        ENEMIES.add(EnemyLists.createEnemy(EnemyType.NORMAL));
+        Cubic.gameLevel = level;
+        Cubic.inStartScreen = false;
+        Cubic.selectScreen("Game");
+
+        new java.util.Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run()
+            {
+                if (!inStartScreen)
+                {
+                    CREATURES.forEach(Creature::executeLogic);
+                    RenderEngine.repaint();
+                }
+            }}, 0L, 5L);
     }
 
     public void repaint()
@@ -138,54 +142,6 @@ public final class Cubic
     public GameFrame getGameFrame()
     {
         return gameFrame;
-    }
-
-    public GamePane getGamePane()
-    {
-        return gamePane;
-    }
-
-    @Deprecated
-    public static int getMaximumIndex(int screen)
-    {
-        switch (screen)
-        {
-            case START_SCREEN:
-                return 2;
-            case OPTIONS:
-                return 2;
-            case LANGUAGE_SCREEN:
-                return Translator.getLanguages().size();
-            case CONTROLS:
-                return 4;
-            default:
-                return 0;
-        }
-    }
-
-    @Deprecated
-    public static int getSelectedButton()
-    {
-        return selectedButton;
-    }
-
-    @Deprecated
-    public static int getSelectedScreen()
-    {
-        return selectedScreen;
-    }
-
-    @Deprecated
-    public static int getControlIndex()
-    {
-        return controlIndex;
-    }
-
-    @Deprecated
-    public static void selectScreen(int screen)
-    {
-        selectedScreen = screen;
-        selectedButton = 0;
     }
 
     public static void selectScreen(String screen)
@@ -219,6 +175,8 @@ public final class Cubic
             add(new LevelMenu(), "LevelMenu");
             add(game.gamePane, "Game");
             layout.show(this, "MainMenu");
+            addKeyListener(new Keyboard());
+            setFocusable(true);
         }
 
         @Override
@@ -235,8 +193,6 @@ public final class Cubic
     {
         private GamePane()
         {
-            addKeyListener(new Keyboard());
-            setFocusable(true);
         }
 
         @Override
@@ -251,10 +207,9 @@ public final class Cubic
     {
         public void keyPressed(KeyEvent e)
         {
-            if (!selectingBindings && e.getKeyCode() == Options.takeScreenshot.getValue())
+            if (e.getKeyCode() == VK_F12)
                 Screenshooter.takeScreenshot();
-
-            if (!inStartScreen)
+            else if (!inStartScreen)
             {
                 int key = e.getKeyCode();
 
@@ -270,6 +225,12 @@ public final class Cubic
                 }
                 else if (key == Options.jump.getValue())
                     jumpKeyDown = true;
+                else if (key == VK_ESCAPE)
+                {
+                    inStartScreen = true;
+                    MainMenu.continueButton.setVisible(true);
+                    selectScreen("MainMenu");
+                }
             }
         }
 

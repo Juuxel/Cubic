@@ -15,7 +15,7 @@ public final class Player extends Creature
     public int invincibleTime = 0;
     public boolean jumpPressed, jumpWasPressed;
 
-    public Player() throws IOException
+    public Player()
     {
         setCollisionEnabled(true);
         setFlippingEnabled(true);

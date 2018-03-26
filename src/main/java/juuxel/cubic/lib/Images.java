@@ -47,6 +47,8 @@ public final class Images
     public static Sprite radioButtonSelected;
     public static Sprite grass;
     public static Sprite bricks;
+    public static Sprite backButtonSprite;
+    public static Image backButton;
 
     public static Map<Character, Sprite> numbers;
 
@@ -97,6 +99,8 @@ public final class Images
         radioButtonSelected = SpriteLoader.load("gui/radio_button_selected");
         grass = SpriteLoader.load("tiles/grass");
         bricks = SpriteLoader.load("tiles/bricks");
+        backButtonSprite = SpriteLoader.load("gui/back");
+        backButton = backButtonSprite.getImage().getScaledInstance(64, 64, Image.SCALE_DEFAULT);
 
         initializeNumberMap();
     }

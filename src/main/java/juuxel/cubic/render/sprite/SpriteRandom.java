@@ -38,9 +38,9 @@ public class SpriteRandom extends Sprite implements ICreatureListener
      * {@inheritDoc}
      */
     @Override
-    public Image getImage(Object o)
+    public Image getImage(Object owner)
     {
-        return spriteMap.get(o).getImage(o);
+        return spriteMap.get(owner).getImage(owner);
     }
 
     /**

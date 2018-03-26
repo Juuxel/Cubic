@@ -26,15 +26,17 @@ public abstract class Sprite
 
     /**
      * Gets the image of this sprite for an object.
+     * The owner matters when having different images for different owners
+     * (in {@link SpriteRandom}, for example).
      *
-     * @param o the object
-     * @return the sprite image for the object <code>o</code>
+     * @param owner the owner
+     * @return the sprite image for the owner
      */
-    public abstract Image getImage(Object o);
+    public abstract Image getImage(Object owner);
 
     /**
      * Gets the image of this sprite for this sprite object.
-     * Useful when you don't need to care about the object for the image.
+     * Useful when you don't need to care about the owner of the image.
      *
      * @return the sprite image for this object
      * @see #getImage(Object) getImage(Object)

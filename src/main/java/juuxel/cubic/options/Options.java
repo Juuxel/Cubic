@@ -18,8 +18,6 @@ public final class Options
     public static KeyBinding jump;
     public static KeyBinding takeScreenshot;
 
-    public static Font font;
-
     public static boolean captureFrame;
 
     //public static int fps;
@@ -29,14 +27,13 @@ public final class Options
     private Options()
     {}
 
-    public static void initialize() throws IOException, FontFormatException
+    public static void initialize() throws FontFormatException
     {
         moveLeft = new KeyBinding(VK_A);
         moveRight = new KeyBinding(VK_D);
         jump = new KeyBinding(VK_SPACE);
         takeScreenshot = new KeyBinding(VK_F2);
         captureFrame = false;
-        font = null;
         //fps = 60;
 
         properties = new Properties();
@@ -44,7 +41,6 @@ public final class Options
         properties.put("controls.moveRight", moveRight.toString());
         properties.put("controls.jump", jump.toString());
         properties.put("controls.takeScreenshot", takeScreenshot.toString());
-        properties.put("font", "default");
         properties.put("captureFrame", "false");
         properties.put("language", Translator.getLanguage());
         //properties.put("fps", "60");
@@ -67,32 +63,6 @@ public final class Options
                 takeScreenshot.setValue(Integer.valueOf(properties.getProperty("controls.takeScreenshot")));
 
                 captureFrame = Boolean.parseBoolean(properties.getProperty("captureFrame"));
-
-                String fontValue = properties.getProperty("font");
-
-                if (!fontValue.equals("default") && fontValue.contains(":"))
-                {
-                    String type = fontValue.substring(0, fontValue.indexOf(":"));
-                    String fontName = fontValue.substring(fontValue.indexOf(":") + 1);
-
-                    boolean file;
-
-                    switch (type)
-                    {
-                        case "file":
-                            file = true;
-                            break;
-                        case "system":
-                            file = false;
-                            break;
-                        default:
-                            throw new RuntimeException("Invalid font type: " + type);
-                    }
-
-                    font = file
-                        ? Font.createFont(Font.TRUETYPE_FONT, Files.newInputStream(Paths.get(fontName))).deriveFont(16F)
-                        : new Font(fontName, Font.PLAIN, 16);
-                }
 
                 //fps = Integer.parseInt(properties.getProperty("fps"));
 
