@@ -159,6 +159,7 @@ public final class Cubic
             setContentPane(game.windowPane);
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             setSize(640, 480);
+            setIconImage(Images.ICON);
         }
     }
 

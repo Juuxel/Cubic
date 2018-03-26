@@ -78,7 +78,6 @@ public class CButton extends JButton
         {
             buttonColor = baseColor.brighter();
             setForeground(baseColor.brighter());
-            System.out.println("HEHE");
         }
 
         @Override
@@ -86,7 +85,6 @@ public class CButton extends JButton
         {
             buttonColor = baseColor;
             setForeground(baseColor);
-            System.out.println(":(");
         }
     }
 }
