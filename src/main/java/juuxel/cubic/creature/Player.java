@@ -61,12 +61,30 @@ public final class Player extends Creature
 
         for (Enemy enemy : Cubic.ENEMIES)
         {
-            // TODO Replace with Creature.onCollidedWith(Creature, Side)
+            // TODO Replace with Creature.onCollidedWithPlayer(Side)
 
-            if (Math.abs(x - enemy.x) > 50 || Math.abs(y - enemy.y) > 33) return;
+            // Modified from https://gamedev.stackexchange.com/a/29796
 
-            if (enemy.y + 20 < y) enemy.kill();
-            else if (invincibleTime == 0) kill();
+            float w = 0.5F * (spriteWidth + enemy.spriteWidth);
+            float h = 0.5F * (spriteHeight + enemy.spriteHeight);
+            float dx = (float) (x + spriteWidth / 2 - (enemy.x + enemy.spriteWidth / 2));
+            float dy = (float) (y + spriteHeight / 2 - (enemy.y + enemy.spriteHeight / 2));
+
+            if (Math.abs(dx) <= w && Math.abs(dy) <= h)
+            {
+                float wy = w * dy;
+                float hx = h * dx;
+
+                if (wy > hx)
+                {
+                    if (wy > -hx) // Top
+                        enemy.kill();
+                    else if (invincibleTime == 0) // Left
+                        kill();
+                }
+                else if (wy > -hx && invincibleTime == 0) // Right
+                        kill();
+            }
         }
     }
 

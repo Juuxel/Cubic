@@ -31,7 +31,7 @@ public final class Cubic
     public static Level gameLevel;
     public static boolean inStartScreen = true, running = true, moveKeyDown, jumpKeyDown;
     public static final List<Enemy> ENEMIES = new CopyOnWriteArrayList<>();
-    public static int score = 0, deaths = 0, level = 1, lives = 8;
+    public static int score = 0, deaths = 0, level = 1, lives = 3;
     public static final List<Creature> CREATURES = new CopyOnWriteArrayList<>();
     public static final List<ICreatureListener> CREATURE_LISTENERS = new ArrayList<>();
 
@@ -104,7 +104,7 @@ public final class Cubic
         score = 0;
         deaths = 0;
         Cubic.level = 1;
-        lives = 8;
+        lives = 3;
         CREATURES.clear();
         ENEMIES.clear();
         player = new Player();
@@ -126,7 +126,7 @@ public final class Cubic
                         RenderEngine.repaint();
                     }
                 }
-            }, 0L, 5L);
+            }, 10L, 5L);
             hasTimerBeenCreated = true;
         }
     }
