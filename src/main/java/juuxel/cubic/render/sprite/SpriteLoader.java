@@ -56,6 +56,9 @@ public final class SpriteLoader
 
             String function = props.getProperty("function");
 
+            if (function == null)
+                function = "default";
+
             for (Map.Entry<String, Function<Properties, Sprite>> entry : SPRITE_PROVIDERS.entrySet())
             {
                 if (entry.getKey().equals(function))
