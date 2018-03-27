@@ -14,6 +14,7 @@ public class Translator
     private static String language;
     private static List<String> languages;
     private static final List<ITranslationProvider> TRANSLATION_PROVIDERS = new ArrayList<>();
+    private static final List<ILanguageChangeListener> LISTENERS = new ArrayList<>();
 
     private Translator()
     {}
@@ -80,6 +81,7 @@ public class Translator
     public static void setLanguage(String language)
     {
         Translator.language = language;
+        LISTENERS.forEach(ILanguageChangeListener::onLanguageChange);
     }
 
     public static void setLanguage(int index)
@@ -183,6 +185,11 @@ public class Translator
     public static Locale getLocale()
     {
         return Locale.forLanguageTag(language);
+    }
+
+    public static void addLanguageChangeListener(ILanguageChangeListener listener)
+    {
+        LISTENERS.add(listener);
     }
 
     private static class InputStreamProvider implements ITranslationProvider

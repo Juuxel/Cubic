@@ -22,15 +22,15 @@ public class MainMenu extends CPanel
 
         add(Box.createVerticalStrut(20));
 
-        add(new CLabel(new ImageIcon(Images.LOGO.getScaledInstance(128, 64, Image.SCALE_FAST))));
+        add(new CBasicLabel(new ImageIcon(Images.LOGO.getScaledInstance(128, 64, Image.SCALE_FAST))));
         add(Box.createVerticalStrut(5));
-        add(new CLabel(Translator.format("mainMenu.version", GameInfo.VERSION)));
+        add(new CLabel("mainMenu.version", GameInfo.VERSION));
         add(Box.createVerticalGlue());
 
-        CButton playButton = new CButton(Translator.translate("mainMenu.play"));
-        CButton optionsButton = new CButton(Translator.translate("mainMenu.options"));
-        CButton quitButton = new CButton(Translator.translate("mainMenu.exit"));
-        continueButton = new CButton(Translator.translate("mainMenu.continue"));
+        CButton playButton = new CButton("mainMenu.play");
+        CButton optionsButton = new CButton("mainMenu.options");
+        CButton quitButton = new CButton("mainMenu.exit");
+        continueButton = new CButton("mainMenu.continue");
 
         playButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         optionsButton.setAlignmentX(Component.CENTER_ALIGNMENT);

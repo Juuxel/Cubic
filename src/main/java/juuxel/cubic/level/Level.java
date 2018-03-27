@@ -59,11 +59,11 @@ public abstract class Level
     {}
 
     /**
-     * Gets the name of this level.
+     * Gets the translation key of the name of this level.
      *
-     * @return the name
+     * @return the key
      */
-    public abstract String getName();
+    public abstract String getNameKey();
 
     /**
      * An internal method to register Cubic's default levels.

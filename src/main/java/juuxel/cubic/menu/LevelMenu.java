@@ -4,7 +4,6 @@ import juuxel.cubic.Cubic;
 import juuxel.cubic.level.Level;
 import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.lib.Images;
-import juuxel.cubic.util.Translator;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -26,14 +25,14 @@ public class LevelMenu extends CPanel
         titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.X_AXIS));
         panel.setOpaque(false);
 
-        CLabel title = new CLabel(Translator.translate("mainMenu.selectLevel"));
+        CLabel title = new CLabel("mainMenu.selectLevel");
         CButton backButton = new CButton(new ImageIcon(Images.backButton));
 
         title.setFont(GameValues.FONT.deriveFont(32F));
         backButton.addActionListener(e -> Cubic.selectScreen("MainMenu"));
 
         Level.LEVELS.forEach(level -> {
-            CButton button = new CButton(level.getName());
+            CButton button = new CButton(level.getNameKey());
             button.setFont(GameValues.FONT.deriveFont(24F));
             button.setBackground(new Color(0x7ceeebaa));
 

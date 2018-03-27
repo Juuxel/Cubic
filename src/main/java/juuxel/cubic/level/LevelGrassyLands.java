@@ -11,8 +11,8 @@ public class LevelGrassyLands extends Level
     }
 
     @Override
-    public String getName()
+    public String getNameKey()
     {
-        return Translator.translate("level.grassyLands");
+        return "level.grassyLands";
     }
 }

@@ -1,6 +1,8 @@
 package juuxel.cubic.menu;
 
 import juuxel.cubic.lib.GameValues;
+import juuxel.cubic.util.ILanguageChangeListener;
+import juuxel.cubic.util.Translator;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -11,17 +13,19 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class CButton extends JButton
+public class CButton extends JButton implements ILanguageChangeListener
 {
     private final Color baseColor;
     private Color buttonColor;
+    private String translationKey = "ui.button";
 
-    public CButton(String label, Color color)
+    public CButton(String translationKey, Color color)
     {
-        super(label);
+        super(Translator.translate(translationKey));
 
         baseColor = color;
         buttonColor = color;
+        this.translationKey = translationKey;
 
         setFont(GameValues.FONT);
         setContentAreaFilled(false);
@@ -29,6 +33,7 @@ public class CButton extends JButton
         setBorder(new ButtonBorder());
         setForeground(color);
         addMouseListener(new Mouse());
+        Translator.addLanguageChangeListener(this);
     }
 
     public CButton(String label)
@@ -47,6 +52,12 @@ public class CButton extends JButton
         setFocusPainted(false);
         setBorder(new ButtonBorder());
         addMouseListener(new Mouse());
+    }
+
+    @Override
+    public void onLanguageChange()
+    {
+        SwingUtilities.invokeLater(() -> setText(Translator.translate(translationKey)));
     }
 
     private class ButtonBorder implements Border

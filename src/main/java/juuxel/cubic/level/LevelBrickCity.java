@@ -11,8 +11,8 @@ public class LevelBrickCity extends Level
     }
 
     @Override
-    public String getName()
+    public String getNameKey()
     {
-        return Translator.translate("level.brickCity");
+        return "level.brickCity";
     }
 }

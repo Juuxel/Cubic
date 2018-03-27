@@ -1,22 +1,38 @@
 package juuxel.cubic.menu;
 
-import juuxel.cubic.lib.GameValues;
+import juuxel.cubic.util.ILanguageChangeListener;
+import juuxel.cubic.util.Translator;
 
 import javax.swing.*;
 
-public class CLabel extends JLabel
+public class CLabel extends CBasicLabel implements ILanguageChangeListener
 {
+    private String translationKey;
+    private Object[] format = null;
+
+    public CLabel(String translationKey)
     {
-        setFont(GameValues.FONT);
+        super(Translator.translate(translationKey));
+
+        this.translationKey = translationKey;
+        Translator.addLanguageChangeListener(this);
     }
 
-    public CLabel(String label)
+    public CLabel(String translationKey, Object... format)
     {
-        super(label);
+        super(Translator.format(translationKey, format));
+
+        this.translationKey = translationKey;
+        this.format = format;
+        Translator.addLanguageChangeListener(this);
     }
 
-    public CLabel(Icon icon)
+    @Override
+    public void onLanguageChange()
     {
-        super(icon);
+        if (format == null)
+            SwingUtilities.invokeLater(() -> setText(Translator.translate(translationKey)));
+        else
+            SwingUtilities.invokeLater(() -> setText(Translator.format(translationKey, format)));
     }
 }
