@@ -11,7 +11,7 @@ import java.util.Properties;
 /**
  * A sprite consisting of multiple sprite layers.
  */
-public class SpriteLayered extends Sprite
+public final class SpriteLayered extends Sprite
 {
     private final Map<Object, Image> imageMap;
 

@@ -3,12 +3,13 @@ package juuxel.cubic.menu;
 import juuxel.cubic.Cubic;
 import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.lib.Images;
+import juuxel.cubic.options.Options;
 import juuxel.cubic.util.Translator;
 
 import javax.swing.*;
 import java.awt.BorderLayout;
 
-public class OptionsMenu extends CPanel
+public final class OptionsMenu extends CPanel
 {
     public OptionsMenu()
     {
@@ -18,7 +19,10 @@ public class OptionsMenu extends CPanel
         CButton backButton = new CButton(new ImageIcon(Images.backButton));
         CLabel title = new CLabel("mainMenu.options");
 
-        backButton.addActionListener(e -> Cubic.selectScreen("MainMenu"));
+        backButton.addActionListener(e -> {
+            Cubic.selectScreen("MainMenu");
+            Options.reloadAndWriteOptions();
+        });
         title.setFont(GameValues.FONT.deriveFont(32F));
 
         titlePanel.add(backButton);

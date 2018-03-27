@@ -3,7 +3,7 @@ package juuxel.cubic.creature.enemy;
 import juuxel.cubic.lib.Images;
 import juuxel.cubic.render.Graphics;
 
-public class EnemyBouncing extends EnemyNormal
+public final class EnemyBouncing extends EnemyNormal
 {
     public EnemyBouncing()
     {

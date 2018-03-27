@@ -11,7 +11,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
-public class LevelMenu extends CPanel
+public final class LevelMenu extends CPanel
 {
     public LevelMenu()
     {

@@ -17,7 +17,7 @@ import static juuxel.cubic.Cubic.OPTIONS;
 import static juuxel.cubic.Cubic.LANGUAGE_SCREEN;
 import static juuxel.cubic.Cubic.CONTROLS;
 
-public class RenderEngine
+public final class RenderEngine
 {
     public static final Color SKY = new Color(0x80daeb);
     public static final Color SKY2 = new Color(0x7ceeeb);

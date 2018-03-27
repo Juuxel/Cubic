@@ -10,7 +10,7 @@ import java.util.function.Function;
 /**
  * SpriteLoader loads sprites from the classpath.
  */
-public class SpriteLoader
+public final class SpriteLoader
 {
     private static final Map<String, Function<Properties, Sprite>> SPRITE_PROVIDERS = new HashMap<>();
 

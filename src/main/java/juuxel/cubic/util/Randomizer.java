@@ -8,9 +8,11 @@ import java.util.Random;
 /**
  * This class provides randomizing on collections and arrays.
  */
-public class Randomizer
+public final class Randomizer
 {
     private static final Random RANDOM = new Random();
+
+    private Randomizer() {}
 
     /**
      * Gets a random object of an array.

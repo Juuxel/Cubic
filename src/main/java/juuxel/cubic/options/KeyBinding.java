@@ -3,7 +3,7 @@ package juuxel.cubic.options;
 /**
  * A KeyBinding is an object representing an action and a key bound to it.
  */
-public class KeyBinding
+public final class KeyBinding
 {
     private int value;
 

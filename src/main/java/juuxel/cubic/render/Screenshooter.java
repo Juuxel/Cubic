@@ -13,8 +13,10 @@ import java.time.LocalDateTime;
 /**
  * This class performs operations related to screenshots.
  */
-public class Screenshooter
+public final class Screenshooter
 {
+    private Screenshooter() {}
+
     /**
      * Gets an image of the component.
      *

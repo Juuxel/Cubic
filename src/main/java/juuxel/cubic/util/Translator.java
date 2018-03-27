@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * Gets localized strings for localization keys.
  */
-public class Translator
+public final class Translator
 {
     private static Properties properties;
     private static String language;

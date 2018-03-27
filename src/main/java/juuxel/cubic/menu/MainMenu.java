@@ -11,7 +11,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Image;
 
-public class MainMenu extends CPanel
+public final class MainMenu extends CPanel
 {
     public static CButton continueButton;
 

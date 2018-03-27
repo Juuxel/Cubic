@@ -14,7 +14,7 @@ import java.util.Properties;
 /**
  * A sprite which chooses a random subsprite for every object.
  */
-public class SpriteRandom extends Sprite implements ICreatureListener
+public final class SpriteRandom extends Sprite implements ICreatureListener
 {
     private final Map<Object, Sprite> spriteMap = new HashMap<>();
     private final Sprite[] subsprites;

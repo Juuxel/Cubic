@@ -8,7 +8,7 @@ import java.util.Properties;
 /**
  * A simple sprite containing one image.
  */
-public class SpriteDefault extends Sprite
+public final class SpriteDefault extends Sprite
 {
     private final Image image;
 

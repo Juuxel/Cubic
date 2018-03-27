@@ -9,7 +9,7 @@ import java.awt.*;
  * This class is used for drawing on the screen.
  * A wrapper for AWT's Graphics/Graphics2D.
  */
-public class Graphics
+public final class Graphics
 {
     private final Graphics2D graphics2D;
 

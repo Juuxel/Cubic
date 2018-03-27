@@ -9,7 +9,7 @@ import java.util.Properties;
 /**
  * A sprite loaded from a bigger sheet image.
  */
-public class SpriteMulti extends Sprite
+public final class SpriteMulti extends Sprite
 {
     private Image image;
 
