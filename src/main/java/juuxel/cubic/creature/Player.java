@@ -7,6 +7,7 @@ import juuxel.cubic.creature.enemy.*;
 import juuxel.cubic.lib.Images;
 import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.render.Graphics;
+import juuxel.cubic.util.Direction;
 
 import java.io.IOException;
 
@@ -48,10 +49,8 @@ public final class Player extends Creature
             else if (Cubic.moveKeyDown) Cubic.moveKeyDown = false;
         }
 
-        if (x < -10)
-            x = Cubic.game.getWidth() + 10;
-        if (x > Cubic.game.getWidth() + 10)
-            x = -10;
+        if ((x < -10 && xSpeed < 0) || (x > Cubic.game.getWidth() && xSpeed > 0))
+            xSpeed = -xSpeed;
 
         jumpWasPressed = jumpPressed;
         jumpPressed = Cubic.jumpKeyDown;
@@ -61,8 +60,6 @@ public final class Player extends Creature
 
         for (Enemy enemy : Cubic.ENEMIES)
         {
-            // TODO Replace with Creature.onCollidedWithPlayer(Side)
-
             // Modified from https://gamedev.stackexchange.com/a/29796
 
             float w = 0.5F * (spriteWidth + enemy.spriteWidth);
@@ -78,12 +75,14 @@ public final class Player extends Creature
                 if (wy > hx)
                 {
                     if (wy > -hx) // Top
-                        enemy.kill();
+                        enemy.onCollidedWithPlayer(Direction.UP);
                     else if (invincibleTime == 0) // Left
-                        kill();
+                        enemy.onCollidedWithPlayer(Direction.LEFT);
                 }
                 else if (wy > -hx && invincibleTime == 0) // Right
-                        kill();
+                    enemy.onCollidedWithPlayer(Direction.RIGHT);
+                else
+                    enemy.onCollidedWithPlayer(Direction.DOWN);
             }
         }
     }

@@ -3,6 +3,7 @@ package juuxel.cubic.creature.enemy;
 import juuxel.cubic.creature.Creature;
 import juuxel.cubic.Cubic;
 import juuxel.cubic.creature.fx.EffectLife;
+import juuxel.cubic.util.Direction;
 
 public abstract class Enemy extends Creature
 {
@@ -70,15 +71,60 @@ public abstract class Enemy extends Creature
         }
     }
 
+    /**
+     * Calculates the score that the player gets when they kill this enemy.
+     *
+     * It gets {@link #getScoreBase the base score} and adds the {@link #getScoreAddition score addition}
+     * to it, multiplied by {@link Cubic#level the player level} - 1
+     *
+     * @return the calculated score
+     * @see #getScoreBase
+     * @see #getScoreAddition
+     */
     public int getScore()
     {
         return getScoreBase() + getScoreAddition() * (Cubic.level - 1);
     }
 
+    /**
+     * Gets the base score for killing this enemy.
+     *
+     * @return the base score
+     */
     protected abstract int getScoreBase();
 
+    /**
+     * Gets the additional score for killing this enemy. The additional score is multiplied by
+     * {@code the player level - 1}.
+     *
+     * @return the additional score
+     */
     protected int getScoreAddition()
     {
-        return getScoreBase();
+        return getScoreBase() / 2;
+    }
+
+    /**
+     * This method runs when the player collides with this enemy.
+     *
+     * By default it kills the player if {@code direction} is {@code LEFT} or {@code RIGHT}
+     * and kills the enemy if {@code direction} is {@code UP} or {@code DOWN}.
+     *
+     * @param direction the side of this enemy that the player hit
+     */
+    public void onCollidedWithPlayer(Direction direction)
+    {
+        switch (direction)
+        {
+            case LEFT:
+            case RIGHT:
+                Cubic.player.kill();
+                break;
+
+            case UP:
+            case DOWN:
+                kill();
+                break;
+        }
     }
 }

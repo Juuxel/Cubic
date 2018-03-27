@@ -13,5 +13,15 @@ public enum Direction
     /**
      * This represents going right on the screen.
      */
-    RIGHT
+    RIGHT,
+
+    /**
+     * This represents going up on the screen.
+     */
+    UP,
+
+    /**
+     * This represents going down on the screen.
+     */
+    DOWN
 }
