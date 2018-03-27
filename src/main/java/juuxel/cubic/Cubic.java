@@ -45,6 +45,7 @@ public final class Cubic
     public static final int CONTROLS = 3;
 
     private static ModLoader modLoader;
+    private static boolean hasTimerBeenCreated = false;
 
     private Cubic()
     {
@@ -112,16 +113,22 @@ public final class Cubic
         Cubic.inStartScreen = false;
         Cubic.selectScreen("Game");
 
-        new java.util.Timer().scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run()
+        if (!hasTimerBeenCreated)
+        {
+            new java.util.Timer().scheduleAtFixedRate(new TimerTask()
             {
-                if (!inStartScreen)
+                @Override
+                public void run()
                 {
-                    CREATURES.forEach(Creature::executeLogic);
-                    RenderEngine.repaint();
+                    if (!inStartScreen)
+                    {
+                        CREATURES.forEach(Creature::executeLogic);
+                        RenderEngine.repaint();
+                    }
                 }
-            }}, 0L, 5L);
+            }, 0L, 5L);
+            hasTimerBeenCreated = true;
+        }
     }
 
     public void repaint()
