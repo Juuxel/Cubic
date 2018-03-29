@@ -63,7 +63,7 @@ public final class Graphics
 
     public void drawImage(Sprite sprite, int x, int y, int width, int height)
     {
-        drawImage(sprite.getImage(Cubic.game), x, y, width, height);
+        drawImage(sprite.getImage(), x, y, width, height);
     }
 
     public void drawFlippedImage(Image image, int x, int y, int width, int height)
@@ -73,6 +73,6 @@ public final class Graphics
 
     public void drawFlippedImage(Sprite sprite, int x, int y, int width, int height)
     {
-        drawFlippedImage(sprite.getImage(Cubic.game), x, y, width, height);
+        drawFlippedImage(sprite.getImage(), x, y, width, height);
     }
 }

@@ -10,7 +10,7 @@ import java.util.Random;
  */
 public final class Randomizer
 {
-    private static final Random RANDOM = new Random();
+    public static final Random RANDOM = new Random();
 
     private Randomizer() {}
 

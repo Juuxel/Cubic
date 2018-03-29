@@ -38,10 +38,13 @@ public final class SpriteLoader
     }
 
     /**
-     * Gets a Sprite from the classpath using
-     * the sprite file's <code>function</code> property.
+     * Gets a Sprite from the classpath using the sprite file's <code>function</code> property.
      * The location this method looks for is <code>"/data/sprites/" + sprite + ".sprite"</code>
      * If no function matching the property is found, returns null.
+     *
+     * If the sprite file is not found, tries to construct a Sprite from the {@code sprite} parameter.
+     * This method looks for an image file in the {@code /data/images} directory. If one is found, returns
+     * a new Sprite.
      *
      * @param sprite the sprite name
      * @return the sprite, or null if function not found
@@ -72,6 +75,21 @@ public final class SpriteLoader
         catch (IOException e)
         {
             e.printStackTrace();
+        }
+        catch (Exception e)
+        {
+            // Try to construct the missing sprite from the texture
+
+            Properties p = new Properties();
+            p.setProperty("function", "default");
+            p.setProperty("textures", sprite);
+
+            Sprite s = new SpriteDefault(p);
+
+            if (s.getImage() == null)
+                e.printStackTrace();
+            else
+                return s;
         }
 
         return null;

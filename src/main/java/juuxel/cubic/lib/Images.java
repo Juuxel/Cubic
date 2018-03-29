@@ -23,6 +23,8 @@ public final class Images
     public static Sprite player;
     public static Sprite enemy;
     public static Sprite bouncingEnemy;
+    public static Sprite bird;
+    public static Sprite birdPoop;
     public static Sprite dot;
     public static Sprite number0;
     public static Sprite number1;
@@ -102,6 +104,8 @@ public final class Images
         bricks = SpriteLoader.load("tiles/bricks");
         backButtonSprite = SpriteLoader.load("gui/back");
         backButton = backButtonSprite.getImage().getScaledInstance(64, 64, Image.SCALE_DEFAULT);
+        bird = SpriteLoader.load("bird");
+        birdPoop = SpriteLoader.load("bird_poop");
 
         initializeNumberMap();
     }

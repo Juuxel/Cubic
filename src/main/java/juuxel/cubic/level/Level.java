@@ -6,8 +6,7 @@ import juuxel.cubic.render.sprite.Sprite;
 import juuxel.cubic.util.Randomizer;
 import juuxel.cubic.util.Utils;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Supplier;
 
 /**
@@ -16,7 +15,7 @@ import java.util.function.Supplier;
  */
 public abstract class Level
 {
-    public static final Set<Level> LEVELS = new HashSet<>();
+    public static final List<Level> LEVELS = new ArrayList<>();
 
     private Sprite ground;
 

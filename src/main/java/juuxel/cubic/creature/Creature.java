@@ -18,16 +18,16 @@ public abstract class Creature
     public int spriteWidth = 32, spriteHeight = 32;
 
     private Sprite sprite;
-    private boolean collisionEnabled, flippingEnabled;
-    private Direction direction = Direction.RIGHT;
+    public boolean collidesWithGround, flippingEnabled;
+    public Direction direction = Direction.RIGHT;
     protected int speedModifierX = 1, speedModifierY = 1;
 
     public Creature()
     {
         Cubic.CREATURES.add(this);
         Cubic.CREATURE_LISTENERS.forEach(listener -> listener.onCreatureCreated(this));
-        setCollisionEnabled(false);
-        setFlippingEnabled(false);
+        collidesWithGround = false;
+        flippingEnabled = false;
     }
 
     public double yOnScreen()
@@ -53,7 +53,7 @@ public abstract class Creature
     {
         moveX(xSpeed / speedModifierX);
 
-        if (isCollisionEnabled())
+        if (collidesWithGround)
         {
             double yNew = y + ySpeed / speedModifierY;
 
@@ -82,36 +82,20 @@ public abstract class Creature
     public Sprite getSprite()
     { return sprite; }
 
-    public void setSprite(Sprite sprite)
+    protected void setSprite(Sprite sprite)
     { this.sprite = sprite; }
 
     public boolean onGround()
     { return y <= GameValues.GROUND; }
 
-    public boolean isCollisionEnabled()
-    { return collisionEnabled; }
-
-    public void setCollisionEnabled(boolean collisionEnabled)
-    { this.collisionEnabled = collisionEnabled; }
-
-    public boolean isFlippingEnabled()
-    { return flippingEnabled; }
-
-    public void setFlippingEnabled(boolean b)
-    { flippingEnabled = b; }
-
     public void moveX(double xOffset)
     {
-        if (isFlippingEnabled())
+        if (flippingEnabled)
         {
-            Direction d = getDirection();
-
             if (xOffset > 0)
-                d = Direction.RIGHT;
+                direction = Direction.RIGHT;
             else if (xOffset < 0)
-                d = Direction.LEFT;
-
-            setDirection(d);
+                direction = Direction.LEFT;
         }
 
         x += xOffset;
@@ -125,10 +109,4 @@ public abstract class Creature
 
     public double getY()
     { return y; }
-
-    public Direction getDirection()
-    { return direction; }
-
-    public void setDirection(Direction d2)
-    { direction = d2; }
 }

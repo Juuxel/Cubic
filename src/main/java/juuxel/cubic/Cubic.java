@@ -122,7 +122,8 @@ public final class Cubic
                 {
                     if (!inStartScreen)
                     {
-                        CREATURES.forEach(Creature::executeLogic);
+                        if (lives > 0)
+                            CREATURES.forEach(Creature::executeLogic);
                         RenderEngine.repaint();
                     }
                 }

@@ -7,12 +7,12 @@ import juuxel.cubic.util.Direction;
 
 public abstract class Enemy extends Creature
 {
-    public boolean sliding = false, slidable = true, edgeMove = true;
+    public boolean sliding = false, slidable = true, edgeMove = true, collidesWithPlayer = true;
     protected static final int SLIDE_DISTANCE = 32;
 
     public Enemy()
     {
-        setCollisionEnabled(true);
+        collidesWithGround = true;
     }
 
     public abstract void move();
@@ -25,7 +25,7 @@ public abstract class Enemy extends Creature
         else
             xSpeed *= 0.97;
 
-        if (!isCollisionEnabled() && y < -20)
+        if (!collidesWithGround && y < -20)
             Cubic.CREATURES.remove(this);
 
         if (Math.abs(xSpeed) < 0.5)
@@ -59,7 +59,7 @@ public abstract class Enemy extends Creature
 
         Cubic.ENEMIES.remove(this);
         ySpeed = -2;
-        setCollisionEnabled(false);
+        collidesWithGround = false;
 
         if (Cubic.ENEMIES.size() == 0)
             Cubic.player.levelUp();

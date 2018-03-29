@@ -8,8 +8,7 @@ import juuxel.cubic.lib.Images;
 import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.render.Graphics;
 import juuxel.cubic.util.Direction;
-
-import java.io.IOException;
+import juuxel.cubic.util.Randomizer;
 
 public final class Player extends Creature
 {
@@ -18,8 +17,8 @@ public final class Player extends Creature
 
     public Player()
     {
-        setCollisionEnabled(true);
-        setFlippingEnabled(true);
+        collidesWithGround = true;
+        flippingEnabled = true;
         setSprite(Images.player);
         x = 100;
         y = 100;
@@ -60,6 +59,9 @@ public final class Player extends Creature
 
         for (Enemy enemy : Cubic.ENEMIES)
         {
+            if (!enemy.collidesWithPlayer) // Do nothing to dead enemies
+                continue;
+
             // Modified from https://gamedev.stackexchange.com/a/29796
 
             float w = 0.5F * (spriteWidth + enemy.spriteWidth);
@@ -108,7 +110,7 @@ public final class Player extends Creature
         for (int i = 0; i < Cubic.level; i++)
             Cubic.ENEMIES.add(EnemyLists.createEnemy(EnemyType.NORMAL));
 
-        if (Cubic.level % 5 == 0)
+        if (Cubic.level > 2 && Randomizer.RANDOM.nextInt(5) == 0)
             Cubic.ENEMIES.add(EnemyLists.createEnemy(EnemyType.STRANGE));
     }
 
