@@ -14,42 +14,45 @@ import java.util.jar.Manifest;
 
 public final class ModLoader
 {
-    private final List<ModContainer> mods;
+    private final static List<ModContainer> MODS = new ArrayList<>();
 
-    public ModLoader()
-    {
-        mods = new ArrayList<>();
-    }
+    private ModLoader()
+    {}
 
-    public void init()
+    public static void init()
     {
         detectJarMods();
 
-        mods.forEach(mod -> {
-            System.out.printf("Mod %d:%n", mods.indexOf(mod));
+        MODS.forEach(mod -> {
+            System.out.printf("Mod %d:%n", MODS.indexOf(mod));
             System.out.printf("    ID: %32s%n", mod.getId());
             System.out.printf("    Author: %28s%n", mod.getAuthor());
             System.out.printf("    Version: %27s%n", mod.getVersion());
         });
     }
 
-    public void coreInit()
+    public static void coreInit()
     {
-        mods.forEach(mod -> {
+        MODS.forEach(mod -> {
             System.out.printf("Initializing core components for mod %s.%n", mod.getId());
             mod.coreInit();
         });
     }
 
-    public void contentInit()
+    public static void contentInit()
     {
-        mods.forEach(mod -> {
+        MODS.forEach(mod -> {
             System.out.printf("Initializing contents for mod %s.%n", mod.getId());
             mod.contentInit();
         });
     }
 
-    private void detectJarMods()
+    public static void addModClass(Class<?> clazz)
+    {
+        MODS.add(createContainer(clazz));
+    }
+
+    private static void detectJarMods()
     {
         try
         {
@@ -80,7 +83,7 @@ public final class ModLoader
                     ModContainer container = createContainer(Class.forName(modClass, true, jarLoader));
 
                     if (container != null)
-                        mods.add(container);
+                        MODS.add(container);
                 }
             }
         }
@@ -90,12 +93,12 @@ public final class ModLoader
         }
     }
 
-    private URLClassLoader newURLLoader(Path path) throws IOException
+    private static URLClassLoader newURLLoader(Path path) throws IOException
     {
-        return new URLClassLoader(new URL[] { path.toUri().toURL() }, getClass().getClassLoader());
+        return new URLClassLoader(new URL[] { path.toUri().toURL() }, ModLoader.class.getClassLoader());
     }
 
-    private ModContainer createContainer(Class<?> modClass)
+    private static ModContainer createContainer(Class<?> modClass)
     {
         try
         {
@@ -106,9 +109,9 @@ public final class ModLoader
                 Class<? extends IMod> iModClass = modClass.asSubclass(IMod.class);
 
                 if (modClass.isAnnotationPresent(Mod.class))
-                    mod = new ModContainer(iModClass.newInstance(), modClass.getAnnotation(Mod.class));
+                    mod = new ModContainer(iModClass.getDeclaredConstructor().newInstance(), modClass.getAnnotation(Mod.class));
                 else
-                    mod = new ModContainer(iModClass.newInstance());
+                    mod = new ModContainer(iModClass.getDeclaredConstructor().newInstance());
 
                 return mod;
             }

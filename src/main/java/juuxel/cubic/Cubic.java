@@ -44,7 +44,6 @@ public final class Cubic
     public static final int LANGUAGE_SCREEN = 2;
     public static final int CONTROLS = 3;
 
-    private static ModLoader modLoader;
     private static boolean hasTimerBeenCreated = false;
 
     private Cubic()
@@ -82,21 +81,20 @@ public final class Cubic
      */
     private static void coreInit() throws Exception
     {
-        modLoader = new ModLoader();
         Translator.initialize();
         Options.initialize();
         SpriteLoader.registerDefaults();
         Images.initialize();
         Level.registerDefaults();
         gameLevel = Level.getRandomLevel();
-        modLoader.init();
-        modLoader.coreInit();
+        ModLoader.init();
+        ModLoader.coreInit();
     }
 
     private static void contentInit()
     {
         EnemyLists.initializeLists();
-        modLoader.contentInit();
+        ModLoader.contentInit();
     }
 
     public static void newGame(Level level)
