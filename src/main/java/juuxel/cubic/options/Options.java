@@ -27,7 +27,7 @@ public final class Options
     private Options()
     {}
 
-    public static void initialize() throws FontFormatException
+    public static void initialize()
     {
         moveLeft = new KeyBinding(VK_A);
         moveRight = new KeyBinding(VK_D);

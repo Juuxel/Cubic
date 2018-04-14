@@ -59,7 +59,7 @@ public final class Player extends Creature
 
         for (Enemy enemy : Cubic.ENEMIES)
         {
-            if (!enemy.collidesWithPlayer) // Do nothing to dead enemies
+            if (!enemy.collidesWithPlayer) // Do nothing to dead / other non-colliding enemies
                 continue;
 
             // Modified from https://gamedev.stackexchange.com/a/29796
