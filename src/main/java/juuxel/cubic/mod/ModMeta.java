@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
  * Defines metadata for mods.
  */
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Mod
+public @interface ModMeta
 {
     /**
      * The ID of this mod.

@@ -87,7 +87,7 @@ public final class Cubic
         Images.initialize();
         Level.registerDefaults();
         gameLevel = Level.getRandomLevel();
-        ModLoader.init();
+        ModLoader.load();
         ModLoader.coreInit();
     }
 

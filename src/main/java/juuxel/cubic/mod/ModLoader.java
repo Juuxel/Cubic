@@ -12,46 +12,99 @@ import java.util.List;
 import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
+/**
+ * This class loads and initializes Cubic mods.
+ *
+ * <h2>Mod Format</h2>
+ *
+ * The Cubic mod jar format is simple:
+ * <ul>
+ *     <li>A mod class implementing {@link IMod} and optionally annotated by {@link ModMeta}.</li>
+ *     <li>In the manifest file: {@code Mod-Class: your.mod.Class}</li>
+ * </ul>
+ */
 public final class ModLoader
 {
     private final static List<ModContainer> MODS = new ArrayList<>();
+    private static boolean hasLoaded = false;
 
     private ModLoader()
     {}
 
-    public static void init()
+    /**
+     * Initializes the mod loader and loads mods from the mod directory.
+     * All manually added mods should be added before calling this method.
+     *
+     * @see #detectJarMods()
+     */
+    public static void load()
     {
-        detectJarMods();
+        if (!hasLoaded)
+        {
+            detectJarMods();
 
-        MODS.forEach(mod -> {
-            System.out.printf("Mod %d:%n", MODS.indexOf(mod));
-            System.out.printf("    ID: %32s%n", mod.getId());
-            System.out.printf("    Author: %28s%n", mod.getAuthor());
-            System.out.printf("    Version: %27s%n", mod.getVersion());
-        });
+            MODS.forEach(mod -> {
+                System.out.printf("Mod %d:%n", MODS.indexOf(mod));
+                System.out.printf("    ID: %32s%n", mod.getId());
+                System.out.printf("    Author: %28s%n", mod.getAuthor());
+                System.out.printf("    Version: %27s%n", mod.getVersion());
+            });
+        }
+        else
+        {
+            throw new IllegalStateException("The mod loader has already been loaded.");
+        }
     }
 
+    /**
+     * Calls the {@code coreInit} phase of the mods.
+     *
+     * @see #contentInit()
+     * @see IMod#coreInit()
+     */
     public static void coreInit()
     {
+        if (!hasLoaded)
+            throw new IllegalStateException("The mod loader has not been loaded.");
+
         MODS.forEach(mod -> {
             System.out.printf("Initializing core components for mod %s.%n", mod.getId());
             mod.coreInit();
         });
     }
 
+    /**
+     * Calls the {@code contentInit} phase of the mods.
+     *
+     * @see #coreInit()
+     * @see IMod#contentInit()
+     */
     public static void contentInit()
     {
+        if (!hasLoaded)
+            throw new IllegalStateException("The mod loader has not been loaded.");
+
         MODS.forEach(mod -> {
             System.out.printf("Initializing contents for mod %s.%n", mod.getId());
             mod.contentInit();
         });
     }
 
-    public static void addModClass(Class<?> clazz)
+    /**
+     * Adds a mod class implementing {@link IMod} to the internal list.
+     * Should be called before {@link #load()}.
+     *
+     * @param clazz the mod class
+     */
+    public static void addModClass(Class<? extends IMod> clazz)
     {
-        MODS.add(createContainer(clazz));
+        if (!hasLoaded)
+            MODS.add(createContainer(clazz));
     }
 
+    /**
+     * Looks for mods in the {@code ./mods} directory.
+     */
     private static void detectJarMods()
     {
         try
@@ -108,8 +161,8 @@ public final class ModLoader
 
                 Class<? extends IMod> iModClass = modClass.asSubclass(IMod.class);
 
-                if (modClass.isAnnotationPresent(Mod.class))
-                    mod = new ModContainer(iModClass.getDeclaredConstructor().newInstance(), modClass.getAnnotation(Mod.class));
+                if (modClass.isAnnotationPresent(ModMeta.class))
+                    mod = new ModContainer(iModClass.getDeclaredConstructor().newInstance(), modClass.getAnnotation(ModMeta.class));
                 else
                     mod = new ModContainer(iModClass.getDeclaredConstructor().newInstance());
 
@@ -152,7 +205,7 @@ public final class ModLoader
             author = "";
         }
 
-        ModContainer(IMod mod, Mod annotation)
+        ModContainer(IMod mod, ModMeta annotation)
         {
             this.mod = mod;
             id = annotation.id();
