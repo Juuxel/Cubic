@@ -19,7 +19,7 @@ import java.util.jar.Manifest;
  *
  * The Cubic mod jar format is simple:
  * <ul>
- *     <li>A mod class implementing {@link IMod} and optionally annotated by {@link ModMeta}.</li>
+ *     <li>A mod class implementing {@link Mod} and optionally annotated by {@link ModMeta}.</li>
  *     <li>In the manifest file: {@code Mod-Class: your.mod.Class}</li>
  * </ul>
  */
@@ -60,7 +60,7 @@ public final class ModLoader
      * Calls the {@code coreInit} phase of the mods.
      *
      * @see #contentInit()
-     * @see IMod#coreInit()
+     * @see Mod#coreInit()
      */
     public static void coreInit()
     {
@@ -77,7 +77,7 @@ public final class ModLoader
      * Calls the {@code contentInit} phase of the mods.
      *
      * @see #coreInit()
-     * @see IMod#contentInit()
+     * @see Mod#contentInit()
      */
     public static void contentInit()
     {
@@ -91,12 +91,12 @@ public final class ModLoader
     }
 
     /**
-     * Adds a mod class implementing {@link IMod} to the internal list.
+     * Adds a mod class implementing {@link Mod} to the internal list.
      * Should be called before {@link #load()}.
      *
      * @param clazz the mod class
      */
-    public static void addModClass(Class<? extends IMod> clazz)
+    public static void addModClass(Class<? extends Mod> clazz)
     {
         if (!hasLoaded)
             MODS.add(createContainer(clazz));
@@ -155,11 +155,11 @@ public final class ModLoader
     {
         try
         {
-            if (implementsInterface(modClass, IMod.class))
+            if (implementsInterface(modClass, Mod.class))
             {
                 ModContainer mod;
 
-                Class<? extends IMod> iModClass = modClass.asSubclass(IMod.class);
+                Class<? extends Mod> iModClass = modClass.asSubclass(Mod.class);
 
                 if (modClass.isAnnotationPresent(ModMeta.class))
                     mod = new ModContainer(iModClass.getDeclaredConstructor().newInstance(), modClass.getAnnotation(ModMeta.class));
@@ -195,9 +195,9 @@ public final class ModLoader
     public static class ModContainer
     {
         private final String id, version, author;
-        private final IMod mod;
+        private final Mod mod;
 
-        ModContainer(IMod mod)
+        ModContainer(Mod mod)
         {
             this.mod = mod;
             id = mod.getClass().getName();
@@ -205,7 +205,7 @@ public final class ModLoader
             author = "";
         }
 
-        ModContainer(IMod mod, ModMeta annotation)
+        ModContainer(Mod mod, ModMeta annotation)
         {
             this.mod = mod;
             id = annotation.id();

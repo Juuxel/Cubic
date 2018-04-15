@@ -5,7 +5,7 @@ import juuxel.cubic.creature.Creature;
 /**
  * A handler interface for {@link Creature} creations.
  */
-public interface ICreatureListener
+public interface CreatureListener
 {
     /**
      * Handles a creature being created.

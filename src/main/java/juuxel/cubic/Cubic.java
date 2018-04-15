@@ -33,7 +33,7 @@ public final class Cubic
     public static final List<Enemy> ENEMIES = new CopyOnWriteArrayList<>();
     public static int score = 0, deaths = 0, level = 1, lives = 3;
     public static final List<Creature> CREATURES = new CopyOnWriteArrayList<>();
-    public static final List<ICreatureListener> CREATURE_LISTENERS = new ArrayList<>();
+    public static final List<CreatureListener> CREATURE_LISTENERS = new ArrayList<>();
 
     private final GameFrame gameFrame;
     private final WindowPane windowPane;
@@ -81,10 +81,10 @@ public final class Cubic
      */
     private static void coreInit() throws Exception
     {
-        Translator.initialize();
-        Options.initialize();
+        Translator.init();
+        Options.init();
         SpriteLoader.registerDefaults();
-        Images.initialize();
+        Images.init();
         Level.registerDefaults();
         gameLevel = Level.getRandomLevel();
         ModLoader.load();
@@ -93,7 +93,7 @@ public final class Cubic
 
     private static void contentInit()
     {
-        EnemyLists.initializeLists();
+        EnemyLists.initLists();
         ModLoader.contentInit();
     }
 

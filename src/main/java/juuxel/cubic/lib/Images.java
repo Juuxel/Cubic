@@ -72,7 +72,7 @@ public final class Images
         return image;
     }
 
-    public static void initialize()
+    public static void init()
     {
         player = SpriteLoader.load("player");
         enemy = SpriteLoader.load("enemy");

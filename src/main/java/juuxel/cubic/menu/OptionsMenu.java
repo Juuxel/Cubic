@@ -38,7 +38,7 @@ public final class OptionsMenu extends CPanel
 
         comboBox.addActionListener(e -> {
             Translator.setLanguage(comboBox.getSelectedIndex());
-            Translator.reloadProperties();
+            Translator.reloadStrings();
         });
 
         languagePanel.add(new CLabel("options.language"));

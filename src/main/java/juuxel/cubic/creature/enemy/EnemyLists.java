@@ -11,7 +11,7 @@ public final class EnemyLists
     private static final Map<EnemyType, List<Supplier<Enemy>>> ENEMY_LISTS = new HashMap<>();
     private static final Random RANDOM = new Random();
 
-    public static void initializeLists()
+    public static void initLists()
     {
         List<Supplier<Enemy>> normalEnemies = new ArrayList<>();
         List<Supplier<Enemy>> strangeEnemies = new ArrayList<>();

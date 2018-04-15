@@ -2,7 +2,7 @@ package juuxel.cubic.render.sprite;
 
 import juuxel.cubic.Cubic;
 import juuxel.cubic.creature.Creature;
-import juuxel.cubic.util.ICreatureListener;
+import juuxel.cubic.util.CreatureListener;
 import juuxel.cubic.util.Randomizer;
 import juuxel.cubic.util.Utils;
 
@@ -14,7 +14,7 @@ import java.util.Properties;
 /**
  * A sprite which chooses a random subsprite for every object.
  */
-public final class SpriteRandom extends Sprite implements ICreatureListener
+public final class SpriteRandom extends Sprite implements CreatureListener
 {
     private final Map<Object, Sprite> spriteMap = new HashMap<>();
     private final Sprite[] subsprites;

@@ -1,7 +1,7 @@
 package juuxel.cubic.menu;
 
 import juuxel.cubic.lib.GameValues;
-import juuxel.cubic.util.ILanguageChangeListener;
+import juuxel.cubic.util.LanguageChangeListener;
 import juuxel.cubic.util.Translator;
 
 import javax.swing.*;
@@ -13,7 +13,7 @@ import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class CButton extends JButton implements ILanguageChangeListener
+public class CButton extends JButton implements LanguageChangeListener
 {
     private final Color baseColor;
     private Color buttonColor;

@@ -1,11 +1,11 @@
 package juuxel.cubic.mod;
 
 /**
- * An IMod is a mod for Cubic. This interface
+ * A mod for Cubic. This interface
  * provides methods for hooking to Cubic's init
  * phases.
  */
-public interface IMod
+public interface Mod
 {
     /**
      * Called after Cubic's coreInit phase.

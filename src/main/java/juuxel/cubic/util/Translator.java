@@ -13,14 +13,21 @@ public final class Translator
     private static Properties properties;
     private static String language;
     private static List<String> languages;
-    private static final List<ITranslationProvider> TRANSLATION_PROVIDERS = new ArrayList<>();
-    private static final List<ILanguageChangeListener> LISTENERS = new ArrayList<>();
+    private static boolean hasInit = false;
+    private static final List<TranslationProvider> TRANSLATION_PROVIDERS = new ArrayList<>();
+    private static final List<LanguageChangeListener> LISTENERS = new ArrayList<>();
 
     private Translator()
     {}
 
-    public static void initialize()
+    /**
+     * Initializes Translator.
+     */
+    public static void init()
     {
+        if (hasInit)
+            throw new IllegalStateException("Translator has already been initialized.");
+
         loadFileProviders();
 
         InputStreamProvider provider = new InputStreamProvider();
@@ -33,10 +40,12 @@ public final class Translator
         language = getDefault();
         properties = new Properties();
 
-        reloadProperties();
+        reloadStrings();
+
+        hasInit = true;
     }
 
-    public static void reloadProviders()
+    private static void reloadProviders()
     {
         languages.clear();
 
@@ -48,13 +57,16 @@ public final class Translator
         });
     }
 
-    public static void reloadProperties()
+    /**
+     * Reloads the localized strings from {@code .properties} files.
+     */
+    public static void reloadStrings()
     {
         try
         {
             properties.load(Translator.class.getResourceAsStream("/data/lang/en_US.lang.properties"));
 
-            ITranslationProvider provider = getProviderForLanguage(language);
+            TranslationProvider provider = getProviderForLanguage(language);
 
             properties.load(provider.isInternal()
                 ? Translator.class.getResourceAsStream(provider.getLocation() + String.format("%s.lang.properties", language))
@@ -73,42 +85,85 @@ public final class Translator
         return Locale.getDefault().toLanguageTag().replace('-', '_');
     }
 
+    /**
+     * Gets the current game language.
+     *
+     * @return the language code
+     */
     public static String getLanguage()
     {
         return language;
     }
 
+    /**
+     * Sets the current game language.
+     *
+     * @param language the language code
+     */
     public static void setLanguage(String language)
     {
         Translator.language = language;
-        LISTENERS.forEach(ILanguageChangeListener::onLanguageChange);
+        LISTENERS.forEach(LanguageChangeListener::onLanguageChange);
     }
 
+    /**
+     * Sets the current game language by the index in {@link #getLanguages() the language list}.
+     *
+     * @param index the language index
+     */
     public static void setLanguage(int index)
     {
         setLanguage(languages.get(index));
     }
 
+    /**
+     * Gets a translated string by {@code key}.
+     *
+     * @param key the translation key
+     * @return the translated string
+     */
     public static String translate(String key)
     {
         return properties.getProperty(key);
     }
 
+    /**
+     * Gets a translated string by {@code key}, formatted using {@code args}.
+     *
+     * @param key the translation key
+     * @param args the format arguments
+     * @return the translated string
+     */
     public static String format(String key, Object... args)
     {
         return String.format(translate(key), args);
     }
 
-    public static void addProvider(ITranslationProvider provider)
+    /**
+     * Adds a {@link TranslationProvider}.
+     *
+     * @param provider the translation provider
+     */
+    public static void addProvider(TranslationProvider provider)
     {
         TRANSLATION_PROVIDERS.add(provider);
     }
 
+    /**
+     * Gets the languages registered in the game.
+     *
+     * @return a list of languages
+     */
     public static List<String> getLanguages()
     {
         return languages;
     }
 
+    /**
+     * Gets the languages registered in the game, converted to the language names.
+     *
+     * @return a list of languages
+     */
     public static List<String> getLanguageNames()
     {
         try
@@ -116,7 +171,7 @@ public final class Translator
             ArrayList<String> output = new ArrayList<>();
             for (String language1 : getLanguages())
             {
-                ITranslationProvider provider = getProviderForLanguage(language1);
+                TranslationProvider provider = getProviderForLanguage(language1);
 
                 Properties properties = new Properties();
                 properties.load(provider.isInternal()
@@ -137,6 +192,12 @@ public final class Translator
         }
     }
 
+    /**
+     * Gets the current language's index in the language list.
+     *
+     * @return an index
+     * @see #getLanguage()
+     */
     public static int getLanguageIndex()
     {
         return languages.indexOf(language);
@@ -171,9 +232,16 @@ public final class Translator
         }
     }
 
-    public static ITranslationProvider getProviderForLanguage(String language)
+    /**
+     * Gets the translation provider for {@code language}.
+     *
+     * @param language the language
+     * @return the provider
+     * @throws RuntimeException if provider is not found
+     */
+    public static TranslationProvider getProviderForLanguage(String language)
     {
-        for (ITranslationProvider provider : TRANSLATION_PROVIDERS)
+        for (TranslationProvider provider : TRANSLATION_PROVIDERS)
         {
             if (provider.getTranslations().contains(language))
                 return provider;
@@ -182,17 +250,27 @@ public final class Translator
         throw new RuntimeException(String.format("Provider for language %s not found!", language));
     }
 
+    /**
+     * Gets the {@code Locale} object of the current language.
+     *
+     * @return the Locale
+     */
     public static Locale getLocale()
     {
         return Locale.forLanguageTag(language);
     }
 
-    public static void addLanguageChangeListener(ILanguageChangeListener listener)
+    /**
+     * Adds a {@link LanguageChangeListener}.
+     *
+     * @param listener the listener
+     */
+    public static void addLanguageChangeListener(LanguageChangeListener listener)
     {
         LISTENERS.add(listener);
     }
 
-    private static class InputStreamProvider implements ITranslationProvider
+    private static class InputStreamProvider implements TranslationProvider
     {
         private List<String> translations;
         private String name;

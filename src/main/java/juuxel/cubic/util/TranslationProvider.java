@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Provides translations for Cubic.
  */
-public interface ITranslationProvider
+public interface TranslationProvider
 {
     /**
      * Gets the translations provided by this provider.

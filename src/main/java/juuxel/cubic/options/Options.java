@@ -2,7 +2,6 @@ package juuxel.cubic.options;
 
 import juuxel.cubic.util.Translator;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -27,7 +26,7 @@ public final class Options
     private Options()
     {}
 
-    public static void initialize()
+    public static void init()
     {
         moveLeft = new KeyBinding(VK_A);
         moveRight = new KeyBinding(VK_D);
@@ -67,7 +66,7 @@ public final class Options
                 //fps = Integer.parseInt(properties.getProperty("fps"));
 
                 Translator.setLanguage(properties.getProperty("language"));
-                Translator.reloadProperties();
+                Translator.reloadStrings();
             }
         }
         catch (IOException e)

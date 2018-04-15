@@ -1,11 +1,11 @@
 package juuxel.cubic.menu;
 
-import juuxel.cubic.util.ILanguageChangeListener;
+import juuxel.cubic.util.LanguageChangeListener;
 import juuxel.cubic.util.Translator;
 
 import javax.swing.*;
 
-public class CLabel extends CBasicLabel implements ILanguageChangeListener
+public class CLabel extends CBasicLabel implements LanguageChangeListener
 {
     private String translationKey;
     private Object[] format = null;
