@@ -49,6 +49,8 @@ public final class ModLoader
                 System.out.printf("    Author: %28s%n", mod.getAuthor());
                 System.out.printf("    Version: %27s%n", mod.getVersion());
             });
+
+            hasLoaded = true;
         }
         else
         {
