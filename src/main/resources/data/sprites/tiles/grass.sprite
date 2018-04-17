@@ -1,2 +1,1 @@
-function=layered
-textures=tiles/grass_base, tiles/grass_overlay
+textures=grass

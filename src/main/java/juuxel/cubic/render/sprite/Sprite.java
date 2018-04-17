@@ -10,6 +10,7 @@ public abstract class Sprite
 {
     private final String texture;
     private final Properties props;
+    private final boolean flippable;
 
     /**
      * The constructor. Please use {@link SpriteLoader#load(String)}
@@ -22,6 +23,7 @@ public abstract class Sprite
     {
         this.props = props;
         this.texture = props.getProperty("textures");
+        this.flippable = Boolean.parseBoolean(props.getOrDefault("flippable", "false").toString());
     }
 
     /**
@@ -45,19 +47,30 @@ public abstract class Sprite
     { return getImage(this); }
 
     /**
-     * Gets the value of the <code>texture</code> variable.
+     * Gets the value of the {@code texture} variable.
      *
-     * @return the value of <code>texture</code>
+     * @return the value of {@code texture}
      */
     public String getTexture()
     { return texture; }
 
     /**
-     * Gets the value of the <code>props</code> variable,
+     * Gets the value of the {@code props} variable,
      * or the properties for this sprite.
      *
-     * @return the value of <code>props</code>
+     * @return the value of {@code props}
      */
     public Properties getProps()
     { return props; }
+
+    /**
+     * Gets the value of {@code flippable}. If it's true, this sprite can flip.
+     *
+     * <p>{@code flippable} is the corresponding sprite file property.</p>
+     *
+     * @return the value of {@code flippable}
+     * @see juuxel.cubic.creature.Creature#flippingEnabled
+     */
+    public boolean isFlippable()
+    { return flippable; }
 }

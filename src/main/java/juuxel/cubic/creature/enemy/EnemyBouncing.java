@@ -1,13 +1,13 @@
 package juuxel.cubic.creature.enemy;
 
 import juuxel.cubic.lib.Images;
-import juuxel.cubic.render.Graphics;
 
 public final class EnemyBouncing extends EnemyNormal
 {
     public EnemyBouncing()
     {
         slidable = false;
+        setSprite(Images.bouncingEnemy);
     }
 
     @Override
@@ -26,12 +26,6 @@ public final class EnemyBouncing extends EnemyNormal
 
         if (!onGround())
             ySpeed -= 0.1;
-    }
-
-    @Override
-    public void draw(Graphics g)
-    {
-        drawCreature(g, Images.bouncingEnemy);
     }
 
     @Override

@@ -6,15 +6,15 @@ import juuxel.cubic.util.Translator;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class CButton extends JButton implements LanguageChangeListener
 {
+    private static final Color BACKGROUND = new Color(0xCC16b7fc);
+    private static final Color BACKGROUND_PRESSED = new Color(0xCC16b7fc).darker();
+
     private final Color baseColor;
     private Color buttonColor;
     private String translationKey = "ui.button";
@@ -58,6 +58,24 @@ public class CButton extends JButton implements LanguageChangeListener
     public void onLanguageChange()
     {
         SwingUtilities.invokeLater(() -> setText(Translator.translate(translationKey)));
+    }
+
+    @Override
+    protected void paintComponent(Graphics graphics)
+    {
+        Graphics2D g = (Graphics2D) graphics.create();
+
+        Color color = BACKGROUND;
+
+        if (getModel().isPressed())
+            color = BACKGROUND_PRESSED;
+
+        g.setPaint(new GradientPaint(new Point(0, 0), new Color(0, 0, 0, 0),
+                                     new Point(0, getHeight()), color));
+        g.fillRect(0, 0, getWidth(), getHeight());
+        g.dispose();
+
+        super.paintComponent(graphics);
     }
 
     private class ButtonBorder implements Border

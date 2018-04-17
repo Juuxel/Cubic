@@ -37,11 +37,10 @@ public final class Images
     public static Sprite number8;
     public static Sprite number9;
     public static Sprite life;
-    public static Sprite levelUp;
     public static Sprite death;
     public static Sprite score;
     public static Sprite level;
-    public static Sprite levelUpIcon;
+    public static Sprite levelUp;
     public static Sprite heart;
     public static Sprite comma;
     public static Sprite space;
@@ -89,11 +88,10 @@ public final class Images
         number8 = SpriteLoader.load("numbers/number_8");
         number9 = SpriteLoader.load("numbers/number_9");
         life = SpriteLoader.load("life");
-        levelUp = SpriteLoader.load("level_up");
         death = SpriteLoader.load("death");
         score = SpriteLoader.load("icons/score");
         level = SpriteLoader.load("icons/level");
-        levelUpIcon = SpriteLoader.load("icons/level_up");
+        levelUp = SpriteLoader.load("icons/level_up");
         heart = SpriteLoader.load("icons/heart");
         comma = SpriteLoader.load("numbers/comma");
         space = SpriteLoader.load("numbers/space");

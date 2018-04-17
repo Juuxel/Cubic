@@ -191,8 +191,8 @@ public final class Cubic
         {
             super.paintComponent(g);
 
-            RenderEngine.INSTANCE.drawSky(Graphics.fromAWTGraphics(g));
-            RenderEngine.INSTANCE.drawLevel(Graphics.fromAWTGraphics(g));
+            RenderEngine.drawSky(Graphics.fromAWTGraphics(g));
+            RenderEngine.drawLevel(Graphics.fromAWTGraphics(g));
         }
     }
 
@@ -206,7 +206,7 @@ public final class Cubic
         public void paintComponent(java.awt.Graphics g)
         {
             super.paintComponent(g);
-            RenderEngine.INSTANCE.repaint(Graphics.fromAWTGraphics(g));
+            RenderEngine.repaint(Graphics.fromAWTGraphics(g));
         }
     }
 

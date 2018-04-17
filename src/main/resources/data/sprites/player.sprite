@@ -1,2 +1,3 @@
 function=random
 textures=player_green, player_blue
+flippable=true

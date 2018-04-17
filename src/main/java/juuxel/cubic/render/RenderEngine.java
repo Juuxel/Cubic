@@ -1,31 +1,19 @@
 package juuxel.cubic.render;
 
 import juuxel.cubic.Cubic;
-import juuxel.cubic.lib.GameInfo;
 import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.lib.Images;
-import juuxel.cubic.options.KeyBinding;
-import juuxel.cubic.options.Options;
 import juuxel.cubic.util.Translator;
 
 import java.awt.*;
-import java.util.*;
-import java.util.List;
-
-import static juuxel.cubic.Cubic.START_SCREEN;
-import static juuxel.cubic.Cubic.OPTIONS;
-import static juuxel.cubic.Cubic.LANGUAGE_SCREEN;
-import static juuxel.cubic.Cubic.CONTROLS;
 
 public final class RenderEngine
 {
-    public static final Color SKY = new Color(0x80daeb);
-    public static final Color SKY2 = new Color(0x7ceeeb);
+    public static final Color SKY = new Color(0x80caeb);
+    public static final Color SKY2 = new Color(0x7cdeeb);
 
     private RenderEngine()
     {}
-
-    public static RenderEngine INSTANCE = new RenderEngine();
 
     public static void repaint()
     {
@@ -33,7 +21,7 @@ public final class RenderEngine
         Cubic.game.repaint();
     }
 
-    public void repaint(Graphics g)
+    public static void repaint(Graphics g)
     {
         if (!Cubic.inStartScreen)
         {
@@ -56,25 +44,25 @@ public final class RenderEngine
         }
     }
 
-    private void drawScore(Graphics g)
+    private static void drawScore(Graphics g)
     {
         g.drawImage(Images.score, 5, 10, 16, 16);
         g.drawImage(Images.level, 5, 30, 16, 16);
-        g.drawImage(Images.levelUpIcon, 5, 50, 16, 16);
+        g.drawImage(Images.levelUp, 5, 50, 16, 16);
         g.drawImage(Images.heart, 5, 70, 16, 16);
 
-        drawNumberString(g, String.format(Translator.getLocale(), "%,d", Cubic.score), 30, 10);
-        drawNumberString(g, String.format(Translator.getLocale(), "%,d", Cubic.level), 30, 30);
-        drawNumberString(g, String.format(Translator.getLocale(), "%,d / %,d", Cubic.ENEMIES.size(), Cubic.level), 30, 50);
-        drawNumberString(g, String.format(Translator.getLocale(), "%,d", Cubic.lives), 30, 70);
+        drawNumberString(g, String.format(Translator.getLocale(), "%,d", Cubic.score), 30, 10, 1F);
+        drawNumberString(g, String.format(Translator.getLocale(), "%,d", Cubic.level), 30, 30, 1F);
+        drawNumberString(g, String.format(Translator.getLocale(), "%,d / %,d", Cubic.ENEMIES.size(), Cubic.level), 30, 50, 1F);
+        drawNumberString(g, String.format(Translator.getLocale(), "%,d", Cubic.lives), 30, 70, 1F);
     }
 
-    public void drawLevel(Graphics g)
+    public static void drawLevel(Graphics g)
     {
         Cubic.gameLevel.draw(g);
     }
 
-    public void drawSky(Graphics g)
+    public static void drawSky(Graphics g)
     {
         Paint paint = g.getGraphics2D().getPaint();
 
@@ -84,13 +72,17 @@ public final class RenderEngine
         g.getGraphics2D().setPaint(paint);
     }
 
-    private void drawNumberString(Graphics g, String s, int x, int y)
+    public static void drawNumberString(Graphics g, String s, int x, int y, float alpha)
     {
         char[] chars = s.toCharArray();
+
+        g.getGraphics2D().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
 
         for (int i = 0; i < chars.length; i++)
         {
             g.drawImage(Images.numbers.get(chars[i]), x + i * 10, y, 8, 16);
         }
+
+        g.getGraphics2D().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
     }
 }

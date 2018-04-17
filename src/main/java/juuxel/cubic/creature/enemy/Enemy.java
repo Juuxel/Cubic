@@ -3,6 +3,7 @@ package juuxel.cubic.creature.enemy;
 import juuxel.cubic.creature.Creature;
 import juuxel.cubic.Cubic;
 import juuxel.cubic.creature.fx.EffectLife;
+import juuxel.cubic.creature.fx.EffectNumber;
 import juuxel.cubic.util.Direction;
 
 public abstract class Enemy extends Creature
@@ -54,6 +55,8 @@ public abstract class Enemy extends Creature
     @Override
     public void kill()
     {
+        new EffectNumber(x, y, getScore());
+
         Cubic.score += getScore();
         Cubic.player.ySpeed = 5;
 

@@ -83,20 +83,33 @@ public abstract class Creature
     { return sprite; }
 
     protected void setSprite(Sprite sprite)
-    { this.sprite = sprite; }
+    {
+        this.sprite = sprite;
+        this.flippingEnabled = sprite.isFlippable();
+    }
 
     public boolean onGround()
     { return y <= GameValues.GROUND; }
 
-    public void moveX(double xOffset)
+    public void updateSpriteDirection(double value)
     {
         if (flippingEnabled)
         {
-            if (xOffset > 0)
+            if (value > 0)
                 direction = Direction.RIGHT;
-            else if (xOffset < 0)
+            else if (value < 0)
                 direction = Direction.LEFT;
         }
+    }
+
+    public void updateSpriteDirection()
+    {
+        updateSpriteDirection(xSpeed);
+    }
+
+    public void moveX(double xOffset)
+    {
+        updateSpriteDirection(xOffset);
 
         x += xOffset;
     }
