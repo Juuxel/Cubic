@@ -1,0 +1,4 @@
+function=animated
+textures=bird_red
+autoFind=2
+speed=0.2

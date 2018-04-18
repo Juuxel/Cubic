@@ -40,6 +40,9 @@ public final class SpriteRandom extends Sprite implements CreatureListener
     @Override
     public Image getImage(Object owner)
     {
+        if (!spriteMap.containsKey(owner))
+            addToSpriteMap(owner);
+
         return spriteMap.get(owner).getImage(owner);
     }
 
@@ -49,6 +52,11 @@ public final class SpriteRandom extends Sprite implements CreatureListener
     @Override
     public void onCreatureCreated(Creature creature)
     {
-        spriteMap.put(creature, Randomizer.getRandomObject(subsprites));
+        addToSpriteMap(creature);
+    }
+
+    private void addToSpriteMap(Object o)
+    {
+        spriteMap.put(o, Randomizer.getRandomObject(subsprites));
     }
 }

@@ -12,8 +12,9 @@ import java.awt.event.MouseEvent;
 
 public class CButton extends JButton implements LanguageChangeListener
 {
-    private static final Color BACKGROUND = new Color(0xCC16b7fc);
-    private static final Color BACKGROUND_PRESSED = new Color(0xCC16b7fc).darker();
+    private static final Color BACKGROUND = new Color(0x16b7fc);
+    private static final Color BACKGROUND_PRESSED = BACKGROUND.darker();
+    private static final Color BACKGROUND_HOVER = BACKGROUND.brighter();
 
     private final Color baseColor;
     private Color buttonColor;
@@ -69,10 +70,13 @@ public class CButton extends JButton implements LanguageChangeListener
 
         if (getModel().isPressed())
             color = BACKGROUND_PRESSED;
+        else if (getModel().isRollover())
+            color = BACKGROUND_HOVER;
 
         g.setPaint(new GradientPaint(new Point(0, 0), new Color(0, 0, 0, 0),
                                      new Point(0, getHeight()), color));
-        g.fillRect(0, 0, getWidth(), getHeight());
+        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5F));
+        g.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
         g.dispose();
 
         super.paintComponent(graphics);

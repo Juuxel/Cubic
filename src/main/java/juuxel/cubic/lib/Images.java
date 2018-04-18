@@ -47,6 +47,8 @@ public final class Images
     public static Sprite bricks;
     public static Sprite backButtonSprite;
     public static Sprite levelUpEffect;
+    public static Sprite cloud;
+    public static Sprite building;
     public static Image backButton;
 
     public static Map<Character, Sprite> numbers;
@@ -100,6 +102,8 @@ public final class Images
         bird = SpriteLoader.load("bird");
         birdPoop = SpriteLoader.load("bird_poop");
         levelUpEffect = SpriteLoader.load("level_up");
+        cloud = SpriteLoader.load("decorations/cloud");
+        building = SpriteLoader.load("decorations/building");
 
         initializeNumberMap();
     }
