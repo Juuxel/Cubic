@@ -32,8 +32,8 @@ public final class EnemyBird extends Enemy
 
         if (poopDelay == 0)
         {
+            poopDelay = Randomizer.RANDOM.nextInt(200) + 350;
             new Poop();
-            poopDelay = Randomizer.RANDOM.nextInt(300) + 300;
         }
     }
 
