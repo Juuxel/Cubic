@@ -31,6 +31,7 @@ public final class Cubic
     public static Level gameLevel;
     public static boolean inStartScreen = true, running = true, moveKeyDown, jumpKeyDown;
     public static final List<Enemy> ENEMIES = new CopyOnWriteArrayList<>();
+    public static final List<Enemy> COLLIDING_ENEMIES = new CopyOnWriteArrayList<>();
     public static int score = 0, deaths = 0, level = 1, lives = 3;
     public static final List<Creature> CREATURES = new CopyOnWriteArrayList<>();
     public static final List<CreatureListener> CREATURE_LISTENERS = new ArrayList<>();
@@ -39,12 +40,8 @@ public final class Cubic
     private final WindowPane windowPane;
     private final GamePane gamePane;
 
-    public static final int START_SCREEN = 0;
-    public static final int OPTIONS = 1;
-    public static final int LANGUAGE_SCREEN = 2;
-    public static final int CONTROLS = 3;
-
     private static boolean hasTimerBeenCreated = false;
+    private static int tick = 0;
 
     private Cubic()
     {
@@ -106,7 +103,7 @@ public final class Cubic
         CREATURES.clear();
         ENEMIES.clear();
         player = new Player();
-        ENEMIES.add(EnemyLists.createEnemy(EnemyType.NORMAL));
+        addEnemy(EnemyLists.createEnemy(EnemyType.NORMAL));
         Cubic.gameLevel = level;
         Cubic.inStartScreen = false;
         Cubic.selectScreen("Game");
@@ -118,14 +115,25 @@ public final class Cubic
                 @Override
                 public void run()
                 {
-                    if (!inStartScreen)
+                    if (!inStartScreen && lives > 0)
                     {
-                        if (lives > 0)
-                            CREATURES.forEach(Creature::executeLogic);
-                        RenderEngine.repaint();
+                        CREATURES.forEach(Creature::executeLogic);
                     }
                 }
-            }, 10L, 5L);
+            }, 0L, 5L);
+
+            new java.util.Timer().scheduleAtFixedRate(new TimerTask()
+            {
+                @Override
+                public void run()
+                {
+                    if (!inStartScreen)
+                    {
+                        RenderEngine.repaint();
+                        tick = (tick + 1) % 60;
+                    }
+                }
+            }, 0L, 1000L / 60L);
             hasTimerBeenCreated = true;
         }
     }
@@ -155,6 +163,17 @@ public final class Cubic
         CardLayout layout = game.windowPane.layout;
 
         layout.show(game.windowPane, screen);
+    }
+
+    public static int getTick()
+    {
+        return tick / 3;
+    }
+
+    public static void addEnemy(Enemy enemy)
+    {
+        ENEMIES.add(enemy);
+        COLLIDING_ENEMIES.add(enemy);
     }
 
     public static final class GameFrame extends JFrame

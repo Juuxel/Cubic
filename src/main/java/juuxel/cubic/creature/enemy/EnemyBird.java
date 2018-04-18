@@ -7,7 +7,7 @@ import juuxel.cubic.util.Randomizer;
 
 public final class EnemyBird extends Enemy
 {
-    private int poopDelay = 2000;
+    private int poopDelay = 300;
 
     public EnemyBird()
     {
@@ -16,7 +16,6 @@ public final class EnemyBird extends Enemy
         slidable = false;
         spriteWidth = 48;
         spriteHeight = 48;
-        flippingEnabled = true;
     }
 
     @Override
@@ -31,10 +30,10 @@ public final class EnemyBird extends Enemy
 
         poopDelay--;
 
-        if (poopDelay == 0 || (Randomizer.RANDOM.nextInt(10) == 0 && x == Cubic.player.getX()))
+        if (poopDelay == 0)
         {
             new Poop();
-            poopDelay = Randomizer.RANDOM.nextInt(1000) + 500;
+            poopDelay = Randomizer.RANDOM.nextInt(300) + 300;
         }
     }
 
@@ -56,14 +55,17 @@ public final class EnemyBird extends Enemy
             spriteHeight = 24;
             setSprite(Images.birdPoop);
             collidesWithGround = false;
-            Cubic.ENEMIES.add(this);
+            Cubic.COLLIDING_ENEMIES.add(this);
         }
 
         @Override
         public void move()
         {
-            if (y < -20)
-                Cubic.ENEMIES.remove(this);
+            if (y < 0)
+            {
+                Cubic.COLLIDING_ENEMIES.remove(this);
+                Cubic.CREATURES.remove(this);
+            }
         }
 
         @Override
@@ -76,6 +78,7 @@ public final class EnemyBird extends Enemy
         public void onCollidedWithPlayer(Direction direction)
         {
             Cubic.player.kill();
+            Cubic.COLLIDING_ENEMIES.remove(this);
         }
     }
 }

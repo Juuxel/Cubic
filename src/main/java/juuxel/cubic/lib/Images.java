@@ -15,9 +15,7 @@ public final class Images
 {
     private static final String IMAGE_PREFIX = "/data/images/";
 
-    public static final Image GAME_OVER = load("game_over.png");
     public static final Image LOGO = load("logo.png");
-    public static final Image CURSOR = load("cursor.png");
     public static final Image ICON = load("player.png").getScaledInstance(64, 64, Image.SCALE_FAST);
 
     public static Sprite player;
@@ -40,16 +38,15 @@ public final class Images
     public static Sprite death;
     public static Sprite score;
     public static Sprite level;
-    public static Sprite levelUp;
+    public static Sprite levelUpIcon;
     public static Sprite heart;
     public static Sprite comma;
     public static Sprite space;
     public static Sprite slash;
-    public static Sprite radioButton;
-    public static Sprite radioButtonSelected;
     public static Sprite grass;
     public static Sprite bricks;
     public static Sprite backButtonSprite;
+    public static Sprite levelUpEffect;
     public static Image backButton;
 
     public static Map<Character, Sprite> numbers;
@@ -91,19 +88,18 @@ public final class Images
         death = SpriteLoader.load("death");
         score = SpriteLoader.load("icons/score");
         level = SpriteLoader.load("icons/level");
-        levelUp = SpriteLoader.load("icons/level_up");
+        levelUpIcon = SpriteLoader.load("icons/level_up");
         heart = SpriteLoader.load("icons/heart");
         comma = SpriteLoader.load("numbers/comma");
         space = SpriteLoader.load("numbers/space");
         slash = SpriteLoader.load("numbers/slash");
-        radioButton = SpriteLoader.load("gui/radio_button");
-        radioButtonSelected = SpriteLoader.load("gui/radio_button_selected");
         grass = SpriteLoader.load("tiles/grass");
         bricks = SpriteLoader.load("tiles/bricks");
         backButtonSprite = SpriteLoader.load("gui/back");
         backButton = backButtonSprite.getImage().getScaledInstance(64, 64, Image.SCALE_DEFAULT);
         bird = SpriteLoader.load("bird");
         birdPoop = SpriteLoader.load("bird_poop");
+        levelUpEffect = SpriteLoader.load("level_up");
 
         initializeNumberMap();
     }

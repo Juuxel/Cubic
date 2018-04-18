@@ -76,10 +76,10 @@ public final class Graphics
         drawFlippedImage(sprite.getImage(), x, y, width, height);
     }
 
-    public void drawImageWithAlpha(Sprite sprite, int x, int y, int width, int height, float alpha)
+    public void drawImageWithAlpha(Image image, int x, int y, int width, int height, float alpha)
     {
         graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
-        drawImage(sprite, x, y, width, height);
+        drawImage(image, x, y, width, height);
         graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
     }
 }

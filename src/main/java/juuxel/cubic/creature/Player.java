@@ -57,7 +57,7 @@ public final class Player extends Creature
         if (invincibleTime > 0)
             invincibleTime--;
 
-        for (Enemy enemy : Cubic.ENEMIES)
+        for (Enemy enemy : Cubic.COLLIDING_ENEMIES)
         {
             if (!enemy.collidesWithPlayer) // Do nothing to dead / other non-colliding enemies
                 continue;
@@ -108,10 +108,10 @@ public final class Player extends Creature
         new EffectLevelUp(x, y);
 
         for (int i = 0; i < Cubic.level; i++)
-            Cubic.ENEMIES.add(EnemyLists.createEnemy(EnemyType.NORMAL));
+            Cubic.addEnemy(EnemyLists.createEnemy(EnemyType.NORMAL));
 
         if (Cubic.level > 2 && Randomizer.RANDOM.nextInt(5) == 0)
-            Cubic.ENEMIES.add(EnemyLists.createEnemy(EnemyType.STRANGE));
+            Cubic.addEnemy(EnemyLists.createEnemy(EnemyType.STRANGE));
     }
 
     public void moveLeft()

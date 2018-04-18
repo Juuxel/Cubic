@@ -9,6 +9,6 @@ public final class EffectLevelUp extends Effect
     public EffectLevelUp(double x, double y)
     {
         super(x, y + 64);
-        setSprite(Images.level);
+        setSprite(Images.levelUpEffect);
     }
 }

@@ -17,6 +17,7 @@ public final class EnemyLists
         List<Supplier<Enemy>> strangeEnemies = new ArrayList<>();
 
         normalEnemies.add(EnemyNormal::new);
+        normalEnemies.add(EnemyBird::new);
         strangeEnemies.add(EnemyBouncing::new);
         strangeEnemies.add(EnemyBird::new);
 

@@ -48,7 +48,7 @@ public final class RenderEngine
     {
         g.drawImage(Images.score, 5, 10, 16, 16);
         g.drawImage(Images.level, 5, 30, 16, 16);
-        g.drawImage(Images.levelUp, 5, 50, 16, 16);
+        g.drawImage(Images.levelUpIcon, 5, 50, 16, 16);
         g.drawImage(Images.heart, 5, 70, 16, 16);
 
         drawNumberString(g, String.format(Translator.getLocale(), "%,d", Cubic.score), 30, 10, 1F);

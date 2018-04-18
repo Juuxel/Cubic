@@ -105,5 +105,6 @@ public final class SpriteLoader
         registerSprite("random", SpriteRandom::new);
         registerSprite("multi", SpriteMulti::new);
         registerSprite("layered", SpriteLayered::new);
+        registerSprite("animated", SpriteAnimated::new);
     }
 }

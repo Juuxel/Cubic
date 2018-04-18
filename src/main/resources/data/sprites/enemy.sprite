@@ -1,2 +1,4 @@
+function=animated
 textures=enemy
 flippable=true
+autoFind=9

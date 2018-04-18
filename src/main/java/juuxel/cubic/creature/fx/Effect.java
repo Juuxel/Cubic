@@ -22,7 +22,7 @@ public abstract class Effect extends Creature
     {
         int dx = (int) x;
         int dy = (int) yOnScreen();
-        g.drawImageWithAlpha(sprite,
+        g.drawImageWithAlpha(sprite.getImage(this),
                              dx - spriteWidth / 2,
                              dy - spriteHeight / 2,
                              spriteWidth,
@@ -41,7 +41,7 @@ public abstract class Effect extends Creature
             Cubic.CREATURES.remove(this);
     }
 
-    protected int getAge()
+    public int getAge()
     {
         return age;
     }

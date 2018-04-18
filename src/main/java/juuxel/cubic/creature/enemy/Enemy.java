@@ -61,6 +61,7 @@ public abstract class Enemy extends Creature
         Cubic.player.ySpeed = 5;
 
         Cubic.ENEMIES.remove(this);
+        Cubic.COLLIDING_ENEMIES.remove(this);
         ySpeed = -2;
         collidesWithGround = false;
 
