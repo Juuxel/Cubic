@@ -31,7 +31,7 @@ public final class Options
         moveLeft = new KeyBinding(VK_A);
         moveRight = new KeyBinding(VK_D);
         jump = new KeyBinding(VK_SPACE);
-        takeScreenshot = new KeyBinding(VK_F2);
+        takeScreenshot = new KeyBinding(VK_F12);
         captureFrame = false;
         //fps = 60;
 

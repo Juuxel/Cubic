@@ -82,6 +82,21 @@ public class CButton extends JButton implements LanguageChangeListener
         super.paintComponent(graphics);
     }
 
+    public static class Basic extends CButton
+    {
+        public Basic(String label)
+        {
+            super(label);
+
+            setText(label);
+        }
+
+        @Override
+        public void onLanguageChange()
+        {
+        }
+    }
+
     private class ButtonBorder implements Border
     {
         @Override

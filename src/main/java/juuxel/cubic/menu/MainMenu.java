@@ -3,11 +3,9 @@ package juuxel.cubic.menu;
 import juuxel.cubic.Cubic;
 import juuxel.cubic.lib.GameInfo;
 import juuxel.cubic.lib.Images;
-import juuxel.cubic.util.Translator;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Image;
 
@@ -31,14 +29,17 @@ public final class MainMenu extends CPanel
         CButton optionsButton = new CButton("mainMenu.options");
         CButton quitButton = new CButton("mainMenu.exit");
         continueButton = new CButton("mainMenu.continue");
+        CButton aboutButton = new CButton.Basic("About");
 
         playButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         optionsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         quitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         continueButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        aboutButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         playButton.addActionListener(e -> Cubic.selectScreen("LevelMenu"));
         optionsButton.addActionListener(e -> Cubic.selectScreen("OptionsMenu"));
+        aboutButton.addActionListener(e -> Cubic.selectScreen("AboutScreen"));
         quitButton.addActionListener(e -> System.exit(0));
         continueButton.addActionListener(e -> {
             Cubic.inStartScreen = false;
@@ -53,6 +54,8 @@ public final class MainMenu extends CPanel
         add(playButton);
         add(Box.createVerticalStrut(5));
         add(optionsButton);
+        add(Box.createVerticalStrut(5));
+        add(aboutButton);
         add(Box.createVerticalStrut(5));
         add(quitButton);
         add(Box.createVerticalGlue());

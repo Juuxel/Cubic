@@ -4,6 +4,7 @@ import juuxel.cubic.creature.Creature;
 import juuxel.cubic.creature.Player;
 import juuxel.cubic.creature.enemy.*;
 import juuxel.cubic.level.Level;
+import juuxel.cubic.menu.AboutScreen;
 import juuxel.cubic.menu.LevelMenu;
 import juuxel.cubic.menu.MainMenu;
 import juuxel.cubic.menu.OptionsMenu;
@@ -199,6 +200,7 @@ public final class Cubic
             add(new MainMenu(), "MainMenu");
             add(new OptionsMenu(), "OptionsMenu");
             add(new LevelMenu(), "LevelMenu");
+            add(new AboutScreen(), "AboutScreen");
             add(game.gamePane, "Game");
             layout.show(this, "MainMenu");
             addKeyListener(new Keyboard());
