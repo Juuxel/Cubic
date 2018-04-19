@@ -26,7 +26,7 @@ public final class LevelGrassyLands extends Level
     private void newCloud(int i)
     {
         int x = Randomizer.RANDOM.nextInt(640 - i * 40) + i * 40;
-        int y = Randomizer.RANDOM.nextInt(150) + 300;
+        int y = Randomizer.RANDOM.nextInt(180) + 300;
         int size = Randomizer.RANDOM.nextInt(3) + 1;
         float alpha = Math.max(Randomizer.RANDOM.nextFloat(), 0.3F);
         float speed = Randomizer.RANDOM.nextFloat() + 0.15F;
