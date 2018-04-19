@@ -30,7 +30,7 @@ public final class LevelBrickCity extends Level
     private void newBuilding(int i)
     {
         int x = Randomizer.RANDOM.nextInt(300) - 150 + i * (640 / buildings.length);
-        int size = Randomizer.RANDOM.nextInt(3) + 5;
+        int size = Randomizer.RANDOM.nextInt(3) + 5 - i / 2;
         buildings[i] = new Building(x, size);
     }
 
@@ -48,7 +48,7 @@ public final class LevelBrickCity extends Level
                                  (int) Utils.yOnScreen(image.getHeight(null) * building.size + 64),
                                  image.getWidth(null) * building.size,
                                  image.getHeight(null) * building.size,
-                                 0.8F);
+                                 Math.min(0.5F * (float) building.size / 3.0F, 1.0F));
         }
     }
 
