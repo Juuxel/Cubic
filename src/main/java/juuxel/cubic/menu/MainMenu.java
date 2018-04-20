@@ -29,7 +29,7 @@ public final class MainMenu extends CPanel
         CButton optionsButton = new CButton("mainMenu.options");
         CButton quitButton = new CButton("mainMenu.exit");
         continueButton = new CButton("mainMenu.continue");
-        CButton aboutButton = new CButton.Basic("About");
+        CButton aboutButton = new CButton("mainMenu.about");
 
         playButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         optionsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
