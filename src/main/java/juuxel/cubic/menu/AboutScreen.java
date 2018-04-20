@@ -52,7 +52,7 @@ public final class AboutScreen extends CPanel
 
         try
         {
-            doc.insertString(0, "Copyright ⓒ2016-2018 Juuxel\n\n", attributes);
+            doc.insertString(0, "Copyright \u00a92016-2018 Juuxel\n\n", attributes);
             doc.insertString(0, Translator.translate("about.text") + "\n\n", attributes);
         }
         catch (BadLocationException e)
