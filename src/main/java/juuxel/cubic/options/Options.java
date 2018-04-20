@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.*;
-import java.util.Properties;
+import java.util.*;
 
 import static java.awt.event.KeyEvent.*;
 
@@ -21,17 +21,20 @@ public final class Options
 
     //public static int fps;
 
+    public static final List<KeyBinding> KEY_BINDINGS = new ArrayList<>();
+
     private static Properties properties;
+    private static KeyBinding currentlySelectedKeyBinding = null;
 
     private Options()
     {}
 
     public static void init()
     {
-        moveLeft = new KeyBinding(VK_A);
-        moveRight = new KeyBinding(VK_D);
-        jump = new KeyBinding(VK_SPACE);
-        takeScreenshot = new KeyBinding(VK_F12);
+        moveLeft = addKeyBinding("controls.moveLeft", VK_A, false);
+        moveRight = addKeyBinding("controls.moveRight", VK_D, false);
+        jump = addKeyBinding("controls.jump", VK_SPACE, false);
+        takeScreenshot = addKeyBinding("controls.takeScreenshot", VK_F12, false);
         captureFrame = false;
         //fps = 60;
 
@@ -75,6 +78,23 @@ public final class Options
         }
     }
 
+    public static KeyBinding addKeyBinding(String name, int initialValue, boolean checkValue)
+    {
+        KeyBinding binding = new KeyBinding(name, initialValue);
+
+        if (checkValue)
+        {
+            if (properties.containsKey(name))
+                binding.setValue(Integer.parseInt(properties.getProperty(name)));
+            else
+                properties.setProperty(name, Integer.toString(initialValue));
+        }
+
+        KEY_BINDINGS.add(binding);
+
+        return binding;
+    }
+
     public static String getKeyName(int code)
     {
         switch (code)
@@ -114,5 +134,20 @@ public final class Options
         {
             e.printStackTrace();
         }
+    }
+
+    public static void selectKeyBinding(KeyBinding binding)
+    {
+        currentlySelectedKeyBinding = binding;
+    }
+
+    public static boolean isSelectingKeyBinding()
+    {
+        return currentlySelectedKeyBinding != null;
+    }
+
+    public static KeyBinding getCurrentKeyBinding()
+    {
+        return currentlySelectedKeyBinding;
     }
 }

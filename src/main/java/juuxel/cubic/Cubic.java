@@ -52,7 +52,7 @@ public final class Cubic
         gamePane.requestFocusInWindow();
     }
 
-    public static void main(String[] args) throws Exception
+    public static void main(String[] args)
     {
         processArgs(args);
 
@@ -77,7 +77,7 @@ public final class Cubic
 
     /* Initialize the core components of Cubic. (Translator, options, sprite system)
      */
-    private static void coreInit() throws Exception
+    private static void coreInit()
     {
         Translator.init();
         Options.init();
@@ -177,7 +177,7 @@ public final class Cubic
         COLLIDING_ENEMIES.add(enemy);
     }
 
-    public static final class GameFrame extends JFrame
+    private static final class GameFrame extends JFrame
     {
         private GameFrame(Cubic game, String title)
         {
@@ -235,7 +235,7 @@ public final class Cubic
     {
         public void keyPressed(KeyEvent e)
         {
-            if (e.getKeyCode() == VK_F12)
+            if (e.getKeyCode() == Options.takeScreenshot.getValue())
                 Screenshooter.takeScreenshot();
             else if (!inStartScreen)
             {

@@ -1,19 +1,25 @@
 package juuxel.cubic.options;
 
+import java.util.*;
+
 /**
  * A KeyBinding is an object representing an action and a key bound to it.
  */
 public final class KeyBinding
 {
     private int value;
+    private final List<ChangeListener> changeListeners = new ArrayList<>();
+    private final String name;
 
     /**
      * The class constructor.
      *
+     * @param name the name of this key binding
      * @param initialValue the initial key code of this binding
      */
-    public KeyBinding(int initialValue)
+    public KeyBinding(String name, int initialValue)
     {
+        this.name = name;
         value = initialValue;
     }
 
@@ -25,6 +31,7 @@ public final class KeyBinding
     public void setValue(int value)
     {
         this.value = value;
+        changeListeners.forEach(l -> l.handleChange(this));
     }
 
     /**
@@ -37,9 +44,25 @@ public final class KeyBinding
         return value;
     }
 
+    public void addChangeListener(ChangeListener l)
+    {
+        changeListeners.add(l);
+    }
+
     @Override
     public String toString()
     {
         return String.valueOf(getValue());
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    @FunctionalInterface
+    public interface ChangeListener
+    {
+        void handleChange(KeyBinding b);
     }
 }
