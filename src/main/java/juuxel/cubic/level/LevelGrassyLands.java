@@ -29,7 +29,7 @@ public final class LevelGrassyLands extends Level
         int y = Randomizer.RANDOM.nextInt(180) + 300;
         int size = Randomizer.RANDOM.nextInt(3) + 1;
         float alpha = Math.max(Randomizer.RANDOM.nextFloat(), 0.3F);
-        float speed = Randomizer.RANDOM.nextFloat() + 0.15F;
+        float speed = Randomizer.RANDOM.nextFloat() + 0.05F;
         Direction direction = Randomizer.getRandomObject(Direction.LEFT, Direction.RIGHT);
         clouds[i] = new Cloud(x, y, size, i, alpha, speed, direction);
     }
