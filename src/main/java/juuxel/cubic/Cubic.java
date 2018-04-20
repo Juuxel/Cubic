@@ -134,7 +134,7 @@ public final class Cubic
                         tick = (tick + 1) % 60;
                     }
                 }
-            }, 0L, 1000L / 60L);
+            }, 0L, 1000L / (long) Options.fps);
             hasTimerBeenCreated = true;
         }
     }

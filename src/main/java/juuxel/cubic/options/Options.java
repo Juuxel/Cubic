@@ -18,8 +18,7 @@ public final class Options
     public static KeyBinding takeScreenshot;
 
     public static boolean captureFrame;
-
-    //public static int fps;
+    public static int fps;
 
     public static final List<KeyBinding> KEY_BINDINGS = new ArrayList<>();
 
@@ -36,7 +35,7 @@ public final class Options
         jump = addKeyBinding("controls.jump", VK_SPACE, false);
         takeScreenshot = addKeyBinding("controls.takeScreenshot", VK_F12, false);
         captureFrame = false;
-        //fps = 60;
+        fps = 60;
 
         properties = new Properties();
         properties.put("controls.moveLeft", moveLeft.toString());
@@ -45,7 +44,7 @@ public final class Options
         properties.put("controls.takeScreenshot", takeScreenshot.toString());
         properties.put("captureFrame", "false");
         properties.put("language", Translator.getLanguage());
-        //properties.put("fps", "60");
+        properties.put("fps", "60");
 
         try
         {
@@ -65,8 +64,7 @@ public final class Options
                 takeScreenshot.setValue(Integer.valueOf(properties.getProperty("controls.takeScreenshot")));
 
                 captureFrame = Boolean.parseBoolean(properties.getProperty("captureFrame"));
-
-                //fps = Integer.parseInt(properties.getProperty("fps"));
+                fps = Integer.parseInt(properties.getProperty("fps"));
 
                 Translator.setLanguage(properties.getProperty("language"));
                 Translator.reloadStrings();
