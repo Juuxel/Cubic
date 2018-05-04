@@ -4,7 +4,7 @@
  * Cubic is licensed under the GNU LGPLv3 license.
  * Full source and license: https://github.com/Juuxel/Cubic
  */
-package juuxel.cubic.level;
+package juuxel.cubic.world;
 
 import juuxel.cubic.Cubic;
 import juuxel.cubic.lib.Images;
@@ -13,11 +13,11 @@ import juuxel.cubic.util.Direction;
 import juuxel.cubic.util.Randomizer;
 import juuxel.cubic.util.Utils;
 
-public final class LevelGrassyLands extends Level
+public final class WorldGrassyLands extends World
 {
     private final Cloud[] clouds;
 
-    public LevelGrassyLands()
+    public WorldGrassyLands()
     {
         super(Images.grass);
 
@@ -43,7 +43,7 @@ public final class LevelGrassyLands extends Level
     @Override
     public String getNameKey()
     {
-        return "level.grassyLands";
+        return "world.grassyLands";
     }
 
     @Override

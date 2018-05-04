@@ -9,9 +9,9 @@ package juuxel.cubic;
 import juuxel.cubic.creature.Creature;
 import juuxel.cubic.creature.Player;
 import juuxel.cubic.creature.enemy.*;
-import juuxel.cubic.level.Level;
+import juuxel.cubic.world.World;
 import juuxel.cubic.menu.AboutScreen;
-import juuxel.cubic.menu.LevelMenu;
+import juuxel.cubic.menu.WorldMenu;
 import juuxel.cubic.menu.MainMenu;
 import juuxel.cubic.menu.OptionsMenu;
 import juuxel.cubic.mod.ModLoader;
@@ -22,6 +22,7 @@ import juuxel.cubic.render.Graphics;
 import juuxel.cubic.render.Screenshooter;
 import juuxel.cubic.render.RenderEngine;
 import juuxel.cubic.render.sprite.SpriteLoader;
+import juuxel.cubic.world.WorldGrassyLands;
 
 import javax.swing.*;
 import java.awt.CardLayout;
@@ -35,7 +36,7 @@ public final class Cubic
 {
     public static Cubic game;
     public static Player player;
-    public static Level gameLevel;
+    public static World gameWorld;
     public static boolean inStartScreen = true, running = true, moveKeyDown, jumpKeyDown;
     public static final List<Enemy> ENEMIES = new CopyOnWriteArrayList<>();
     public static final List<Enemy> COLLIDING_ENEMIES = new CopyOnWriteArrayList<>();
@@ -89,8 +90,8 @@ public final class Cubic
         Options.init();
         SpriteLoader.registerDefaults();
         Images.init();
-        Level.registerDefaults();
-        gameLevel = Level.getRandomLevel();
+        World.registerDefaults();
+        gameWorld = World.getInstance(WorldGrassyLands.class);
         ModLoader.load();
         ModLoader.coreInit();
     }
@@ -101,7 +102,7 @@ public final class Cubic
         ModLoader.contentInit();
     }
 
-    public static void newGame(Level level)
+    public static void newGame(World world)
     {
         score = 0;
         deaths = 0;
@@ -111,7 +112,7 @@ public final class Cubic
         ENEMIES.clear();
         player = new Player();
         addEnemy(EnemyLists.createEnemy(EnemyType.NORMAL));
-        Cubic.gameLevel = level;
+        Cubic.gameWorld = world;
         Cubic.inStartScreen = false;
         Cubic.selectScreen("Game");
 
@@ -205,7 +206,7 @@ public final class Cubic
             setLayout(layout);
             add(new MainMenu(), "MainMenu");
             add(new OptionsMenu(), "OptionsMenu");
-            add(new LevelMenu(), "LevelMenu");
+            add(new WorldMenu(), "WorldMenu");
             add(new AboutScreen(), "AboutScreen");
             add(game.gamePane, "Game");
             layout.show(this, "MainMenu");

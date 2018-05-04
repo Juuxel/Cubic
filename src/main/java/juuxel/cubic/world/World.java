@@ -4,7 +4,7 @@
  * Cubic is licensed under the GNU LGPLv3 license.
  * Full source and license: https://github.com/Juuxel/Cubic
  */
-package juuxel.cubic.level;
+package juuxel.cubic.world;
 
 import juuxel.cubic.Cubic;
 import juuxel.cubic.render.Graphics;
@@ -13,15 +13,13 @@ import juuxel.cubic.util.Randomizer;
 import juuxel.cubic.util.Utils;
 
 import java.util.*;
-import java.util.function.Supplier;
 
 /**
- * A Level is a "world" for Cubic. It sets the ground look,
- * decorations and other details of the current game.
+ * Worlds set the ground look, decorations, enemies and other details of the current game.
  */
-public abstract class Level
+public abstract class World
 {
-    public static final List<Level> LEVELS = new ArrayList<>();
+    public static final List<World> WORLDS = new ArrayList<>();
 
     private Sprite ground;
 
@@ -30,13 +28,13 @@ public abstract class Level
      *
      * @param ground the ground sprite
      */
-    public Level(Sprite ground)
+    public World(Sprite ground)
     {
         this.ground = ground;
     }
 
     /**
-     * Draws this level to the {@link Graphics} object.
+     * Draws this world to the {@link Graphics} object.
      * The default implementation draws the ground and then
      * calls {@link #drawDecoration(Graphics)}. Subclasses don't
      * need call this.
@@ -56,7 +54,7 @@ public abstract class Level
     }
 
     /**
-     * Draws the decoration of this level to the {@link Graphics} object.
+     * Draws the decoration of this world to the {@link Graphics} object.
      *
      * @param g the graphics object
      */
@@ -64,41 +62,45 @@ public abstract class Level
     {}
 
     /**
-     * Gets the translation key of the name of this level.
+     * Gets the translation key of the name of this world.
      *
      * @return the key
      */
     public abstract String getNameKey();
 
     /**
-     * An internal method to register Cubic's default levels.
+     * An internal method to register Cubic's default worlds.
      * Mods, please don't call this.
      */
     public static void registerDefaults()
     {
-        registerLevel(new LevelGrassyLands());
-        registerLevel(new LevelBrickCity());
+        registerWorld(new WorldGrassyLands());
+        registerWorld(new WorldBrickCity());
     }
 
     /**
-     * Registers a new Level to the game.
+     * Registers a new World to the game.
      * This method should be called on the coreInit phase.
      *
-     * @param level the new level
+     * @param world the new world
      */
-    public static void registerLevel(Level level)
+    public static void registerWorld(World world)
     {
-        LEVELS.add(level);
+        WORLDS.add(world);
     }
 
     /**
-     * Gets a random level object from the supplier list.
+     * Gets the world instance of {@code worldClass}.
      *
-     * @return a Level
-     * @see #registerLevel(Level) registerLevelSupplier
+     * @param worldClass the class
+     * @return the world instance
+     * @throws NoSuchElementException if instance is not found
      */
-    public static Level getRandomLevel()
+    public static World getInstance(Class<? extends World> worldClass) throws NoSuchElementException
     {
-        return Randomizer.getRandomObject(LEVELS);
+        return WORLDS.stream()
+                     .filter(w -> w.getClass() == worldClass)
+                     .findFirst()
+                     .orElseThrow(NoSuchElementException::new);
     }
 }

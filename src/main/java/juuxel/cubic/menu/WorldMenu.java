@@ -7,7 +7,7 @@
 package juuxel.cubic.menu;
 
 import juuxel.cubic.Cubic;
-import juuxel.cubic.level.Level;
+import juuxel.cubic.world.World;
 import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.lib.Images;
 
@@ -17,9 +17,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
-public final class LevelMenu extends CPanel
+public final class WorldMenu extends CPanel
 {
-    public LevelMenu()
+    public WorldMenu()
     {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -31,13 +31,13 @@ public final class LevelMenu extends CPanel
         titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.X_AXIS));
         panel.setOpaque(false);
 
-        CLabel title = new CLabel("mainMenu.selectLevel");
+        CLabel title = new CLabel("mainMenu.selectWorld");
         CButton backButton = new CButton(new ImageIcon(Images.backButton));
 
         title.setFont(GameValues.FONT.deriveFont(32F));
         backButton.addActionListener(e -> Cubic.selectScreen("MainMenu"));
 
-        Level.LEVELS.forEach(level -> {
+        World.WORLDS.forEach(level -> {
             CButton button = new CButton(level.getNameKey());
             button.setFont(GameValues.FONT.deriveFont(24F));
             button.setBackground(new Color(0x7ceeebaa));

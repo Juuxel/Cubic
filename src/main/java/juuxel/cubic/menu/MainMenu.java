@@ -43,7 +43,7 @@ public final class MainMenu extends CPanel
         continueButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         aboutButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        playButton.addActionListener(e -> Cubic.selectScreen("LevelMenu"));
+        playButton.addActionListener(e -> Cubic.selectScreen("WorldMenu"));
         optionsButton.addActionListener(e -> Cubic.selectScreen("OptionsMenu"));
         aboutButton.addActionListener(e -> Cubic.selectScreen("AboutScreen"));
         quitButton.addActionListener(e -> System.exit(0));

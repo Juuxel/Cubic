@@ -15,15 +15,14 @@ import java.awt.*;
 
 public final class RenderEngine
 {
-    public static final Color SKY = new Color(0x80caeb);
-    public static final Color SKY2 = new Color(0x7cdeeb);
+    private static final Color SKY_TOP = new Color(0x80caeb);
+    private static final Color SKY_BOTTOM = new Color(0x7cdeeb);
 
     private RenderEngine()
     {}
 
     public static void repaint()
     {
-        // TODO Implement FPS limit
         Cubic.game.repaint();
     }
 
@@ -65,14 +64,14 @@ public final class RenderEngine
 
     public static void drawLevel(Graphics g)
     {
-        Cubic.gameLevel.draw(g);
+        Cubic.gameWorld.draw(g);
     }
 
     public static void drawSky(Graphics g)
     {
         Paint paint = g.getGraphics2D().getPaint();
 
-        g.getGraphics2D().setPaint(new GradientPaint(0, 0, SKY, 0, Cubic.game.getHeight(), SKY2));
+        g.getGraphics2D().setPaint(new GradientPaint(0, 0, SKY_TOP, 0, Cubic.game.getHeight(), SKY_BOTTOM));
         g.getGraphics2D().fillRect(0, 0, Cubic.game.getWidth(), Cubic.game.getHeight());
 
         g.getGraphics2D().setPaint(paint);

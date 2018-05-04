@@ -4,7 +4,7 @@
  * Cubic is licensed under the GNU LGPLv3 license.
  * Full source and license: https://github.com/Juuxel/Cubic
  */
-package juuxel.cubic.level;
+package juuxel.cubic.world;
 
 import juuxel.cubic.lib.Images;
 import juuxel.cubic.render.Graphics;
@@ -13,11 +13,11 @@ import juuxel.cubic.util.Utils;
 
 import java.awt.Image;
 
-public final class LevelBrickCity extends Level
+public final class WorldBrickCity extends World
 {
     private final Building[] buildings;
 
-    public LevelBrickCity()
+    public WorldBrickCity()
     {
         super(Images.bricks);
 
@@ -30,7 +30,7 @@ public final class LevelBrickCity extends Level
     @Override
     public String getNameKey()
     {
-        return "level.brickCity";
+        return "world.brickCity";
     }
 
     private void newBuilding(int i)
