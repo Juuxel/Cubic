@@ -116,7 +116,7 @@ public final class Player extends Creature
         for (int i = 0; i < Cubic.level; i++)
             Cubic.addEnemy(EnemyLists.createEnemy(EnemyType.NORMAL));
 
-        if (Cubic.level > 2 && Randomizer.RANDOM.nextInt(5) == 0)
+        if (Cubic.level > 2 && random.nextInt(5) == 0)
             Cubic.addEnemy(EnemyLists.createEnemy(EnemyType.STRANGE));
     }
 

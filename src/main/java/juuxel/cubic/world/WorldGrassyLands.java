@@ -13,15 +13,19 @@ import juuxel.cubic.util.Direction;
 import juuxel.cubic.util.Randomizer;
 import juuxel.cubic.util.Utils;
 
+import java.util.*;
+
 public final class WorldGrassyLands extends World
 {
     private final Cloud[] clouds;
+
+    private static final Random RANDOM = new Random();
 
     public WorldGrassyLands()
     {
         super(Images.grass);
 
-        clouds = new Cloud[Randomizer.RANDOM.nextInt(2) + 3];
+        clouds = new Cloud[RANDOM.nextInt(2) + 3];
 
         for (int i = 0; i < clouds.length; i++)
         {
@@ -31,11 +35,11 @@ public final class WorldGrassyLands extends World
 
     private void newCloud(int i)
     {
-        int x = Randomizer.RANDOM.nextInt(640 - i * 40) + i * 40;
-        int y = Randomizer.RANDOM.nextInt(180) + 300;
-        int size = Randomizer.RANDOM.nextInt(3) + 1;
-        float alpha = Math.max(Randomizer.RANDOM.nextFloat(), 0.3F);
-        float speed = Randomizer.RANDOM.nextFloat() + 0.05F;
+        int x = RANDOM.nextInt(640 - i * 40) + i * 40;
+        int y = RANDOM.nextInt(180) + 300;
+        int size = RANDOM.nextInt(3) + 1;
+        float alpha = Math.max(RANDOM.nextFloat(), 0.3F);
+        float speed = RANDOM.nextFloat() + 0.05F;
         Direction direction = Randomizer.getRandomObject(Direction.LEFT, Direction.RIGHT);
         clouds[i] = new Cloud(x, y, size, i, alpha, speed, direction);
     }

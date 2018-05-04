@@ -19,7 +19,7 @@ public final class Randomizer
     /**
      * The {@code Random} object of {@code Randomizer}.
      */
-    public static final Random RANDOM = new Random();
+    private static final Random RANDOM = new Random();
 
     private Randomizer() {}
 

@@ -12,16 +12,19 @@ import juuxel.cubic.util.Randomizer;
 import juuxel.cubic.util.Utils;
 
 import java.awt.Image;
+import java.util.*;
 
 public final class WorldBrickCity extends World
 {
     private final Building[] buildings;
 
+    private static final Random RANDOM = new Random();
+
     public WorldBrickCity()
     {
         super(Images.bricks);
 
-        buildings = new Building[Randomizer.RANDOM.nextInt(4) + 4];
+        buildings = new Building[RANDOM.nextInt(4) + 4];
 
         for (int i = 0; i < buildings.length; i++)
             newBuilding(i);
@@ -35,8 +38,8 @@ public final class WorldBrickCity extends World
 
     private void newBuilding(int i)
     {
-        int x = Randomizer.RANDOM.nextInt(300) - 150 + i * (640 / buildings.length);
-        int size = Randomizer.RANDOM.nextInt(3) + 5 - i / 2;
+        int x = RANDOM.nextInt(300) - 150 + i * (640 / buildings.length);
+        int size = RANDOM.nextInt(3) + 5 - i / 2;
         buildings[i] = new Building(x, size);
     }
 
