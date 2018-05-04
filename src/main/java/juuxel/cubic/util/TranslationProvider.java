@@ -6,7 +6,7 @@
  */
 package juuxel.cubic.util;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Provides translations for Cubic.
@@ -18,7 +18,7 @@ public interface TranslationProvider
      *
      * @return a List of languages
      */
-    List<String> getTranslations();
+    List<String> getLanguages();
 
     /**
      * Returns the name of this provider.
@@ -28,20 +28,12 @@ public interface TranslationProvider
     String getName();
 
     /**
-     * Returns true if this provider should be loaded from the classpath,
-     * false if it should be loaded from the file system.
+     * Returns the translated strings for a language code.
+     * Throws a {@link LanguageNotProvidedException} if the language is not provided.
      *
-     * @return a boolean
+     * @param language the language code
+     * @return a Map of translation strings
+     * @throws LanguageNotProvidedException if {@code language} is not provided
      */
-    default boolean isInternal()
-    {
-        return false;
-    }
-
-    /**
-     * Returns the location of this provider's translation.
-     *
-     * @return a String
-     */
-    String getLocation();
+    Map<String, String> getStringsForLanguage(String language) throws LanguageNotProvidedException;
 }

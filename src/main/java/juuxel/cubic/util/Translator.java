@@ -34,8 +34,6 @@ public final class Translator
         if (hasInit)
             throw new IllegalStateException("Translator has already been initialized.");
 
-        loadFileProviders();
-
         InputStreamProvider provider = new InputStreamProvider();
         provider.loadTranslation(Translator.class.getResourceAsStream("/data/lang/provider.properties"), "/data/lang/");
         addProvider(provider);
@@ -58,13 +56,13 @@ public final class Translator
         System.out.println("Translation providers:");
 
         TRANSLATION_PROVIDERS.forEach(provider -> {
-            languages.addAll(provider.getTranslations());
+            languages.addAll(provider.getLanguages());
             System.out.println(provider.getName());
         });
     }
 
     /**
-     * Reloads the localized strings from {@code .properties} files.
+     * Reloads the localized strings from all providers.
      */
     public static void reloadStrings()
     {
@@ -74,10 +72,7 @@ public final class Translator
 
             TranslationProvider provider = getProviderForLanguage(language);
 
-            properties.load(provider.isInternal()
-                ? Translator.class.getResourceAsStream(provider.getLocation() + String.format("%s.lang.properties", language))
-                : Files.newInputStream(Paths.get(provider.getLocation(), String.format("%s.lang.properties", language)))
-            );
+            properties.putAll(provider.getStringsForLanguage(language));
         }
         catch (IOException e)
         {
@@ -172,30 +167,15 @@ public final class Translator
      */
     public static List<String> getLanguageNames()
     {
-        try
+        ArrayList<String> output = new ArrayList<>();
+        for (String language1 : getLanguages())
         {
-            ArrayList<String> output = new ArrayList<>();
-            for (String language1 : getLanguages())
-            {
-                TranslationProvider provider = getProviderForLanguage(language1);
+            TranslationProvider provider = getProviderForLanguage(language1);
 
-                Properties properties = new Properties();
-                properties.load(provider.isInternal()
-                    ? Translator.class.getResourceAsStream(provider.getLocation() + String.format("%s.lang.properties", language1))
-                    : Files.newInputStream(Paths.get(provider.getLocation(), String.format("%s.lang.properties", language1)))
-                );
-
-                output.add(properties.getProperty("language.name"));
-            }
-
-            return output;
+            output.add(provider.getStringsForLanguage(language1).get("language.name"));
         }
-        catch (IOException e)
-        {
-            System.err.println("Error in language names:");
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
+
+        return output;
     }
 
     /**
@@ -209,51 +189,22 @@ public final class Translator
         return languages.indexOf(language);
     }
 
-    private static void loadFileProviders()
-    {
-        Path path = Paths.get("translations");
-
-        if (Files.exists(path))
-        {
-            try (DirectoryStream<Path> stream = Files.newDirectoryStream(path))
-            {
-                stream.forEach(path1 -> {
-                    if (Files.isDirectory(path1))
-                    {
-                        Path languagePath = Paths.get(path1.toString(), "data", "lang");
-
-                        if (Files.exists(languagePath))
-                        {
-                            InputStreamProvider provider = new InputStreamProvider();
-                            provider.loadTranslation(Paths.get(languagePath.toString(), "provider.properties"));
-                            TRANSLATION_PROVIDERS.add(provider);
-                        }
-                    }
-                });
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
-    }
-
     /**
      * Gets the translation provider for {@code language}.
      *
      * @param language the language
      * @return the provider
-     * @throws RuntimeException if provider is not found
+     * @throws LanguageNotProvidedException if provider is not found
      */
     public static TranslationProvider getProviderForLanguage(String language)
     {
         for (TranslationProvider provider : TRANSLATION_PROVIDERS)
         {
-            if (provider.getTranslations().contains(language))
+            if (provider.getLanguages().contains(language))
                 return provider;
         }
 
-        throw new RuntimeException(String.format("Provider for language %s not found!", language));
+        throw new LanguageNotProvidedException(String.format("Provider for language %s not found!", language));
     }
 
     /**
@@ -278,7 +229,7 @@ public final class Translator
 
     private static class InputStreamProvider implements TranslationProvider
     {
-        private List<String> translations;
+        private List<String> languages;
         private String name;
         private boolean internal;
         private String location;
@@ -305,7 +256,7 @@ public final class Translator
                 properties.load(stream);
                 String languageArray = properties.getProperty("languages");
                 name = properties.getProperty("name");
-                translations = Arrays.asList(Utils.commaSplit(languageArray));
+                languages = Arrays.asList(Utils.commaSplit(languageArray));
                 internal = properties.containsKey("internal") ? Boolean.valueOf(properties.getProperty("internal")) : false;
                 stream.close();
             }
@@ -316,9 +267,9 @@ public final class Translator
         }
 
         @Override
-        public List<String> getTranslations()
+        public List<String> getLanguages()
         {
-            return translations;
+            return languages;
         }
 
         @Override
@@ -328,15 +279,33 @@ public final class Translator
         }
 
         @Override
-        public boolean isInternal()
+        public Map<String, String> getStringsForLanguage(String language)
         {
-            return internal;
-        }
+            if (!languages.contains(language))
+                throw new LanguageNotProvidedException("Language " + language + " not provided!");
 
-        @Override
-        public String getLocation()
-        {
-            return location;
+            try
+            {
+                Properties props = new Properties();
+
+                props.load(internal
+                                   ? Translator.class.getResourceAsStream(location + String.format("%s.lang.properties", language))
+                                   : Files.newInputStream(Paths.get(location, String.format("%s.lang.properties", language)))
+                );
+
+                Map<String, String> map = new HashMap<>();
+
+                for (Object key : props.keySet())
+                {
+                    map.put((String) key, props.getProperty((String) key));
+                }
+
+                return map;
+            }
+            catch (IOException e)
+            {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
