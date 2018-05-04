@@ -64,7 +64,7 @@ public final class RenderEngine
 
     public static void drawLevel(Graphics g)
     {
-        Cubic.gameWorld.draw(g);
+        Cubic.world.draw(g);
     }
 
     public static void drawSky(Graphics g)

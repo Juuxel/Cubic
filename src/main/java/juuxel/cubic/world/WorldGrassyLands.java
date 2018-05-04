@@ -7,6 +7,7 @@
 package juuxel.cubic.world;
 
 import juuxel.cubic.Cubic;
+import juuxel.cubic.creature.enemy.*;
 import juuxel.cubic.lib.Images;
 import juuxel.cubic.render.Graphics;
 import juuxel.cubic.util.Direction;
@@ -66,6 +67,14 @@ public final class WorldGrassyLands extends World
 
             cloud.tick();
         }
+    }
+
+    @Override
+    protected void initEnemyList(EnemyList enemyList)
+    {
+        enemyList.registerEnemy(EnemyType.NORMAL, EnemyNormal::new);
+        enemyList.registerEnemy(EnemyType.NORMAL, EnemyBird::new);
+        enemyList.registerEnemy(EnemyType.RARE, EnemyBouncing::new);
     }
 
     private final class Cloud

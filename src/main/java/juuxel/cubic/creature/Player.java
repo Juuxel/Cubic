@@ -14,7 +14,6 @@ import juuxel.cubic.lib.Images;
 import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.render.Graphics;
 import juuxel.cubic.util.Direction;
-import juuxel.cubic.util.Randomizer;
 
 public final class Player extends Creature
 {
@@ -114,10 +113,10 @@ public final class Player extends Creature
         new EffectLevelUp(x, y);
 
         for (int i = 0; i < Cubic.level; i++)
-            Cubic.addEnemy(EnemyLists.createEnemy(EnemyType.NORMAL));
+            Cubic.addEnemy(Cubic.world.getEnemyList().createEnemy(EnemyType.NORMAL));
 
         if (Cubic.level > 2 && random.nextInt(5) == 0)
-            Cubic.addEnemy(EnemyLists.createEnemy(EnemyType.STRANGE));
+            Cubic.addEnemy(Cubic.world.getEnemyList().createEnemy(EnemyType.RARE));
     }
 
     public void moveLeft()

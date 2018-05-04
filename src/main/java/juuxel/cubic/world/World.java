@@ -7,9 +7,9 @@
 package juuxel.cubic.world;
 
 import juuxel.cubic.Cubic;
+import juuxel.cubic.creature.enemy.EnemyList;
 import juuxel.cubic.render.Graphics;
 import juuxel.cubic.render.sprite.Sprite;
-import juuxel.cubic.util.Randomizer;
 import juuxel.cubic.util.Utils;
 
 import java.util.*;
@@ -21,6 +21,7 @@ public abstract class World
 {
     public static final List<World> WORLDS = new ArrayList<>();
 
+    private final EnemyList enemyList = new EnemyList();
     private Sprite ground;
 
     /**
@@ -31,6 +32,7 @@ public abstract class World
     public World(Sprite ground)
     {
         this.ground = ground;
+        initEnemyList(enemyList);
     }
 
     /**
@@ -67,6 +69,21 @@ public abstract class World
      * @return the key
      */
     public abstract String getNameKey();
+
+    /**
+     * Initializes the enemy list of this level.
+     */
+    protected abstract void initEnemyList(EnemyList enemyList);
+
+    /**
+     * Gets the {@link EnemyList enemy list} of this level.
+     *
+     * @return the enemy list
+     */
+    public EnemyList getEnemyList()
+    {
+        return enemyList;
+    }
 
     /**
      * An internal method to register Cubic's default worlds.

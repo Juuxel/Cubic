@@ -6,6 +6,7 @@
  */
 package juuxel.cubic.world;
 
+import juuxel.cubic.creature.enemy.*;
 import juuxel.cubic.lib.Images;
 import juuxel.cubic.render.Graphics;
 import juuxel.cubic.util.Randomizer;
@@ -59,6 +60,14 @@ public final class WorldBrickCity extends World
                                  image.getHeight(null) * building.size,
                                  Math.min(0.5F * (float) building.size / 3.0F, 1.0F));
         }
+    }
+
+    @Override
+    protected void initEnemyList(EnemyList enemyList)
+    {
+        enemyList.registerEnemy(EnemyType.NORMAL, EnemyNormal::new);
+        enemyList.registerEnemy(EnemyType.NORMAL, EnemyBird::new);
+        enemyList.registerEnemy(EnemyType.RARE, EnemyBouncing::new);
     }
 
     private final class Building

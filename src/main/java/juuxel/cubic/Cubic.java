@@ -36,7 +36,7 @@ public final class Cubic
 {
     public static Cubic game;
     public static Player player;
-    public static World gameWorld;
+    public static World world;
     public static boolean inStartScreen = true, running = true, moveKeyDown, jumpKeyDown;
     public static final List<Enemy> ENEMIES = new CopyOnWriteArrayList<>();
     public static final List<Enemy> COLLIDING_ENEMIES = new CopyOnWriteArrayList<>();
@@ -91,14 +91,14 @@ public final class Cubic
         SpriteLoader.registerDefaults();
         Images.init();
         World.registerDefaults();
-        gameWorld = World.getInstance(WorldGrassyLands.class);
+        world = World.getInstance(WorldGrassyLands.class);
         ModLoader.load();
         ModLoader.coreInit();
     }
 
     private static void contentInit()
     {
-        EnemyLists.initLists();
+        EnemyList.initLists();
         ModLoader.contentInit();
     }
 
@@ -111,8 +111,8 @@ public final class Cubic
         CREATURES.clear();
         ENEMIES.clear();
         player = new Player();
-        addEnemy(EnemyLists.createEnemy(EnemyType.NORMAL));
-        Cubic.gameWorld = world;
+        Cubic.world = world;
+        addEnemy(world.getEnemyList().createEnemy(EnemyType.NORMAL));
         Cubic.inStartScreen = false;
         Cubic.selectScreen("Game");
 
