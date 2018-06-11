@@ -103,7 +103,7 @@ public final class SpriteLoader
 
     /**
      * An internal method to register Cubic's default sprites.
-     * Mods, please don't call this.
+     * Can be called multiple times, but doesn't do anything after the first call.
      */
     public static void registerDefaults()
     {

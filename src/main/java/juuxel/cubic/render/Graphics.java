@@ -12,7 +12,8 @@ import java.awt.*;
 
 /**
  * This class is used for drawing on the screen.
- * A wrapper for AWT's Graphics/Graphics2D.
+ * A wrapper with extensions for AWT's Graphics/Graphics2D.
+ * The underlying methods from {@code Graphics2D} can be used with {@link #getGraphics2D()}.
  */
 public final class Graphics
 {
@@ -56,31 +57,80 @@ public final class Graphics
         return fromGraphics2D((Graphics2D) graphics);
     }
 
-    public void drawString(String str, int x, int y)
-    {
-        graphics2D.drawString(str, x, y);
-    }
-
+    /**
+     * Draws an image on the canvas.
+     *
+     * @param image the image
+     * @param x the top-left x coordinate
+     * @param y the top-left y coordinate
+     * @param width the image width (image will be rescaled)
+     * @param height the image height (image will be rescaled)
+     */
     public void drawImage(Image image, int x, int y, int width, int height)
     {
         graphics2D.drawImage(image, x, y, x + width, y + height, 0, 0, image.getWidth(null), image.getHeight(null), null);
     }
 
+    /**
+     * Draws a {@link Sprite sprite} on the canvas.
+     *
+     * @param sprite the sprite
+     * @param x the top-left x coordinate
+     * @param y the top-left y coordinate
+     * @param width the image width (image will be rescaled)
+     * @param height the image height (image will be rescaled)
+     *
+     * @see #drawImage(Image, int, int, int, int)
+     */
     public void drawImage(Sprite sprite, int x, int y, int width, int height)
     {
         drawImage(sprite.getImage(), x, y, width, height);
     }
 
+    /**
+     * Draws an image on the canvas, flipped horizontally.
+     *
+     * @param image the image
+     * @param x the top-left x coordinate
+     * @param y the top-left y coordinate
+     * @param width the image width (image will be rescaled)
+     * @param height the image height (image will be rescaled)
+     *
+     * @see #drawImage(Image, int, int, int, int)
+     */
     public void drawFlippedImage(Image image, int x, int y, int width, int height)
     {
         graphics2D.drawImage(image, x + width, y, x, y + height, 0, 0, image.getWidth(null), image.getHeight(null), null);
     }
 
+    /**
+     * Draws a sprite on the canvas, flipped horizontally.
+     *
+     * @param sprite the sprite
+     * @param x the top-left x coordinate
+     * @param y the top-left y coordinate
+     * @param width the image width (image will be rescaled)
+     * @param height the image height (image will be rescaled)
+     *
+     * @see #drawFlippedImage(Image, int, int, int, int)
+     */
     public void drawFlippedImage(Sprite sprite, int x, int y, int width, int height)
     {
         drawFlippedImage(sprite.getImage(), x, y, width, height);
     }
 
+    /**
+     * Draws an image on the canvas with the opacity {@code alpha}.
+     *
+     * @param image the image
+     * @param x the top-left x coordinate
+     * @param y the top-left y coordinate
+     * @param width the image width (image will be rescaled)
+     * @param height the image height (image will be rescaled)
+     * @param alpha the opacity in the range {@code 0.0-1.0}
+     *
+     * @see #drawImage(Image, int, int, int, int)
+     */
     public void drawImageWithAlpha(Image image, int x, int y, int width, int height, float alpha)
     {
         graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));

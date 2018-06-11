@@ -65,12 +65,11 @@ public final class ModLoader
     }
 
     /**
-     * Calls the {@code coreInit} phase of the mods.
+     * Initializes the mods.
      *
-     * @see #contentInit()
-     * @see Mod#coreInit()
+     * @see Mod#init()
      */
-    public static void coreInit()
+    public static void init()
     {
         if (!hasLoaded)
             throw new IllegalStateException("The mod loader has not been loaded.");
@@ -78,23 +77,6 @@ public final class ModLoader
         MODS.forEach(mod -> {
             System.out.printf("Initializing core components for mod %s.%n", mod.getId());
             mod.coreInit();
-        });
-    }
-
-    /**
-     * Calls the {@code contentInit} phase of the mods.
-     *
-     * @see #coreInit()
-     * @see Mod#contentInit()
-     */
-    public static void contentInit()
-    {
-        if (!hasLoaded)
-            throw new IllegalStateException("The mod loader has not been loaded.");
-
-        MODS.forEach(mod -> {
-            System.out.printf("Initializing contents for mod %s.%n", mod.getId());
-            mod.contentInit();
         });
     }
 
@@ -223,10 +205,7 @@ public final class ModLoader
         }
 
         void coreInit()
-        { mod.coreInit(); }
-
-        void contentInit()
-        { mod.contentInit(); }
+        { mod.init(); }
 
         public String getId()
         { return id; }

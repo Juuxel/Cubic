@@ -19,7 +19,7 @@ import juuxel.cubic.options.*;
 import juuxel.cubic.lib.*;
 import juuxel.cubic.util.*;
 import juuxel.cubic.render.Graphics;
-import juuxel.cubic.render.Screenshooter;
+import juuxel.cubic.render.Screenshots;
 import juuxel.cubic.render.RenderEngine;
 import juuxel.cubic.render.sprite.SpriteLoader;
 import juuxel.cubic.world.WorldGrassyLands;
@@ -62,8 +62,7 @@ public final class Cubic
     {
         processArgs(args);
 
-        coreInit();
-        contentInit();
+        init();
         game = new Cubic();
     }
 
@@ -83,21 +82,16 @@ public final class Cubic
 
     /* Initialize the core components of Cubic. (Translator, options, sprite system)
      */
-    private static void coreInit()
+    private static void init()
     {
         SpriteLoader.registerDefaults();
         Images.init();
         World.registerDefaults();
         world = World.getInstance(WorldGrassyLands.class);
         ModLoader.load();
-        ModLoader.coreInit();
+        ModLoader.init();
         Translator.init();
         Options.init();
-    }
-
-    private static void contentInit()
-    {
-        ModLoader.contentInit();
     }
 
     public static void newGame(World world)
@@ -241,7 +235,7 @@ public final class Cubic
         public void keyPressed(KeyEvent e)
         {
             if (e.getKeyCode() == Options.takeScreenshot.getValue())
-                Screenshooter.takeScreenshot();
+                Screenshots.takeScreenshot();
             else if (!inStartScreen)
             {
                 int key = e.getKeyCode();

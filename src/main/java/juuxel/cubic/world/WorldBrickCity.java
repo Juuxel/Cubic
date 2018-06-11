@@ -15,6 +15,9 @@ import juuxel.cubic.util.Utils;
 import java.awt.Image;
 import java.util.*;
 
+/**
+ * Brick City is a world with brick buildings and skyscrapers.
+ */
 public final class WorldBrickCity extends World
 {
     private final Building[] buildings;

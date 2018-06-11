@@ -16,6 +16,10 @@ import juuxel.cubic.util.Utils;
 
 import java.util.*;
 
+/**
+ * Grassy Lands is a world with a ground covers with grass
+ * and clouds moving across the sky.
+ */
 public final class WorldGrassyLands extends World
 {
     private final Cloud[] clouds;

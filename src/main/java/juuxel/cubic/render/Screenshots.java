@@ -17,11 +17,11 @@ import java.nio.file.*;
 import java.time.LocalDateTime;
 
 /**
- * This class performs operations related to screenshots.
+ * {@code Screenshots} takes screenshots.
  */
-public final class Screenshooter
+public final class Screenshots
 {
-    private Screenshooter() {}
+    private Screenshots() {}
 
     /**
      * Gets an image of the component.
