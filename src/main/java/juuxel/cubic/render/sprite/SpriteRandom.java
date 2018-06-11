@@ -6,9 +6,9 @@
  */
 package juuxel.cubic.render.sprite;
 
-import juuxel.cubic.Cubic;
-import juuxel.cubic.creature.Creature;
-import juuxel.cubic.util.CreatureListener;
+import juuxel.cubic.event.CreatureCreationEvent;
+import juuxel.cubic.event.EventBus;
+import juuxel.cubic.event.EventHandler;
 import juuxel.cubic.util.Randomizer;
 import juuxel.cubic.util.Utils;
 
@@ -20,7 +20,7 @@ import java.util.Properties;
 /**
  * A sprite which chooses a random subsprite for every object.
  */
-public final class SpriteRandom extends Sprite implements CreatureListener
+public final class SpriteRandom extends Sprite implements EventHandler<CreatureCreationEvent>
 {
     private final Map<Object, Sprite> spriteMap = new HashMap<>();
     private final Sprite[] subsprites;
@@ -29,7 +29,7 @@ public final class SpriteRandom extends Sprite implements CreatureListener
     {
         super(props);
 
-        Cubic.CREATURE_LISTENERS.add(this);
+        EventBus.subscribe(CreatureCreationEvent.class, this);
 
         String[] spriteNames = Utils.commaSplit(getTexture());
         subsprites = new Sprite[spriteNames.length];
@@ -54,11 +54,13 @@ public final class SpriteRandom extends Sprite implements CreatureListener
 
     /**
      * {@inheritDoc}
+     *
+     * <p>Adds the event's creature to the internal sprite map.</p>
      */
     @Override
-    public void onCreatureCreated(Creature creature)
+    public void handle(CreatureCreationEvent event)
     {
-        addToSpriteMap(creature);
+        addToSpriteMap(event.getCreature());
     }
 
     private void addToSpriteMap(Object o)

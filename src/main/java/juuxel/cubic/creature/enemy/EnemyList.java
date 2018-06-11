@@ -20,20 +20,6 @@ public final class EnemyList
     private final Map<EnemyType, List<Supplier<Enemy>>> enemyLists = new HashMap<>();
     private static final Random RANDOM = new Random();
 
-    public static void initLists()
-    {
-        List<Supplier<Enemy>> normalEnemies = new ArrayList<>();
-        List<Supplier<Enemy>> strangeEnemies = new ArrayList<>();
-
-        normalEnemies.add(EnemyNormal::new);
-        normalEnemies.add(EnemyBird::new);
-        strangeEnemies.add(EnemyBouncing::new);
-        strangeEnemies.add(EnemyBird::new);
-
-//        ENEMY_LISTS.put(EnemyType.NORMAL, normalEnemies);
-//        ENEMY_LISTS.put(EnemyType.RARE, strangeEnemies);
-    }
-
     public void registerEnemy(EnemyType type, Supplier<Enemy> supplier)
     {
         enemyLists.get(type).add(supplier);

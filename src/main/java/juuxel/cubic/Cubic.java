@@ -42,7 +42,6 @@ public final class Cubic
     public static final List<Enemy> COLLIDING_ENEMIES = new CopyOnWriteArrayList<>();
     public static int score = 0, deaths = 0, level = 1, lives = 3;
     public static final List<Creature> CREATURES = new CopyOnWriteArrayList<>();
-    public static final List<CreatureListener> CREATURE_LISTENERS = new ArrayList<>();
 
     private final GameFrame gameFrame;
     private final WindowPane windowPane;
@@ -86,19 +85,18 @@ public final class Cubic
      */
     private static void coreInit()
     {
-        Translator.init();
-        Options.init();
         SpriteLoader.registerDefaults();
         Images.init();
         World.registerDefaults();
         world = World.getInstance(WorldGrassyLands.class);
         ModLoader.load();
         ModLoader.coreInit();
+        Translator.init();
+        Options.init();
     }
 
     private static void contentInit()
     {
-        EnemyList.initLists();
         ModLoader.contentInit();
     }
 

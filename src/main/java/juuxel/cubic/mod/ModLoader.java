@@ -104,6 +104,7 @@ public final class ModLoader
      *
      * @param clazz the mod class
      */
+    @SuppressWarnings("unused")
     public static void addModClass(Class<? extends Mod> clazz)
     {
         if (!hasLoaded)

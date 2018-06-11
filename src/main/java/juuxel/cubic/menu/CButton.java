@@ -6,8 +6,9 @@
  */
 package juuxel.cubic.menu;
 
+import juuxel.cubic.event.EventBus;
 import juuxel.cubic.lib.GameValues;
-import juuxel.cubic.util.LanguageChangeListener;
+import juuxel.cubic.event.LanguageChangeEvent;
 import juuxel.cubic.util.Translator;
 
 import javax.swing.*;
@@ -16,7 +17,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class CButton extends JButton implements LanguageChangeListener
+public class CButton extends JButton
 {
     private static final Color BACKGROUND = new Color(0x16b7fc);
     private static final Color BACKGROUND_PRESSED = BACKGROUND.darker();
@@ -40,7 +41,7 @@ public class CButton extends JButton implements LanguageChangeListener
         setBorder(new ButtonBorder());
         setForeground(color);
         addMouseListener(new Mouse());
-        Translator.addLanguageChangeListener(this);
+        EventBus.subscribe(LanguageChangeEvent.class, e -> onLanguageChange());
     }
 
     public CButton(String label)
@@ -61,8 +62,7 @@ public class CButton extends JButton implements LanguageChangeListener
         addMouseListener(new Mouse());
     }
 
-    @Override
-    public void onLanguageChange()
+    protected void onLanguageChange()
     {
         SwingUtilities.invokeLater(() -> setText(Translator.translate(translationKey)));
     }

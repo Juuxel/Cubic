@@ -7,6 +7,8 @@
 package juuxel.cubic.creature;
 
 import juuxel.cubic.Cubic;
+import juuxel.cubic.event.CreatureCreationEvent;
+import juuxel.cubic.event.EventBus;
 import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.render.Graphics;
 import juuxel.cubic.render.sprite.Sprite;
@@ -31,7 +33,7 @@ public abstract class Creature
     public Creature()
     {
         Cubic.CREATURES.add(this);
-        Cubic.CREATURE_LISTENERS.forEach(listener -> listener.onCreatureCreated(this));
+        EventBus.post(new CreatureCreationEvent(this));
         collidesWithGround = false;
         flippingEnabled = false;
     }

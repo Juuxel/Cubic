@@ -6,12 +6,13 @@
  */
 package juuxel.cubic.menu;
 
-import juuxel.cubic.util.LanguageChangeListener;
+import juuxel.cubic.event.EventBus;
+import juuxel.cubic.event.LanguageChangeEvent;
 import juuxel.cubic.util.Translator;
 
 import javax.swing.*;
 
-public class CLabel extends CBasicLabel implements LanguageChangeListener
+public class CLabel extends CBasicLabel
 {
     private String translationKey;
     private Object[] format = null;
@@ -21,7 +22,7 @@ public class CLabel extends CBasicLabel implements LanguageChangeListener
         super(Translator.translate(translationKey));
 
         this.translationKey = translationKey;
-        Translator.addLanguageChangeListener(this);
+        EventBus.subscribe(LanguageChangeEvent.class, e -> onLanguageChange());
     }
 
     public CLabel(String translationKey, Object... format)
@@ -30,11 +31,10 @@ public class CLabel extends CBasicLabel implements LanguageChangeListener
 
         this.translationKey = translationKey;
         this.format = format;
-        Translator.addLanguageChangeListener(this);
+        EventBus.subscribe(LanguageChangeEvent.class, e -> onLanguageChange());
     }
 
-    @Override
-    public void onLanguageChange()
+    private void onLanguageChange()
     {
         if (format == null)
             SwingUtilities.invokeLater(() -> setText(Translator.translate(translationKey)));

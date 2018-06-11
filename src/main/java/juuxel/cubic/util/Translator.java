@@ -6,6 +6,9 @@
  */
 package juuxel.cubic.util;
 
+import juuxel.cubic.event.EventBus;
+import juuxel.cubic.event.LanguageChangeEvent;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.*;
@@ -21,7 +24,6 @@ public final class Translator
     private static List<String> languages;
     private static boolean hasInit = false;
     private static final List<TranslationProvider> TRANSLATION_PROVIDERS = new ArrayList<>();
-    private static final List<LanguageChangeListener> LISTENERS = new ArrayList<>();
 
     private Translator()
     {}
@@ -99,12 +101,12 @@ public final class Translator
     /**
      * Sets the current game language.
      *
-     * @param language the language code
+     * @param newLanguage the language code
      */
-    public static void setLanguage(String language)
+    public static void setLanguage(String newLanguage)
     {
-        Translator.language = language;
-        LISTENERS.forEach(LanguageChangeListener::onLanguageChange);
+        EventBus.post(LanguageChangeEvent.INSTANCE);
+        language = newLanguage;
     }
 
     /**
@@ -217,34 +219,12 @@ public final class Translator
         return Locale.forLanguageTag(language);
     }
 
-    /**
-     * Adds a {@link LanguageChangeListener}.
-     *
-     * @param listener the listener
-     */
-    public static void addLanguageChangeListener(LanguageChangeListener listener)
-    {
-        LISTENERS.add(listener);
-    }
-
     private static class InputStreamProvider implements TranslationProvider
     {
         private List<String> languages;
         private String name;
         private boolean internal;
         private String location;
-
-        public void loadTranslation(Path path)
-        {
-            try
-            {
-                loadTranslation(Files.newInputStream(path), path.getParent().toString());
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
 
         public void loadTranslation(InputStream stream, String location)
         {

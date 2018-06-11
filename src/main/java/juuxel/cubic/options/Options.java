@@ -59,15 +59,14 @@ public final class Options
             if (Files.notExists(path))
             {
                 Files.createFile(path);
-                writeOptions();
             }
             else
             {
                 properties.load(Files.newBufferedReader(path));
-                moveLeft.setValue(Integer.valueOf(properties.getProperty("controls.moveLeft")));
-                moveRight.setValue(Integer.valueOf(properties.getProperty("controls.moveRight")));
-                jump.setValue(Integer.valueOf(properties.getProperty("controls.jump")));
-                takeScreenshot.setValue(Integer.valueOf(properties.getProperty("controls.takeScreenshot")));
+                moveLeft.setValue(Integer.parseInt(properties.getProperty("controls.moveLeft")));
+                moveRight.setValue(Integer.parseInt(properties.getProperty("controls.moveRight")));
+                jump.setValue(Integer.parseInt(properties.getProperty("controls.jump")));
+                takeScreenshot.setValue(Integer.parseInt(properties.getProperty("controls.takeScreenshot")));
 
                 captureFrame = Boolean.parseBoolean(properties.getProperty("captureFrame"));
                 fps = Integer.parseInt(properties.getProperty("fps"));
@@ -75,6 +74,8 @@ public final class Options
                 Translator.setLanguage(properties.getProperty("language"));
                 Translator.reloadStrings();
             }
+
+            writeOptions();
         }
         catch (IOException e)
         {
