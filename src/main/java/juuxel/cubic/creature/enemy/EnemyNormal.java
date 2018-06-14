@@ -11,7 +11,7 @@ import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.lib.Images;
 import juuxel.cubic.render.GameWindow;
 
-public class EnemyNormal extends Enemy
+public final class EnemyNormal extends Enemy
 {
     public EnemyNormal()
     {

@@ -6,12 +6,17 @@
  */
 package juuxel.cubic.creature.enemy;
 
+import juuxel.cubic.Cubic;
+import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.lib.Images;
+import juuxel.cubic.render.GameWindow;
 
-public final class EnemyBouncing extends EnemyNormal
+public final class EnemyBouncing extends Enemy
 {
     public EnemyBouncing()
     {
+        x = Math.random() * GameWindow.getWidth();
+        y = GameValues.GROUND;
         slidable = false;
         setSprite(Images.bouncingEnemy);
     }
@@ -19,7 +24,12 @@ public final class EnemyBouncing extends EnemyNormal
     @Override
     public void move()
     {
-        super.move();
+        if (Cubic.player.getX() < x)
+            xSpeed = Math.max(-1, xSpeed - 1);
+        else if (Cubic.player.getX() > x)
+            xSpeed = Math.min(1, xSpeed + 1);
+
+        updateSpriteDirection();
 
         if (ySpeed == 0)
             ySpeed = 2.75;

@@ -12,7 +12,7 @@ import juuxel.cubic.util.Translator;
 
 import javax.swing.*;
 
-public class CLabel extends CBasicLabel
+public final class CLabel extends CBasicLabel
 {
     private String translationKey;
     private Object[] format = null;

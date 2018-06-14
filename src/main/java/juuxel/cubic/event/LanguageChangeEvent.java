@@ -11,7 +11,7 @@ package juuxel.cubic.event;
  *
  * This event is a singleton: the only instance is {@link LanguageChangeEvent#INSTANCE}.
  */
-public class LanguageChangeEvent implements Event
+public final class LanguageChangeEvent implements Event
 {
     /**
      * The only instance of this event.
