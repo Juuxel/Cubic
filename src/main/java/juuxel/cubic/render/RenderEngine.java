@@ -33,7 +33,7 @@ public final class RenderEngine
 
             if (Cubic.player.lives <= 0)
             {
-                int dx = Cubic.getWidth() / 2, dy = Cubic.getHeight() / 2;
+                int dx = GameWindow.getWidth() / 2, dy = GameWindow.getHeight() / 2;
                 Graphics2D g2D = g.getGraphics2D();
                 g2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
                 g2D.setFont(GameValues.FONT.deriveFont(36F));
@@ -66,8 +66,8 @@ public final class RenderEngine
     {
         Paint paint = g.getGraphics2D().getPaint();
 
-        g.getGraphics2D().setPaint(new GradientPaint(0, 0, SKY_TOP, 0, Cubic.getHeight(), SKY_BOTTOM));
-        g.getGraphics2D().fillRect(0, 0, Cubic.getWidth(), Cubic.getHeight());
+        g.getGraphics2D().setPaint(new GradientPaint(0, 0, SKY_TOP, 0, GameWindow.getHeight(), SKY_BOTTOM));
+        g.getGraphics2D().fillRect(0, 0, GameWindow.getWidth(), GameWindow.getHeight());
 
         g.getGraphics2D().setPaint(paint);
     }

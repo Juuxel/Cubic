@@ -8,8 +8,8 @@ package juuxel.cubic.creature.enemy;
 
 import juuxel.cubic.Cubic;
 import juuxel.cubic.lib.Images;
+import juuxel.cubic.render.GameWindow;
 import juuxel.cubic.util.Direction;
-import juuxel.cubic.util.Randomizer;
 
 public final class EnemyBird extends Enemy
 {
@@ -29,7 +29,7 @@ public final class EnemyBird extends Enemy
     {
         if (x == 20)
             direction = Direction.RIGHT;
-        else if (x == Cubic.getWidth() - 20)
+        else if (x == GameWindow.getWidth() - 20)
             direction = Direction.LEFT;
 
         moveX(direction == Direction.RIGHT ? 1 : -1);

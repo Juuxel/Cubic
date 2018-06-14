@@ -6,7 +6,7 @@
  */
 package juuxel.cubic.util;
 
-import juuxel.cubic.Cubic;
+import juuxel.cubic.render.GameWindow;
 
 /**
  * Includes basic functions for classes to use.
@@ -23,7 +23,7 @@ public final class Utils
      */
     public static double yOnScreen(double d)
     {
-        return Cubic.getHeight() - d;
+        return GameWindow.getHeight() - d;
     }
 
     /**

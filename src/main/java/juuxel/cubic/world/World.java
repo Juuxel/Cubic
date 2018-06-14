@@ -6,8 +6,8 @@
  */
 package juuxel.cubic.world;
 
-import juuxel.cubic.Cubic;
 import juuxel.cubic.creature.enemy.EnemyList;
+import juuxel.cubic.render.GameWindow;
 import juuxel.cubic.render.Graphics;
 import juuxel.cubic.render.sprite.Sprite;
 import juuxel.cubic.util.Utils;
@@ -45,7 +45,7 @@ public abstract class World
      */
     public void draw(Graphics g)
     {
-        for (int i = 0; i < Cubic.getWidth() / 32 + 1; i++)
+        for (int i = 0; i < GameWindow.getWidth() / 32 + 1; i++)
         {
             int x = i * 32, y = (int) Utils.yOnScreen(32);
 

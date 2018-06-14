@@ -6,14 +6,16 @@
  */
 package juuxel.cubic.render;
 
-import juuxel.cubic.Cubic;
 import juuxel.cubic.options.Options;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 
 /**
@@ -73,7 +75,7 @@ public final class Screenshots
 
             Files.createFile(path);
 
-            ImageIO.write(getScreenshot(Cubic.getGameFrame()), "png", path.toFile());
+            ImageIO.write(getScreenshot(GameWindow.getFrame()), "png", path.toFile());
         }
         catch (Exception e)
         {

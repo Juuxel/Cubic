@@ -9,7 +9,6 @@ package juuxel.cubic.world;
 import juuxel.cubic.creature.enemy.*;
 import juuxel.cubic.lib.Images;
 import juuxel.cubic.render.Graphics;
-import juuxel.cubic.util.Randomizer;
 import juuxel.cubic.util.Utils;
 
 import java.awt.Image;

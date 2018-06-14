@@ -6,10 +6,11 @@
  */
 package juuxel.cubic.creature.enemy;
 
-import juuxel.cubic.creature.Creature;
 import juuxel.cubic.Cubic;
+import juuxel.cubic.creature.Creature;
 import juuxel.cubic.creature.fx.EffectLife;
 import juuxel.cubic.creature.fx.EffectNumber;
+import juuxel.cubic.render.GameWindow;
 import juuxel.cubic.util.Direction;
 
 public abstract class Enemy extends Creature
@@ -51,9 +52,9 @@ public abstract class Enemy extends Creature
             });
 
         if (x < -10)
-            if (edgeMove) x = Cubic.getWidth() + 10;
+            if (edgeMove) x = GameWindow.getWidth() + 10;
             else Cubic.CREATURES.remove(this);
-        if (x > Cubic.getWidth() + 10)
+        if (x > GameWindow.getWidth() + 10)
             if (edgeMove) x = -10;
             else Cubic.CREATURES.remove(this);
     }
@@ -85,7 +86,7 @@ public abstract class Enemy extends Creature
      * Calculates the score that the player gets when they kill this enemy.
      *
      * It gets {@link #getScoreBase the base score} and adds the {@link #getScoreAddition score addition}
-     * to it, multiplied by {@link Player#level the player level} - 1
+     * to it, multiplied by {@link juuxel.cubic.creature.Player#level the player level} - 1
      *
      * @return the calculated score
      * @see #getScoreBase

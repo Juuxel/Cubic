@@ -6,9 +6,9 @@
  */
 package juuxel.cubic.world;
 
-import juuxel.cubic.Cubic;
 import juuxel.cubic.creature.enemy.*;
 import juuxel.cubic.lib.Images;
+import juuxel.cubic.render.GameWindow;
 import juuxel.cubic.render.Graphics;
 import juuxel.cubic.util.Direction;
 import juuxel.cubic.util.Randomizer;
@@ -115,7 +115,7 @@ public final class WorldGrassyLands extends World
 
             x += (direction == Direction.LEFT ? -speed : speed);
 
-            if (x < 0 || x > Cubic.getWidth())
+            if (x < 0 || x > GameWindow.getWidth())
             {
                 lifeAlpha -= 0.1F;
             }

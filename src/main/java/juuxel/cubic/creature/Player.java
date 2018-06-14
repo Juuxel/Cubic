@@ -7,11 +7,13 @@
 package juuxel.cubic.creature;
 
 import juuxel.cubic.Cubic;
+import juuxel.cubic.creature.enemy.Enemy;
+import juuxel.cubic.creature.enemy.EnemyType;
 import juuxel.cubic.creature.fx.EffectDeath;
 import juuxel.cubic.creature.fx.EffectLevelUp;
-import juuxel.cubic.creature.enemy.*;
-import juuxel.cubic.lib.Images;
 import juuxel.cubic.lib.GameValues;
+import juuxel.cubic.lib.Images;
+import juuxel.cubic.render.GameWindow;
 import juuxel.cubic.render.Graphics;
 import juuxel.cubic.util.Direction;
 
@@ -59,7 +61,7 @@ public final class Player extends Creature
             else if (Cubic.moveKeyDown) Cubic.moveKeyDown = false;
         }
 
-        if ((x < -10 && xSpeed < 0) || (x > Cubic.getWidth() && xSpeed > 0))
+        if ((x < -10 && xSpeed < 0) || (x > GameWindow.getWidth() && xSpeed > 0))
             xSpeed = -xSpeed;
 
         jumpWasPressed = jumpPressed;

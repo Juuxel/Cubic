@@ -9,12 +9,13 @@ package juuxel.cubic.creature.enemy;
 import juuxel.cubic.Cubic;
 import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.lib.Images;
+import juuxel.cubic.render.GameWindow;
 
 public class EnemyNormal extends Enemy
 {
     public EnemyNormal()
     {
-        x = Math.random() * Cubic.getWidth();
+        x = Math.random() * GameWindow.getWidth();
         y = GameValues.GROUND;
         setSprite(Images.enemy);
     }

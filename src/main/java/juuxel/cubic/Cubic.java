@@ -8,29 +8,20 @@ package juuxel.cubic;
 
 import juuxel.cubic.creature.Creature;
 import juuxel.cubic.creature.Player;
-import juuxel.cubic.creature.enemy.*;
-import juuxel.cubic.world.World;
-import juuxel.cubic.menu.AboutScreen;
-import juuxel.cubic.menu.WorldMenu;
-import juuxel.cubic.menu.MainMenu;
-import juuxel.cubic.menu.OptionsMenu;
+import juuxel.cubic.creature.enemy.Enemy;
+import juuxel.cubic.creature.enemy.EnemyType;
+import juuxel.cubic.lib.Images;
 import juuxel.cubic.mod.ModLoader;
-import juuxel.cubic.options.*;
-import juuxel.cubic.lib.*;
-import juuxel.cubic.util.*;
-import juuxel.cubic.render.Graphics;
-import juuxel.cubic.render.Screenshots;
-import juuxel.cubic.render.RenderEngine;
+import juuxel.cubic.options.Options;
+import juuxel.cubic.render.GameWindow;
 import juuxel.cubic.render.sprite.SpriteLoader;
+import juuxel.cubic.util.Translator;
+import juuxel.cubic.world.World;
 import juuxel.cubic.world.WorldGrassyLands;
 
-import javax.swing.*;
 import java.awt.CardLayout;
-import java.awt.event.*;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
-
-import static java.awt.event.KeyEvent.*;
 
 public final class Cubic
 {
@@ -40,10 +31,6 @@ public final class Cubic
     public static final List<Creature> CREATURES = new CopyOnWriteArrayList<>();
     public static final List<Enemy> ENEMIES = new CopyOnWriteArrayList<>();
     public static final List<Enemy> COLLIDING_ENEMIES = new CopyOnWriteArrayList<>();
-
-    private static GamePane gamePane;
-    private static WindowPane windowPane;
-    private static GameFrame gameFrame;
 
     private static boolean hasTimerBeenCreated = false;
     private static int tick = 0;
@@ -55,19 +42,7 @@ public final class Cubic
         processArgs(args);
 
         init();
-        initGui();
-    }
-
-    private static void initGui()
-    {
-        gamePane = new GamePane();
-        windowPane = new WindowPane();
-        gameFrame = new GameFrame(String.format("%s %s", GameInfo.NAME, GameInfo.VERSION));
-
-        SwingUtilities.invokeLater(() -> {
-            gameFrame.setVisible(true);
-            gamePane.requestFocusInWindow();
-        });
+        GameWindow.init();
     }
 
     private static void processArgs(String[] args)
@@ -129,7 +104,7 @@ public final class Cubic
                 {
                     if (!inStartScreen)
                     {
-                        Cubic.repaint();
+                        GameWindow.repaint();
                         tick = (tick + 1) % 60;
                     }
                 }
@@ -138,31 +113,11 @@ public final class Cubic
         }
     }
 
-    public static void repaint()
-    {
-        gameFrame.repaint();
-    }
-
-    public static int getHeight()
-    {
-        return gameFrame.getHeight();
-    }
-
-    public static int getWidth()
-    {
-        return gameFrame.getWidth();
-    }
-
-    public static GameFrame getGameFrame()
-    {
-        return gameFrame;
-    }
-
     public static void selectScreen(String screen)
     {
-        CardLayout layout = windowPane.layout;
+        CardLayout layout = GameWindow.getWindowPane().getLayout();
 
-        layout.show(windowPane, screen);
+        layout.show(GameWindow.getWindowPane(), screen);
     }
 
     public static int getTick()
@@ -174,100 +129,5 @@ public final class Cubic
     {
         ENEMIES.add(enemy);
         COLLIDING_ENEMIES.add(enemy);
-    }
-
-    private static final class GameFrame extends JFrame
-    {
-        private GameFrame(String title)
-        {
-            super(title);
-            setContentPane(windowPane);
-            setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            setSize(640, 480);
-            setIconImage(Images.ICON);
-        }
-    }
-
-    public static class WindowPane extends JPanel
-    {
-        private final CardLayout layout;
-
-        private WindowPane()
-        {
-            layout = new CardLayout();
-            setLayout(layout);
-            add(new MainMenu(), "MainMenu");
-            add(new OptionsMenu(), "OptionsMenu");
-            add(new WorldMenu(), "WorldMenu");
-            add(new AboutScreen(), "AboutScreen");
-            add(gamePane, "Game");
-            layout.show(this, "MainMenu");
-            addKeyListener(new Keyboard());
-            setFocusable(true);
-        }
-
-        @Override
-        protected void paintComponent(java.awt.Graphics g)
-        {
-            super.paintComponent(g);
-
-            RenderEngine.drawSky(Graphics.fromAWTGraphics(g));
-            RenderEngine.drawLevel(Graphics.fromAWTGraphics(g));
-        }
-    }
-
-    public static class GamePane extends JPanel
-    {
-        private GamePane()
-        {
-        }
-
-        @Override
-        public void paintComponent(java.awt.Graphics g)
-        {
-            super.paintComponent(g);
-            RenderEngine.repaint(Graphics.fromAWTGraphics(g));
-        }
-    }
-
-    private static class Keyboard extends KeyAdapter
-    {
-        public void keyPressed(KeyEvent e)
-        {
-            if (e.getKeyCode() == Options.takeScreenshot.getValue())
-                Screenshots.takeScreenshot();
-            else if (!inStartScreen)
-            {
-                int key = e.getKeyCode();
-
-                if (key == Options.moveLeft.getValue())
-                {
-                    player.moveLeft();
-                    moveKeyDown = true;
-                }
-                else if (key == Options.moveRight.getValue())
-                {
-                    player.moveRight();
-                    moveKeyDown = true;
-                }
-                else if (key == Options.jump.getValue())
-                    jumpKeyDown = true;
-                else if (key == VK_ESCAPE)
-                {
-                    inStartScreen = true;
-                    MainMenu.continueButton.setVisible(true);
-                    selectScreen("MainMenu");
-                }
-            }
-        }
-
-        public void keyReleased(KeyEvent e)
-        {
-            if (e.getKeyCode() == Options.moveLeft.getValue() || e.getKeyCode() == Options.moveRight.getValue())
-                moveKeyDown = false;
-            else if (e.getKeyCode() == Options.jump.getValue())
-                jumpKeyDown = false;
-        }
-
     }
 }
