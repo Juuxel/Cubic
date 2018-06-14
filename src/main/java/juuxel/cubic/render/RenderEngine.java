@@ -21,11 +21,6 @@ public final class RenderEngine
     private RenderEngine()
     {}
 
-    public static void repaint()
-    {
-        Cubic.game.repaint();
-    }
-
     public static void repaint(Graphics g)
     {
         if (!Cubic.inStartScreen)
@@ -36,9 +31,9 @@ public final class RenderEngine
 
             Cubic.CREATURES.forEach(creature -> creature.draw(g));
 
-            if (Cubic.lives <= 0)
+            if (Cubic.player.lives <= 0)
             {
-                int dx = Cubic.game.getWidth() / 2, dy = Cubic.game.getHeight() / 2;
+                int dx = Cubic.getWidth() / 2, dy = Cubic.getHeight() / 2;
                 Graphics2D g2D = g.getGraphics2D();
                 g2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
                 g2D.setFont(GameValues.FONT.deriveFont(36F));
@@ -56,10 +51,10 @@ public final class RenderEngine
         g.drawImage(Images.levelUpIcon, 5, 50, 16, 16);
         g.drawImage(Images.heart, 5, 70, 16, 16);
 
-        drawNumberString(g, String.format(Translator.getLocale(), "%,d", Cubic.score), 30, 10, 1F);
-        drawNumberString(g, String.format(Translator.getLocale(), "%,d", Cubic.level), 30, 30, 1F);
-        drawNumberString(g, String.format(Translator.getLocale(), "%,d / %,d", Cubic.ENEMIES.size(), Cubic.level), 30, 50, 1F);
-        drawNumberString(g, String.format(Translator.getLocale(), "%,d", Cubic.lives), 30, 70, 1F);
+        drawNumberString(g, String.format(Translator.getLocale(), "%,d", Cubic.player.score), 30, 10, 1F);
+        drawNumberString(g, String.format(Translator.getLocale(), "%,d", Cubic.player.level), 30, 30, 1F);
+        drawNumberString(g, String.format(Translator.getLocale(), "%,d / %,d", Cubic.ENEMIES.size(), Cubic.player.level), 30, 50, 1F);
+        drawNumberString(g, String.format(Translator.getLocale(), "%,d", Cubic.player.lives), 30, 70, 1F);
     }
 
     public static void drawLevel(Graphics g)
@@ -71,8 +66,8 @@ public final class RenderEngine
     {
         Paint paint = g.getGraphics2D().getPaint();
 
-        g.getGraphics2D().setPaint(new GradientPaint(0, 0, SKY_TOP, 0, Cubic.game.getHeight(), SKY_BOTTOM));
-        g.getGraphics2D().fillRect(0, 0, Cubic.game.getWidth(), Cubic.game.getHeight());
+        g.getGraphics2D().setPaint(new GradientPaint(0, 0, SKY_TOP, 0, Cubic.getHeight(), SKY_BOTTOM));
+        g.getGraphics2D().fillRect(0, 0, Cubic.getWidth(), Cubic.getHeight());
 
         g.getGraphics2D().setPaint(paint);
     }

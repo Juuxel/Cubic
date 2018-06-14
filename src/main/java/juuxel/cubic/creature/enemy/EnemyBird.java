@@ -29,7 +29,7 @@ public final class EnemyBird extends Enemy
     {
         if (x == 20)
             direction = Direction.RIGHT;
-        else if (x == Cubic.game.getWidth() - 20)
+        else if (x == Cubic.getWidth() - 20)
             direction = Direction.LEFT;
 
         moveX(direction == Direction.RIGHT ? 1 : -1);

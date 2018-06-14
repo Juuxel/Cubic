@@ -34,36 +34,40 @@ import static java.awt.event.KeyEvent.*;
 
 public final class Cubic
 {
-    public static Cubic game;
     public static Player player;
     public static World world;
     public static boolean inStartScreen = true, running = true, moveKeyDown, jumpKeyDown;
+    public static final List<Creature> CREATURES = new CopyOnWriteArrayList<>();
     public static final List<Enemy> ENEMIES = new CopyOnWriteArrayList<>();
     public static final List<Enemy> COLLIDING_ENEMIES = new CopyOnWriteArrayList<>();
-    public static int score = 0, deaths = 0, level = 1, lives = 3;
-    public static final List<Creature> CREATURES = new CopyOnWriteArrayList<>();
 
-    private final GameFrame gameFrame;
-    private final WindowPane windowPane;
-    private final GamePane gamePane;
+    private static GamePane gamePane;
+    private static WindowPane windowPane;
+    private static GameFrame gameFrame;
 
     private static boolean hasTimerBeenCreated = false;
     private static int tick = 0;
 
-    private Cubic()
-    {
-        gamePane = new GamePane();
-        windowPane = new WindowPane(this);
-        (gameFrame = new GameFrame(this, GameInfo.NAME + " " + GameInfo.VERSION)).setVisible(true);
-        gamePane.requestFocusInWindow();
-    }
+    private Cubic() throws Exception { throw new Exception("This class cannot be instantiated"); }
 
     public static void main(String[] args)
     {
         processArgs(args);
 
         init();
-        game = new Cubic();
+        initGui();
+    }
+
+    private static void initGui()
+    {
+        gamePane = new GamePane();
+        windowPane = new WindowPane();
+        gameFrame = new GameFrame(String.format("%s %s", GameInfo.NAME, GameInfo.VERSION));
+
+        SwingUtilities.invokeLater(() -> {
+            gameFrame.setVisible(true);
+            gamePane.requestFocusInWindow();
+        });
     }
 
     private static void processArgs(String[] args)
@@ -96,10 +100,6 @@ public final class Cubic
 
     public static void newGame(World world)
     {
-        score = 0;
-        deaths = 0;
-        Cubic.level = 1;
-        lives = 3;
         CREATURES.clear();
         ENEMIES.clear();
         player = new Player();
@@ -115,7 +115,7 @@ public final class Cubic
                 @Override
                 public void run()
                 {
-                    if (!inStartScreen && lives > 0)
+                    if (!inStartScreen && player.lives > 0)
                     {
                         CREATURES.forEach(Creature::executeLogic);
                     }
@@ -129,7 +129,7 @@ public final class Cubic
                 {
                     if (!inStartScreen)
                     {
-                        RenderEngine.repaint();
+                        Cubic.repaint();
                         tick = (tick + 1) % 60;
                     }
                 }
@@ -138,31 +138,31 @@ public final class Cubic
         }
     }
 
-    public void repaint()
+    public static void repaint()
     {
         gameFrame.repaint();
     }
 
-    public int getHeight()
+    public static int getHeight()
     {
         return gameFrame.getHeight();
     }
 
-    public int getWidth()
+    public static int getWidth()
     {
         return gameFrame.getWidth();
     }
 
-    public GameFrame getGameFrame()
+    public static GameFrame getGameFrame()
     {
         return gameFrame;
     }
 
     public static void selectScreen(String screen)
     {
-        CardLayout layout = game.windowPane.layout;
+        CardLayout layout = windowPane.layout;
 
-        layout.show(game.windowPane, screen);
+        layout.show(windowPane, screen);
     }
 
     public static int getTick()
@@ -178,10 +178,10 @@ public final class Cubic
 
     private static final class GameFrame extends JFrame
     {
-        private GameFrame(Cubic game, String title)
+        private GameFrame(String title)
         {
             super(title);
-            setContentPane(game.windowPane);
+            setContentPane(windowPane);
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             setSize(640, 480);
             setIconImage(Images.ICON);
@@ -192,7 +192,7 @@ public final class Cubic
     {
         private final CardLayout layout;
 
-        private WindowPane(Cubic game)
+        private WindowPane()
         {
             layout = new CardLayout();
             setLayout(layout);
@@ -200,7 +200,7 @@ public final class Cubic
             add(new OptionsMenu(), "OptionsMenu");
             add(new WorldMenu(), "WorldMenu");
             add(new AboutScreen(), "AboutScreen");
-            add(game.gamePane, "Game");
+            add(gamePane, "Game");
             layout.show(this, "MainMenu");
             addKeyListener(new Keyboard());
             setFocusable(true);

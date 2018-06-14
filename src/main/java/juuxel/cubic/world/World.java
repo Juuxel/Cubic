@@ -45,7 +45,7 @@ public abstract class World
      */
     public void draw(Graphics g)
     {
-        for (int i = 0; i < Cubic.game.getWidth() / 32 + 1; i++)
+        for (int i = 0; i < Cubic.getWidth() / 32 + 1; i++)
         {
             int x = i * 32, y = (int) Utils.yOnScreen(32);
 

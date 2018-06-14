@@ -14,7 +14,7 @@ public class EnemyNormal extends Enemy
 {
     public EnemyNormal()
     {
-        x = Math.random() * Cubic.game.getWidth();
+        x = Math.random() * Cubic.getWidth();
         y = GameValues.GROUND;
         setSprite(Images.enemy);
     }

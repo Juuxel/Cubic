@@ -115,7 +115,7 @@ public final class WorldGrassyLands extends World
 
             x += (direction == Direction.LEFT ? -speed : speed);
 
-            if (x < 0 || x > Cubic.game.getWidth())
+            if (x < 0 || x > Cubic.getWidth())
             {
                 lifeAlpha -= 0.1F;
             }

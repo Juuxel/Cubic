@@ -73,7 +73,7 @@ public final class Screenshots
 
             Files.createFile(path);
 
-            ImageIO.write(getScreenshot(Cubic.game.getGameFrame()), "png", path.toFile());
+            ImageIO.write(getScreenshot(Cubic.getGameFrame()), "png", path.toFile());
         }
         catch (Exception e)
         {

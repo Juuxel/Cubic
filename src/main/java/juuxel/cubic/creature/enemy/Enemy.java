@@ -51,9 +51,9 @@ public abstract class Enemy extends Creature
             });
 
         if (x < -10)
-            if (edgeMove) x = Cubic.game.getWidth() + 10;
+            if (edgeMove) x = Cubic.getWidth() + 10;
             else Cubic.CREATURES.remove(this);
-        if (x > Cubic.game.getWidth() + 10)
+        if (x > Cubic.getWidth() + 10)
             if (edgeMove) x = -10;
             else Cubic.CREATURES.remove(this);
     }
@@ -63,7 +63,7 @@ public abstract class Enemy extends Creature
     {
         new EffectNumber(x, y, getScore());
 
-        Cubic.score += getScore();
+        Cubic.player.score += getScore();
         Cubic.player.ySpeed = 5;
 
         Cubic.ENEMIES.remove(this);
@@ -77,7 +77,7 @@ public abstract class Enemy extends Creature
         if (random.nextInt(10) == 1)
         {
             new EffectLife(x, y);
-            Cubic.lives++;
+            Cubic.player.lives++;
         }
     }
 
@@ -85,7 +85,7 @@ public abstract class Enemy extends Creature
      * Calculates the score that the player gets when they kill this enemy.
      *
      * It gets {@link #getScoreBase the base score} and adds the {@link #getScoreAddition score addition}
-     * to it, multiplied by {@link Cubic#level the player level} - 1
+     * to it, multiplied by {@link Player#level the player level} - 1
      *
      * @return the calculated score
      * @see #getScoreBase
@@ -93,7 +93,7 @@ public abstract class Enemy extends Creature
      */
     public int getScore()
     {
-        return getScoreBase() + getScoreAddition() * (Cubic.level - 1);
+        return getScoreBase() + getScoreAddition() * (Cubic.player.level - 1);
     }
 
     /**

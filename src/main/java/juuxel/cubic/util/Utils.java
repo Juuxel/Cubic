@@ -23,7 +23,7 @@ public final class Utils
      */
     public static double yOnScreen(double d)
     {
-        return Cubic.game.getHeight() - d;
+        return Cubic.getHeight() - d;
     }
 
     /**

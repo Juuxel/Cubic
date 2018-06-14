@@ -17,8 +17,14 @@ import juuxel.cubic.util.Direction;
 
 public final class Player extends Creature
 {
-    public int invincibleTime = 0;
-    public boolean jumpPressed, jumpWasPressed;
+    private int invincibleTime = 0;
+    private boolean jumpPressed = false;
+    private boolean jumpWasPressed = false;
+
+    public int score = 0;
+    public int deaths = 0;
+    public int level = 1;
+    public int lives = 3;
 
     public Player()
     {
@@ -53,7 +59,7 @@ public final class Player extends Creature
             else if (Cubic.moveKeyDown) Cubic.moveKeyDown = false;
         }
 
-        if ((x < -10 && xSpeed < 0) || (x > Cubic.game.getWidth() && xSpeed > 0))
+        if ((x < -10 && xSpeed < 0) || (x > Cubic.getWidth() && xSpeed > 0))
             xSpeed = -xSpeed;
 
         jumpWasPressed = jumpPressed;
@@ -99,23 +105,23 @@ public final class Player extends Creature
     {
         super.kill();
         y = 100;
-        Cubic.deaths++;
-        Cubic.lives--;
+        deaths++;
+        lives--;
         new EffectDeath(x, y);
         invincibleTime = 200;
     }
 
     public void levelUp()
     {
-        Cubic.level++;
-        Cubic.lives++;
+        level++;
+        lives++;
 
         new EffectLevelUp(x, y);
 
-        for (int i = 0; i < Cubic.level; i++)
+        for (int i = 0; i < level; i++)
             Cubic.addEnemy(Cubic.world.getEnemyList().createEnemy(EnemyType.NORMAL));
 
-        if (Cubic.level > 2 && random.nextInt(5) == 0)
+        if (level > 2 && random.nextInt(5) == 0)
             Cubic.addEnemy(Cubic.world.getEnemyList().createEnemy(EnemyType.RARE));
     }
 
