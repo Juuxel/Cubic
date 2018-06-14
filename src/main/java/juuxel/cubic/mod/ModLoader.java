@@ -25,7 +25,7 @@ import java.util.jar.Manifest;
  *
  * The Cubic mod jar format is simple:
  * <ul>
- *     <li>A mod class implementing {@link Mod} and optionally annotated by {@link ModMeta}.</li>
+ *     <li>A mod class implementing {@link Mod} and optionally annotated by {@link Mod.Info}.</li>
  *     <li>In the manifest file: {@code Mod-Class: your.mod.Class}</li>
  * </ul>
  */
@@ -152,8 +152,8 @@ public final class ModLoader
 
                 Class<? extends Mod> iModClass = modClass.asSubclass(Mod.class);
 
-                if (modClass.isAnnotationPresent(ModMeta.class))
-                    mod = new ModContainer(iModClass.getDeclaredConstructor().newInstance(), modClass.getAnnotation(ModMeta.class));
+                if (modClass.isAnnotationPresent(Mod.Info.class))
+                    mod = new ModContainer(iModClass.getDeclaredConstructor().newInstance(), modClass.getAnnotation(Mod.Info.class));
                 else
                     mod = new ModContainer(iModClass.getDeclaredConstructor().newInstance());
 
@@ -183,7 +183,7 @@ public final class ModLoader
         return false;
     }
 
-    public static class ModContainer
+    public static final class ModContainer
     {
         private final String id, version, author;
         private final Mod mod;
@@ -196,7 +196,7 @@ public final class ModLoader
             author = "";
         }
 
-        ModContainer(Mod mod, ModMeta annotation)
+        ModContainer(Mod mod, Mod.Info annotation)
         {
             this.mod = mod;
             id = annotation.id();
