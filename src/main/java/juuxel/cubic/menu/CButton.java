@@ -88,7 +88,7 @@ public class CButton extends JButton
         super.paintComponent(graphics);
     }
 
-    public static final class Basic extends CButton
+    public static class Basic extends CButton
     {
         public Basic(String label)
         {
