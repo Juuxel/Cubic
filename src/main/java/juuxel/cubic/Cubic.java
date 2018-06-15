@@ -108,7 +108,7 @@ public final class Cubic
                         tick = (tick + 1) % 60;
                     }
                 }
-            }, 0L, 1000L / (long) Options.fps);
+            }, 0L, 1000L / (long) Options.fps.getValue());
             hasTimerBeenCreated = true;
         }
     }

@@ -9,22 +9,20 @@ package juuxel.cubic.menu;
 import juuxel.cubic.Cubic;
 import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.lib.Images;
-import juuxel.cubic.options.KeyBinding;
-import juuxel.cubic.options.Options;
+import juuxel.cubic.options.*;
 import juuxel.cubic.util.Translator;
 
 import javax.swing.*;
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.util.*;
+import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class OptionsMenu extends CPanel
 {
     private final List<KeyChooser> choosers = new ArrayList<>();
 
+    @SuppressWarnings("unchecked")
     public OptionsMenu()
     {
         setLayout(new BorderLayout());
@@ -35,7 +33,7 @@ public final class OptionsMenu extends CPanel
 
         backButton.addActionListener(e -> {
             Cubic.selectScreen("MainMenu");
-            choosers.forEach(c -> c.handleChange(c.binding));
+            choosers.forEach(c -> c.onChange(c.binding));
             Options.selectKeyBinding(null);
             Options.reloadAndWriteOptions();
         });
@@ -68,15 +66,22 @@ public final class OptionsMenu extends CPanel
 
         panel.add(controlsTitle);
 
-        Options.KEY_BINDINGS.forEach(binding -> {
-            CPanel keyPanel = new CPanel();
 
-            keyPanel.add(new CLabel(binding.getName()));
-            keyPanel.add(new KeyChooser(binding));
-            keyPanel.setBorder(BorderFactory.createEmptyBorder());
+        for (Option<?> option : Options.OPTIONS)
+        {
+            if (option.getValue() instanceof Integer && option.showInGui) // Only key bindings, not FPS
+            {
+                var binding = (Option<Integer>) option;
 
-            panel.add(keyPanel);
-        });
+                CPanel keyPanel = new CPanel();
+
+                keyPanel.add(new CLabel(binding.getName()));
+                keyPanel.add(new KeyChooser(binding));
+                keyPanel.setBorder(BorderFactory.createEmptyBorder());
+
+                panel.add(keyPanel);
+            }
+        }
 
         add(titlePanel, BorderLayout.NORTH);
         add(panel, BorderLayout.CENTER);
@@ -97,18 +102,18 @@ public final class OptionsMenu extends CPanel
         }
     }
 
-    private final class KeyChooser extends CButton.Basic implements ActionListener, KeyBinding.ChangeListener
+    private final class KeyChooser extends CButton.Basic implements ActionListener, Option.ChangeListener<Integer>
     {
-        private final KeyBinding binding;
+        private final Option<Integer> binding;
 
-        public KeyChooser(KeyBinding b)
+        private KeyChooser(Option<Integer> binding)
         {
-            super(Options.getKeyName(b.getValue()));
+            super(Options.getKeyName(binding.getValue()));
 
             addActionListener(this);
 
-            binding = b;
-            b.addChangeListener(this);
+            this.binding = binding;
+            binding.addChangeListener(this);
 
             choosers.add(this);
         }
@@ -122,10 +127,10 @@ public final class OptionsMenu extends CPanel
         }
 
         @Override
-        public void handleChange(KeyBinding b)
+        public void onChange(Option<Integer> option)
         {
-            if (Options.getCurrentKeyBinding() == b)
-                setText(Options.getKeyName(b.getValue()));
+            if (option.equals(Options.getCurrentKeyBinding()))
+                setText(Options.getKeyName(option.getValue()));
         }
     }
 }

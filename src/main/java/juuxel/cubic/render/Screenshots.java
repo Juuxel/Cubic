@@ -33,7 +33,7 @@ public final class Screenshots
      */
     public static BufferedImage getScreenshot(Component component)
     {
-        if (!Options.captureFrame && component instanceof JFrame)
+        if (!Options.captureFrame.getValue() && component instanceof JFrame)
             return makeScreenshot(((JFrame) component).getContentPane());
 
         return makeScreenshot(component);

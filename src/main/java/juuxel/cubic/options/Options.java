@@ -11,46 +11,40 @@ import juuxel.cubic.util.Translator;
 import java.awt.event.KeyEvent;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.file.*;
-import java.util.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Properties;
 
 import static java.awt.event.KeyEvent.*;
 
 public final class Options
 {
-    public static KeyBinding moveLeft;
-    public static KeyBinding moveRight;
-    public static KeyBinding jump;
-    public static KeyBinding takeScreenshot;
+    public static final Option<Integer> moveLeft       = new Option<>("controls.moveLeft", VK_A, true);
+    public static final Option<Integer> moveRight      = new Option<>("controls.moveRight", VK_D, true);
+    public static final Option<Integer> jump           = new Option<>("controls.jump", VK_SPACE, true);
+    public static final Option<Integer> takeScreenshot = new Option<>("controls.takeScreenshot", VK_F12, true);
+    public static final Option<Boolean> captureFrame   = new Option<>("captureFrame", false);
+    public static final Option<Integer> fps            = new Option<>("fps", 60);
 
-    public static boolean captureFrame;
-    public static int fps;
-
-    public static final List<KeyBinding> KEY_BINDINGS = new ArrayList<>();
+    public static final Option<?>[] OPTIONS = { moveLeft, moveRight, jump, takeScreenshot, captureFrame, fps };
 
     private static Properties properties;
-    private static KeyBinding currentlySelectedKeyBinding = null;
+    private static Option<Integer> currentlySelectedKeyBinding = null;
 
     private Options()
     {}
 
     public static void init()
     {
-        moveLeft = addKeyBinding("controls.moveLeft", VK_A, false);
-        moveRight = addKeyBinding("controls.moveRight", VK_D, false);
-        jump = addKeyBinding("controls.jump", VK_SPACE, false);
-        takeScreenshot = addKeyBinding("controls.takeScreenshot", VK_F12, false);
-        captureFrame = false;
-        fps = 60;
-
         properties = new Properties();
-        properties.put("controls.moveLeft", moveLeft.toString());
-        properties.put("controls.moveRight", moveRight.toString());
-        properties.put("controls.jump", jump.toString());
-        properties.put("controls.takeScreenshot", takeScreenshot.toString());
-        properties.put("captureFrame", "false");
+        properties.put("controls.moveLeft", moveLeft.getValue().toString());
+        properties.put("controls.moveRight", moveRight.getValue().toString());
+        properties.put("controls.jump", jump.getValue().toString());
+        properties.put("controls.takeScreenshot", takeScreenshot.getValue().toString());
+        properties.put("captureFrame", captureFrame.getValue().toString());
         properties.put("language", Translator.getLanguage());
-        properties.put("fps", "60");
+        properties.put("fps", fps.getValue().toString());
 
         try
         {
@@ -68,8 +62,8 @@ public final class Options
                 jump.setValue(Integer.parseInt(properties.getProperty("controls.jump")));
                 takeScreenshot.setValue(Integer.parseInt(properties.getProperty("controls.takeScreenshot")));
 
-                captureFrame = Boolean.parseBoolean(properties.getProperty("captureFrame"));
-                fps = Integer.parseInt(properties.getProperty("fps"));
+                captureFrame.setValue(Boolean.parseBoolean(properties.getProperty("captureFrame")));
+                fps.setValue(Integer.parseInt(properties.getProperty("fps")));
 
                 Translator.setLanguage(properties.getProperty("language"));
                 Translator.reloadStrings();
@@ -81,23 +75,6 @@ public final class Options
         {
             e.printStackTrace();
         }
-    }
-
-    public static KeyBinding addKeyBinding(String name, int initialValue, boolean checkValue)
-    {
-        KeyBinding binding = new KeyBinding(name, initialValue);
-
-        if (checkValue)
-        {
-            if (properties.containsKey(name))
-                binding.setValue(Integer.parseInt(properties.getProperty(name)));
-            else
-                properties.setProperty(name, Integer.toString(initialValue));
-        }
-
-        KEY_BINDINGS.add(binding);
-
-        return binding;
     }
 
     public static String getKeyName(int code)
@@ -121,15 +98,15 @@ public final class Options
 
     public static void reloadAndWriteOptions()
     {
-        properties.put("controls.moveLeft", moveLeft.toString());
-        properties.put("controls.moveRight", moveRight.toString());
-        properties.put("controls.jump", jump.toString());
-        properties.put("controls.takeScreenshot", takeScreenshot.toString());
+        properties.put("controls.moveLeft", moveLeft.getValue().toString());
+        properties.put("controls.moveRight", moveRight.getValue().toString());
+        properties.put("controls.jump", jump.getValue().toString());
+        properties.put("controls.takeScreenshot", takeScreenshot.getValue().toString());
         properties.put("language", Translator.getLanguage());
         writeOptions();
     }
 
-    public static void writeOptions()
+    private static void writeOptions()
     {
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get("options.properties")))
         {
@@ -141,7 +118,7 @@ public final class Options
         }
     }
 
-    public static void selectKeyBinding(KeyBinding binding)
+    public static void selectKeyBinding(Option<Integer> binding)
     {
         currentlySelectedKeyBinding = binding;
     }
@@ -151,8 +128,9 @@ public final class Options
         return currentlySelectedKeyBinding != null;
     }
 
-    public static KeyBinding getCurrentKeyBinding()
+    public static Option<Integer> getCurrentKeyBinding()
     {
         return currentlySelectedKeyBinding;
     }
+
 }
