@@ -69,7 +69,7 @@ public final class OptionsMenu extends CPanel
 
         for (Option<?> option : Options.OPTIONS)
         {
-            if (option.getValue() instanceof Integer && option.showInGui) // Only key bindings, not FPS
+            if (option.isKey)
             {
                 var binding = (Option<Integer>) option;
 

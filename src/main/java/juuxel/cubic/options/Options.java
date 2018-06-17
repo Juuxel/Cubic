@@ -132,5 +132,4 @@ public final class Options
     {
         return currentlySelectedKeyBinding;
     }
-
 }
