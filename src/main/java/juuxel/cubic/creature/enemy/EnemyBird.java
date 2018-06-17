@@ -92,6 +92,7 @@ public final class EnemyBird extends Enemy
         public void onCollidedWithPlayer(Direction direction)
         {
             Cubic.player.kill();
+            Cubic.CREATURES.remove(this);
             Cubic.COLLIDING_ENEMIES.remove(this);
         }
     }
