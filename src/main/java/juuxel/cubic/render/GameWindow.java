@@ -14,6 +14,8 @@ import juuxel.cubic.menu.MainMenu;
 import juuxel.cubic.menu.OptionsMenu;
 import juuxel.cubic.menu.WorldMenu;
 import juuxel.cubic.options.Options;
+import juuxel.cubic.world.World;
+import juuxel.cubic.world.WorldGrassyLands;
 
 import javax.swing.*;
 import java.awt.CardLayout;
@@ -114,8 +116,17 @@ public final class GameWindow
         {
             super.paintComponent(g);
 
-            RenderEngine.drawSky(Graphics.fromAWTGraphics(g));
+            World world = Cubic.world;
+
+            if (!world.isValidMenuBackground())
+            {
+                Cubic.world = World.getInstance(WorldGrassyLands.class);
+            }
+
+            Cubic.world.drawSky(Graphics.fromAWTGraphics(g));
             RenderEngine.drawLevel(Graphics.fromAWTGraphics(g));
+
+            Cubic.world = world;
         }
     }
 

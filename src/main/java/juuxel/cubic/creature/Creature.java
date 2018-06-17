@@ -30,7 +30,7 @@ public abstract class Creature
     public Direction direction = Direction.RIGHT;
     protected int speedModifierX = 1, speedModifierY = 1;
 
-    public Creature()
+    protected Creature()
     {
         Cubic.CREATURES.add(this);
         EventBus.post(new CreatureCreationEvent(this));
@@ -38,7 +38,7 @@ public abstract class Creature
         flippingEnabled = false;
     }
 
-    public double yOnScreen()
+    protected double yOnScreen()
     { return Utils.yOnScreen(y); }
 
     public void kill()

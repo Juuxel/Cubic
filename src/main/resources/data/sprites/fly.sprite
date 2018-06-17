@@ -1,0 +1,4 @@
+function=animated
+textures=fly
+autoFind=5
+speed=0.4

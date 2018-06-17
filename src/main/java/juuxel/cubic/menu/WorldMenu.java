@@ -13,9 +13,7 @@ import juuxel.cubic.lib.Images;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
+import java.awt.*;
 
 public final class WorldMenu extends CPanel
 {
@@ -25,11 +23,9 @@ public final class WorldMenu extends CPanel
         setBorder(new EmptyBorder(10, 10, 10, 10));
 
         CPanel titlePanel = new CPanel();
-        CPanel panel = new CPanel(new GridLayout(1, 0, 10, 0));
 
         titlePanel.setMaximumSize(new Dimension(titlePanel.getMaximumSize().width, 40));
         titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.X_AXIS));
-        panel.setOpaque(false);
 
         CLabel title = new CLabel("mainMenu.selectWorld");
         CButton backButton = new CButton(new ImageIcon(Images.backButton));
@@ -37,23 +33,25 @@ public final class WorldMenu extends CPanel
         title.setFont(GameValues.FONT.deriveFont(32F));
         backButton.addActionListener(e -> Cubic.selectScreen("MainMenu"));
 
-        World.WORLDS.forEach(level -> {
-            CButton button = new CButton(level.getNameKey());
-            button.setFont(GameValues.FONT.deriveFont(24F));
-            button.setBackground(new Color(0x7ceeebaa));
-
-            button.addActionListener(e -> Cubic.newGame(level));
-
-            panel.add(button);
-        });
-
         titlePanel.add(backButton);
         titlePanel.add(Box.createHorizontalStrut(20));
         titlePanel.add(title);
 
         add(titlePanel);
         add(Box.createVerticalGlue());
-        add(panel);
+
+        World.WORLDS.forEach(level -> {
+            CButton button = new CButton(level.getNameKey());
+            button.setFont(GameValues.FONT.deriveFont(24F));
+            button.setBackground(new Color(0x7ceeebaa));
+            button.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            button.addActionListener(e -> Cubic.newGame(level));
+
+            add(button);
+            add(Box.createVerticalStrut(10));
+        });
+
         add(Box.createVerticalGlue());
     }
 }

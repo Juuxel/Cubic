@@ -9,19 +9,27 @@ package juuxel.cubic.creature.enemy;
 import juuxel.cubic.Cubic;
 import juuxel.cubic.lib.Images;
 import juuxel.cubic.render.GameWindow;
+import juuxel.cubic.render.sprite.Sprite;
 import juuxel.cubic.util.Direction;
 
 public final class EnemyBird extends Enemy
 {
     private int poopDelay = 300;
+    private final Type type;
 
-    public EnemyBird()
+    public EnemyBird(Type type)
     {
         y = 200;
-        setSprite(Images.bird);
+        setSprite(type.sprite);
         slidable = false;
         spriteWidth = 48;
         spriteHeight = 48;
+        this.type = type;
+    }
+
+    public EnemyBird()
+    {
+        this(Type.BIRD);
     }
 
     @Override
@@ -57,8 +65,8 @@ public final class EnemyBird extends Enemy
             y = EnemyBird.this.y - 32;
             ySpeed = -1;
             slidable = false;
-            spriteWidth = 24;
-            spriteHeight = 24;
+            spriteWidth = type.poopSize;
+            spriteHeight = type.poopSize;
             setSprite(Images.birdPoop);
             collidesWithGround = false;
             Cubic.COLLIDING_ENEMIES.add(this);
@@ -85,6 +93,21 @@ public final class EnemyBird extends Enemy
         {
             Cubic.player.kill();
             Cubic.COLLIDING_ENEMIES.remove(this);
+        }
+    }
+
+    public enum Type
+    {
+        BIRD(24, Images.bird),
+        FLY(16, Images.fly);
+
+        private final int poopSize;
+        private final Sprite sprite;
+
+        Type(int poopSize, Sprite sprite)
+        {
+            this.poopSize = poopSize;
+            this.sprite = sprite;
         }
     }
 }

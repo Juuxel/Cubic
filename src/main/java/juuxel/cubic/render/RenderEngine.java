@@ -25,7 +25,7 @@ public final class RenderEngine
     {
         if (!Cubic.inStartScreen)
         {
-            drawSky(g);
+            Cubic.world.drawSky(g);
             drawScore(g);
             drawLevel(g);
 
@@ -51,6 +51,7 @@ public final class RenderEngine
         g.drawImage(Images.levelUpIcon, 5, 50, 16, 16);
         g.drawImage(Images.heart, 5, 70, 16, 16);
 
+        g.getGraphics2D().setColor(Cubic.world.getTextColor());
         drawNumberString(g, String.format(Translator.getLocale(), "%,d", Cubic.player.score), 30, 10, 1F);
         drawNumberString(g, String.format(Translator.getLocale(), "%,d", Cubic.player.level), 30, 30, 1F);
         drawNumberString(g, String.format(Translator.getLocale(), "%,d / %,d", Cubic.ENEMIES.size(), Cubic.player.level), 30, 50, 1F);
@@ -64,9 +65,14 @@ public final class RenderEngine
 
     public static void drawSky(Graphics g)
     {
+        drawSky(g, SKY_TOP, SKY_BOTTOM);
+    }
+
+    public static void drawSky(Graphics g, Color top, Color bottom)
+    {
         Paint paint = g.getGraphics2D().getPaint();
 
-        g.getGraphics2D().setPaint(new GradientPaint(0, 0, SKY_TOP, 0, GameWindow.getHeight(), SKY_BOTTOM));
+        g.getGraphics2D().setPaint(new GradientPaint(0, 0, top, 0, GameWindow.getHeight(), bottom));
         g.getGraphics2D().fillRect(0, 0, GameWindow.getWidth(), GameWindow.getHeight());
 
         g.getGraphics2D().setPaint(paint);
@@ -74,14 +80,19 @@ public final class RenderEngine
 
     public static void drawNumberString(Graphics g, String s, int x, int y, float alpha)
     {
-        char[] chars = s.toCharArray();
+//        char[] chars = s.toCharArray();
 
         g.getGraphics2D().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
 
-        for (int i = 0; i < chars.length; i++)
-        {
-            g.drawImage(Images.numbers.get(chars[i]), x + i * 10, y, 8, 16);
-        }
+//        for (int i = 0; i < chars.length; i++)
+//        {
+//            g.drawImage(Images.numbers.get(chars[i]), x + i * 10, y, 8, 16);
+//        }
+        g.getGraphics2D().setRenderingHint(
+                RenderingHints.KEY_TEXT_ANTIALIASING,
+                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g.getGraphics2D().setFont(GameValues.FONT);
+        g.getGraphics2D().drawString(s, x, y + 12);
 
         g.getGraphics2D().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
     }

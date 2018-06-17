@@ -1,0 +1,5 @@
+function=animated
+textures=fire_monster
+autoFind=9
+speed=0.7
+flippable=true

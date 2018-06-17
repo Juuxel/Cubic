@@ -9,9 +9,11 @@ package juuxel.cubic.world;
 import juuxel.cubic.creature.enemy.EnemyList;
 import juuxel.cubic.render.GameWindow;
 import juuxel.cubic.render.Graphics;
+import juuxel.cubic.render.RenderEngine;
 import juuxel.cubic.render.sprite.Sprite;
 import juuxel.cubic.util.Utils;
 
+import java.awt.Color;
 import java.util.*;
 
 /**
@@ -37,13 +39,12 @@ public abstract class World
 
     /**
      * Draws this world to the {@link Graphics} object.
-     * The default implementation draws the ground and then
-     * calls {@link #drawDecoration(Graphics)}. Subclasses don't
-     * need call this.
+     * The implementation draws the ground and then calls {@link #drawDecoration(Graphics)}.
+     * Subclasses don't need to call this.
      *
      * @param g the graphics object
      */
-    public void draw(Graphics g)
+    public final void draw(Graphics g)
     {
         for (int i = 0; i < GameWindow.getWidth() / 32 + 1; i++)
         {
@@ -62,6 +63,16 @@ public abstract class World
      */
     public void drawDecoration(Graphics g)
     {}
+
+    /**
+     * Draws the sky of this world to the {@link Graphics} object.
+     *
+     * @param g the graphics object
+     */
+    public void drawSky(Graphics g)
+    {
+        RenderEngine.drawSky(g);
+    }
 
     /**
      * Gets the translation key of the name of this world.
@@ -87,12 +98,12 @@ public abstract class World
 
     /**
      * An internal method to register Cubic's default worlds.
-     * Mods, please don't call this.
      */
     public static void registerDefaults()
     {
         registerWorld(new WorldGrassyLands());
         registerWorld(new WorldBrickCity());
+        registerWorld(new WorldMysteriousCave());
     }
 
     /**
@@ -103,7 +114,8 @@ public abstract class World
      */
     public static void registerWorld(World world)
     {
-        WORLDS.add(world);
+        if (!WORLDS.contains(world))
+            WORLDS.add(world);
     }
 
     /**
@@ -119,5 +131,15 @@ public abstract class World
                      .filter(w -> w.getClass() == worldClass)
                      .findFirst()
                      .orElseThrow(NoSuchElementException::new);
+    }
+
+    public Color getTextColor()
+    {
+        return Color.BLACK;
+    }
+
+    public boolean isValidMenuBackground()
+    {
+        return true;
     }
 }
