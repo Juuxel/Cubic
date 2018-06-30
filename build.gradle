@@ -7,7 +7,7 @@ version =  '0.5.0'
 sourceCompatibility = JavaVersion.VERSION_1_10
 targetCompatibility = JavaVersion.VERSION_1_10
 
-task wrapper(type: Wrapper) {
+wrapper {
     gradleVersion = '4.8'
 }
 
