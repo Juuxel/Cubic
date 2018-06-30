@@ -17,7 +17,6 @@ import juuxel.cubic.render.GameWindow;
 import juuxel.cubic.render.sprite.SpriteLoader;
 import juuxel.cubic.util.Translator;
 import juuxel.cubic.world.World;
-import juuxel.cubic.world.WorldGrassyLands;
 
 import java.awt.CardLayout;
 import java.util.*;

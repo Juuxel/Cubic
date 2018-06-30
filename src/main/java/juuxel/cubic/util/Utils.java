@@ -9,21 +9,21 @@ package juuxel.cubic.util;
 import juuxel.cubic.render.GameWindow;
 
 /**
- * Includes basic functions for classes to use.
+ * {@code Utils} contains different utility methods.
  */
 public final class Utils
 {
     private Utils() {}
 
     /**
-     * Inverts the given parameter with the game's window height.
+     * Calculates the Y coordinate on the screen from {@code y}.
      *
-     * @param d the number to be inverted
-     * @return inverted number
+     * @param y the Y coordinate
+     * @return the Y coordinate on the screen
      */
-    public static double yOnScreen(double d)
+    public static double yOnScreen(double y)
     {
-        return GameWindow.getHeight() - d;
+        return GameWindow.getHeight() - y;
     }
 
     /**
@@ -39,5 +39,23 @@ public final class Utils
             return str.split(", *");
 
         return new String[] { str };
+    }
+
+    /**
+     * Returns true if {@code c} implements {@code i}.
+     *
+     * @param c the class
+     * @param i the interface
+     * @return true if {@code c} implements {@code i}
+     */
+    public static boolean implementsInterface(Class<?> c, Class<?> i)
+    {
+        for (Class<?> i2 : c.getInterfaces())
+        {
+            if (i2.equals(i))
+                return true;
+        }
+
+        return false;
     }
 }

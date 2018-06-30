@@ -6,6 +6,8 @@
  */
 package juuxel.cubic.mod;
 
+import juuxel.cubic.util.Utils;
+
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -51,9 +53,9 @@ public final class ModLoader
 
             MODS.forEach(mod -> {
                 System.out.printf("Mod %d:%n", MODS.indexOf(mod));
-                System.out.printf("    ID: %32s%n", mod.getId());
-                System.out.printf("    Author: %28s%n", mod.getAuthor());
-                System.out.printf("    Version: %27s%n", mod.getVersion());
+                System.out.printf("| ID:      %s%n", mod.getId());
+                System.out.printf("| Author:  %s%n", mod.getAuthor());
+                System.out.printf("| Version: %s%n%n", mod.getVersion());
             });
 
             hasLoaded = true;
@@ -146,7 +148,7 @@ public final class ModLoader
     {
         try
         {
-            if (implementsInterface(modClass, Mod.class))
+            if (Utils.implementsInterface(modClass, Mod.class))
             {
                 ModContainer mod;
 
@@ -170,17 +172,6 @@ public final class ModLoader
         }
 
         return null;
-    }
-
-    private static boolean implementsInterface(Class<?> c, Class<?> i)
-    {
-        for (Class<?> i2 : c.getInterfaces())
-        {
-            if (i2.equals(i))
-                return true;
-        }
-
-        return false;
     }
 
     private static final class ModContainer
