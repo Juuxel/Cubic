@@ -75,8 +75,8 @@ public final class ModLoader
             throw new IllegalStateException("The mod loader has not been loaded.");
 
         MODS.forEach(mod -> {
-            System.out.printf("Initializing core components for mod %s.%n", mod.getId());
-            mod.coreInit();
+            System.out.printf("Initializing mod %s.%n", mod.getId());
+            mod.init();
         });
     }
 
@@ -183,7 +183,7 @@ public final class ModLoader
         return false;
     }
 
-    public static final class ModContainer
+    private static final class ModContainer
     {
         private final String id, version, author;
         private final Mod mod;
@@ -204,16 +204,16 @@ public final class ModLoader
             author = annotation.author();
         }
 
-        void coreInit()
+        void init()
         { mod.init(); }
 
-        public String getId()
+        String getId()
         { return id; }
 
-        public String getVersion()
+        String getVersion()
         { return version; }
 
-        public String getAuthor()
+        String getAuthor()
         { return author; }
     }
 }

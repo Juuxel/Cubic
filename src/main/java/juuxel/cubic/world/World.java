@@ -23,6 +23,11 @@ public abstract class World
 {
     public static final List<World> WORLDS = new ArrayList<>();
 
+    /**
+     * The default world of the game, currently {@link WorldGrassyLands}.
+     */
+    public static final Class<? extends World> DEFAULT_WORLD = WorldGrassyLands.class;
+
     private final EnemyList enemyList = new EnemyList();
     private Sprite ground;
 
@@ -83,6 +88,8 @@ public abstract class World
 
     /**
      * Initializes the enemy list of this level.
+     *
+     * @param enemyList the enemy list
      */
     protected abstract void initEnemyList(EnemyList enemyList);
 
@@ -108,7 +115,6 @@ public abstract class World
 
     /**
      * Registers a new World to the game.
-     * This method should be called on the coreInit phase.
      *
      * @param world the new world
      */
@@ -133,11 +139,21 @@ public abstract class World
                      .orElseThrow(NoSuchElementException::new);
     }
 
+    /**
+     * Gets the text color of the interface and the point popups.
+     *
+     * @return the text color
+     */
     public Color getTextColor()
     {
         return Color.BLACK;
     }
 
+    /**
+     * Returns true if this world can be used as a background for the {@link juuxel.cubic.menu.MainMenu main menu}.
+     *
+     * @return true if this world is a valid background for the main menu
+     */
     public boolean isValidMenuBackground()
     {
         return true;

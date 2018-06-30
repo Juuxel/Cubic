@@ -22,7 +22,7 @@ public final class EventBus
     }
 
     /**
-     * Subscribes to the event type {@link E}, handling the events with the event handler.
+     * Subscribes to the event type {@code E}, handling the events with the event handler.
      *
      * @param eventClass the event type class
      * @param eventHandler the event handler

@@ -34,7 +34,7 @@ public abstract class Sprite
 
     /**
      * Gets the image of this sprite for an object.
-     * The owner matters when having different images for different owners
+     * The owner matters when having different images for different owners
      * (in {@link SpriteRandom}, for example).
      *
      * @param owner the owner

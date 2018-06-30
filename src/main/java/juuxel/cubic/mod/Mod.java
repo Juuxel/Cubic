@@ -11,13 +11,12 @@ import java.lang.annotation.RetentionPolicy;
 
 /**
  * A mod for Cubic. This interface provides methods
- * for hooking to Cubic's init phases.
+ * for hooking to Cubic's init phase.
  */
 public interface Mod
 {
     /**
-     * Called after Cubic's coreInit phase.
-     * Registers things like sprite providers.
+     * Called during Cubic's init phase.
      */
     default void init()
     {}
