@@ -1,4 +1,4 @@
-function=animated
+type=animated
 textures=fire_monster
 autoFind=9
 speed=0.7

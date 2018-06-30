@@ -7,7 +7,6 @@
 package juuxel.cubic.render.sprite;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -21,32 +20,22 @@ public final class SpriteLoader
     private static final Map<String, Function<Properties, Sprite>> SPRITE_PROVIDERS = new HashMap<>();
 
     /**
-     * Returns an unmodifiable copy of the sprite provider map.
-     *
-     * @return a copy of the sprite provider map
-     */
-    public static Map<String, Function<Properties, Sprite>> getSpriteProviders()
-    {
-        return Collections.unmodifiableMap(SPRITE_PROVIDERS);
-    }
-
-    /**
-     * Registers a sprite provider for a function name.
+     * Registers a sprite provider for a type name.
      * Modded functions should contains the mod name for
      * mod compatibility.
      *
-     * @param functionId the function name
+     * @param type the type name
      * @param provider the sprite provider
      */
-    public static void registerSprite(String functionId, Function<Properties, Sprite> provider)
+    public static void registerSprite(String type, Function<Properties, Sprite> provider)
     {
-        SPRITE_PROVIDERS.put(functionId, provider);
+        SPRITE_PROVIDERS.put(type, provider);
     }
 
     /**
      * Gets a Sprite from the classpath using the sprite file's <code>function</code> property.
      * The location this method looks for is <code>"/data/sprites/" + sprite + ".sprite"</code>
-     * If no function matching the property is found, returns null.
+     * If no type matching the property is found, returns null.
      *
      * If the sprite file is not found, tries to construct a Sprite from the {@code sprite} parameter.
      * This method looks for an image file in the {@code /data/images} directory. If one is found, returns
@@ -63,20 +52,20 @@ public final class SpriteLoader
 
             props.load(SpriteLoader.class.getResourceAsStream("/data/sprites/" + sprite + ".sprite"));
 
-            String function = props.getProperty("function");
+            String type = props.getProperty("type");
 
-            if (function == null)
-                function = "default";
+            if (type == null)
+                type = "default";
 
             for (Map.Entry<String, Function<Properties, Sprite>> entry : SPRITE_PROVIDERS.entrySet())
             {
-                if (entry.getKey().equals(function))
+                if (entry.getKey().equals(type))
                 {
                     return entry.getValue().apply(props);
                 }
             }
 
-            System.err.printf("Invalid function '%s' in sprite %s. %n", function, sprite);
+            System.err.printf("Invalid type '%s' in sprite %s. %n", type, sprite);
         }
         catch (IOException e)
         {

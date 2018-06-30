@@ -1,4 +1,4 @@
-function=multi
+type=multi
 textures=gui_buttons
 xPos=1
 yPos=0

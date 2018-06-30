@@ -1,2 +1,2 @@
-function=random
+type=random
 textures=decorations/buildingA, decorations/buildingB, decorations/buildingC

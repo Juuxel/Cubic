@@ -1,4 +1,4 @@
-function=animated
+type=animated
 textures=bird_white
 autoFind=2
 speed=0.2

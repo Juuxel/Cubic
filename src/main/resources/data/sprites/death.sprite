@@ -1,4 +1,4 @@
-function=animated
+type=animated
 textures=death
 speed=0.7
 autoFind=8
