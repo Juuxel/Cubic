@@ -40,9 +40,7 @@ public final class Cubic
     public static void main(String[] args)
     {
         processArgs(args);
-
         init();
-        GameWindow.init();
     }
 
     private static void processArgs(String[] args)
@@ -59,20 +57,37 @@ public final class Cubic
         }
     }
 
-    /* Initialize the core components of Cubic. (Translator, options, sprite system)
+    /**
+     * Initialize the core components of Cubic, including the translator, options, and the sprite system.
      */
     private static void init()
     {
         SpriteLoader.registerDefaults();
         Images.init();
         World.registerDefaults();
-        world = World.getInstance(WorldGrassyLands.class);
+        world = World.getInstance(World.DEFAULT_WORLD);
         ModLoader.load();
         ModLoader.init();
         Translator.init();
         Options.init();
+        GameWindow.init();
+
+        new java.util.Timer().scheduleAtFixedRate(new TimerTask()
+        {
+            @Override
+            public void run()
+            {
+                GameWindow.repaint();
+                tick = (tick + 1) % 60;
+            }
+        }, 0L, 1000L / (long) Options.fps.getValue());
     }
 
+    /**
+     * Starts a new game in {@code world}.
+     * Sets {@link #player} to a new player and clears all creatures and enemies.
+     * @param world the world
+     */
     public static void newGame(World world)
     {
         CREATURES.clear();
@@ -96,19 +111,6 @@ public final class Cubic
                     }
                 }
             }, 0L, 5L);
-
-            new java.util.Timer().scheduleAtFixedRate(new TimerTask()
-            {
-                @Override
-                public void run()
-                {
-                    if (!inStartScreen)
-                    {
-                        GameWindow.repaint();
-                        tick = (tick + 1) % 60;
-                    }
-                }
-            }, 0L, 1000L / (long) Options.fps.getValue());
             hasTimerBeenCreated = true;
         }
     }
