@@ -137,4 +137,40 @@ public final class Graphics
         drawImage(image, x, y, width, height);
         graphics2D.setComposite(AlphaComposite.SrcOver);
     }
+
+    /**
+     * Draws an image on the canvas, possibly flipped horizontally.
+     *
+     * @param image the image
+     * @param x the top-left x coordinate
+     * @param y the top-left y coordinate
+     * @param width the image width (image will be rescaled)
+     * @param height the image height (image will be rescaled)
+     * @param flipped {@code true} if the image will be flipped horizontally
+     */
+    public void drawImage(Image image, int x, int y, int width, int height, boolean flipped)
+    {
+        if (flipped)
+            drawFlippedImage(image, x, y, width, height);
+        else
+            drawImage(image, x, y, width, height);
+    }
+
+    /**
+     * Draws a {@link Sprite sprite} on the canvas, possibly flipped horizontally.
+     *
+     * @param sprite the sprite
+     * @param x the top-left x coordinate
+     * @param y the top-left y coordinate
+     * @param width the image width (image will be rescaled)
+     * @param height the image height (image will be rescaled)
+     * @param flipped {@code true} if the image will be flipped horizontally
+     */
+    public void drawImage(Sprite sprite, int x, int y, int width, int height, boolean flipped)
+    {
+        if (flipped)
+            drawFlippedImage(sprite, x, y, width, height);
+        else
+            drawImage(sprite, x, y, width, height);
+    }
 }

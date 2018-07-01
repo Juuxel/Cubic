@@ -22,7 +22,6 @@ public final class WorldCave extends World
     private static final Color[] LIGHT_COLORS = new Color[] { LIGHT_START, LIGHT_END };
     private static final int LIGHT_RADIUS = 50;
     private static final AlphaComposite LIGHT_COMPOSITE = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.15f);
-    private static final AlphaComposite BG_CRYSTAL_COMPOSITE = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f);
 
     private final Crystal[] crystals;
     private final BGCrystal[] backgroundCrystals;
@@ -62,8 +61,10 @@ public final class WorldCave extends World
     {
         int x = ThreadLocalRandom.current().nextInt(640 - 32);
         int y = ThreadLocalRandom.current().nextInt(400 - 32);
+        float alpha = Utils.clamp(ThreadLocalRandom.current().nextFloat(), 0.4f, 0.8f);
+        var isFlipped = ThreadLocalRandom.current().nextBoolean();
 
-        return new BGCrystal(x, y);
+        return new BGCrystal(x, y, alpha, isFlipped);
     }
 
     @Override
@@ -105,8 +106,12 @@ public final class WorldCave extends World
 
         for (var crystal : backgroundCrystals)
         {
-            g.getGraphics2D().setComposite(BG_CRYSTAL_COMPOSITE);
-            g.drawImage(Images.backgroundCrystal.getImage(crystal), crystal.x - 16, crystal.y - 16, 32, 32);
+            g.getGraphics2D().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, crystal.alpha));
+            g.drawImage(Images.backgroundCrystal.getImage(crystal),
+                        crystal.x - 16, crystal.y - 16,
+                        32, 32,
+                        crystal.isFlipped);
+
             g.getGraphics2D().setComposite(AlphaComposite.SrcOver);
         }
     }
@@ -153,11 +158,15 @@ public final class WorldCave extends World
     {
         private final int x;
         private final int y; // A graphical Y coordinate, not a game Y coordinate
+        private final float alpha;
+        private final boolean isFlipped;
 
-        private BGCrystal(int x, int y)
+        private BGCrystal(int x, int y, float alpha, boolean isFlipped)
         {
             this.x = x;
             this.y = y;
+            this.alpha = alpha;
+            this.isFlipped = isFlipped;
         }
     }
 }
