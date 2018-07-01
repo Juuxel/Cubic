@@ -10,12 +10,9 @@ import juuxel.cubic.render.sprite.Sprite;
 import juuxel.cubic.render.sprite.SpriteLoader;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 public final class Images
 {
@@ -47,6 +44,8 @@ public final class Images
     public static Sprite caveWall;
     public static Sprite fireball;
     public static Sprite fly;
+    public static Sprite crystal;
+    public static Sprite backgroundCrystal;
 
     public static BufferedImage load(String file)
     {
@@ -59,7 +58,9 @@ public final class Images
         catch (IOException e)
         {
             image = null;
-            System.err.printf("Error in loading image '%s', setting to null%n", file);
+            System.err.printf("Exception thrown while loading image '%s', setting to null%n", file);
+            System.err.println("Stack trace of the exception:");
+            e.printStackTrace();
         }
 
         return image;
@@ -90,5 +91,7 @@ public final class Images
         caveWall = SpriteLoader.load("cave_wall");
         fireball = SpriteLoader.load("fireball");
         fly = SpriteLoader.load("fly");
+        crystal = SpriteLoader.load("decorations/crystal");
+        backgroundCrystal = SpriteLoader.load("decorations/background_crystal");
     }
 }

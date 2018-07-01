@@ -20,7 +20,6 @@ import java.util.*;
 public final class WorldBrickCity extends World
 {
     private final Building[] buildings;
-
     private static final Random RANDOM = new Random();
 
     public WorldBrickCity()

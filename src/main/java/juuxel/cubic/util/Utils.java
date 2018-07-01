@@ -58,4 +58,22 @@ public final class Utils
 
         return false;
     }
+
+    /**
+     * Clamps the number {@code n} between {@code min} and {@code max} (inclusive).
+     *
+     * @param n the number
+     * @param min the minimum
+     * @param max the maximum
+     * @return a number between {@code min} and {@code max}
+     */
+    public static float clamp(float n, float min, float max)
+    {
+        if (n < min)
+            return min;
+        else if (n > max)
+            return max;
+        else
+            return n;
+    }
 }

@@ -44,21 +44,21 @@ public abstract class World
 
     /**
      * Draws this world to the {@link Graphics} object.
-     * The implementation draws the ground and then calls {@link #drawDecoration(Graphics)}.
+     * The implementation calls {@link #drawDecoration(Graphics)} and then draws the ground.
      * Subclasses don't need to call this.
      *
      * @param g the graphics object
      */
     public final void draw(Graphics g)
     {
+        drawDecoration(g);
+
         for (int i = 0; i < GameWindow.getWidth() / 32 + 1; i++)
         {
             int x = i * 32, y = (int) Utils.yOnScreen(32);
 
             g.drawImage(ground, x, y - 32, 32, 32);
         }
-
-        drawDecoration(g);
     }
 
     /**
@@ -110,7 +110,7 @@ public abstract class World
     {
         registerWorld(new WorldGrassyLands());
         registerWorld(new WorldBrickCity());
-        registerWorld(new WorldMysteriousCave());
+        registerWorld(new WorldCave());
     }
 
     /**

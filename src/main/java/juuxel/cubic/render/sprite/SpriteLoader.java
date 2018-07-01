@@ -42,7 +42,7 @@ public final class SpriteLoader
      * a new Sprite.
      *
      * @param sprite the sprite name
-     * @return the sprite, or null if function not found
+     * @return the sprite, or null if type not found
      */
     public static Sprite load(String sprite)
     {
@@ -76,7 +76,7 @@ public final class SpriteLoader
             // Try to construct the missing sprite from the texture
 
             Properties p = new Properties();
-            p.setProperty("function", "default");
+            p.setProperty("type", "default");
             p.setProperty("textures", sprite);
 
             Sprite s = new SpriteDefault(p);
