@@ -14,6 +14,8 @@ import juuxel.cubic.util.Translator;
 
 import javax.swing.*;
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.GridLayout;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,11 +63,14 @@ public final class OptionsMenu extends CPanel
 
         panel.add(languagePanel);
 
+        CPanel controlsPanel = new CPanel(new GridLayout(0, 2, 10, 5));
         CLabel controlsTitle = new CLabel("options.controls");
+        controlsPanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
         controlsTitle.setFont(GameValues.FONT.deriveFont(24F));
+        controlsTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         panel.add(controlsTitle);
-
+        panel.add(controlsPanel);
 
         for (Option<?> option : Options.OPTIONS)
         {
@@ -73,13 +78,8 @@ public final class OptionsMenu extends CPanel
             {
                 var binding = (Option<Integer>) option;
 
-                CPanel keyPanel = new CPanel();
-
-                keyPanel.add(new CLabel(binding.getName()));
-                keyPanel.add(new KeyChooser(binding));
-                keyPanel.setBorder(BorderFactory.createEmptyBorder());
-
-                panel.add(keyPanel);
+                controlsPanel.add(new CLabel(binding.getName()));
+                controlsPanel.add(new KeyChooser(binding));
             }
         }
 
