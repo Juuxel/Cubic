@@ -44,14 +44,14 @@ public final class WorldCave extends World
 
     private Crystal createCrystal(int index)
     {
-        int size = (4 + ThreadLocalRandom.current().nextInt(-1, 1)) * 12;
+        int size = (2 + ThreadLocalRandom.current().nextInt(4)) * 12;
         int x = ThreadLocalRandom.current().nextInt(640 - size);
 
         for (int i = 0; i < index; i++)
         {
             var crystal = crystals[i];
 
-            if (Math.abs(crystal.x - x) < 64)
+            if (Math.abs(crystal.x - x) < 40)
                 x = ThreadLocalRandom.current().nextInt(640 - size);
         }
 
