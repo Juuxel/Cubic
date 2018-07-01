@@ -80,20 +80,14 @@ public final class RenderEngine
 
     public static void drawNumberString(Graphics g, String s, int x, int y, float alpha)
     {
-//        char[] chars = s.toCharArray();
-
         g.getGraphics2D().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
 
-//        for (int i = 0; i < chars.length; i++)
-//        {
-//            g.drawImage(Images.numbers.get(chars[i]), x + i * 10, y, 8, 16);
-//        }
         g.getGraphics2D().setRenderingHint(
                 RenderingHints.KEY_TEXT_ANTIALIASING,
                 RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g.getGraphics2D().setFont(GameValues.FONT);
         g.getGraphics2D().drawString(s, x, y + 12);
 
-        g.getGraphics2D().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
+        g.getGraphics2D().setComposite(AlphaComposite.SrcOver);
     }
 }

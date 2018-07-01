@@ -135,6 +135,6 @@ public final class Graphics
     {
         graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
         drawImage(image, x, y, width, height);
-        graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
+        graphics2D.setComposite(AlphaComposite.SrcOver);
     }
 }
