@@ -10,7 +10,9 @@ import juuxel.cubic.render.sprite.Sprite;
 import juuxel.cubic.render.sprite.SpriteLoader;
 
 import javax.imageio.ImageIO;
+import java.awt.Color;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -34,11 +36,10 @@ public final class Images
     public static Sprite heart;
     public static Sprite grass;
     public static Sprite bricks;
-    public static Sprite backButtonSprite;
     public static Sprite levelUpEffect;
     public static Sprite cloud;
     public static Sprite building;
-    public static Image backButton;
+    public static BufferedImage backButton;
     public static Sprite fireMonster;
     public static Sprite stone;
     public static Sprite caveWall;
@@ -79,8 +80,6 @@ public final class Images
         heart = SpriteLoader.load("icons/heart");
         grass = SpriteLoader.load("tiles/grass");
         bricks = SpriteLoader.load("tiles/bricks");
-        backButtonSprite = SpriteLoader.load("gui/back");
-        backButton = backButtonSprite.getImage().getScaledInstance(64, 64, Image.SCALE_DEFAULT);
         bird = SpriteLoader.load("bird");
         birdPoop = SpriteLoader.load("bird_poop");
         levelUpEffect = SpriteLoader.load("level_up");
@@ -93,5 +92,14 @@ public final class Images
         fly = SpriteLoader.load("fly");
         crystal = SpriteLoader.load("decorations/crystal");
         backgroundCrystal = SpriteLoader.load("decorations/background_crystal");
+
+        backButton = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
+
+        var graphics = backButton.createGraphics();
+        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        graphics.setColor(Color.BLACK);
+        graphics.fillPolygon(new int[] { 11, 11, 0 }, new int[] { 4, 20, 12 }, 3);
+        graphics.fillRect(11, 11, 12, 3);
+        graphics.dispose();
     }
 }
