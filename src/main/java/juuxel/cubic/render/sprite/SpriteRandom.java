@@ -12,7 +12,7 @@ import juuxel.cubic.event.EventHandler;
 import juuxel.cubic.util.Randomizer;
 import juuxel.cubic.util.Utils;
 
-import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -44,7 +44,7 @@ public final class SpriteRandom extends Sprite implements EventHandler<CreatureC
      * {@inheritDoc}
      */
     @Override
-    public Image getImage(Object owner)
+    public BufferedImage getImage(Object owner)
     {
         if (!spriteMap.containsKey(owner))
             addToSpriteMap(owner);

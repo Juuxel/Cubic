@@ -19,7 +19,7 @@ import java.util.Properties;
  */
 public final class SpriteLayered extends Sprite
 {
-    private final Map<Object, Image> imageMap;
+    private final Map<Object, BufferedImage> imageMap;
 
     public SpriteLayered(Properties props)
     {
@@ -28,7 +28,7 @@ public final class SpriteLayered extends Sprite
         imageMap = new HashMap<>();
     }
 
-    private Image addToMap(Object o)
+    private BufferedImage addToMap(Object o)
     {
         String[] subspriteNames = Utils.commaSplit(getTexture());
         Sprite[] subsprites = new Sprite[subspriteNames.length];
@@ -59,7 +59,7 @@ public final class SpriteLayered extends Sprite
      * {@inheritDoc}
      */
     @Override
-    public Image getImage(Object owner)
+    public BufferedImage getImage(Object owner)
     {
         return imageMap.containsKey(owner) ? imageMap.get(owner) : addToMap(owner);
     }

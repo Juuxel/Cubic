@@ -10,7 +10,7 @@ import juuxel.cubic.Cubic;
 import juuxel.cubic.creature.fx.Effect;
 import juuxel.cubic.util.Utils;
 
-import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.util.*;
 
 public final class SpriteAnimated extends Sprite
@@ -52,7 +52,7 @@ public final class SpriteAnimated extends Sprite
     }
 
     @Override
-    public Image getImage(Object owner)
+    public BufferedImage getImage(Object owner)
     {
         if (owner instanceof Effect)
         {

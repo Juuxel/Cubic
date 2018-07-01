@@ -7,6 +7,7 @@
 package juuxel.cubic.render.sprite;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.Properties;
 
 /**
@@ -40,7 +41,7 @@ public abstract class Sprite
      * @param owner the owner
      * @return the sprite image for the owner
      */
-    public abstract Image getImage(Object owner);
+    public abstract BufferedImage getImage(Object owner);
 
     /**
      * Gets the image of this sprite for this sprite object.
@@ -49,7 +50,7 @@ public abstract class Sprite
      * @return the sprite image for this object
      * @see #getImage(Object) getImage(Object)
      */
-    public Image getImage()
+    public BufferedImage getImage()
     { return getImage(this); }
 
     /**

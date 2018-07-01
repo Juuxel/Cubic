@@ -8,7 +8,6 @@ package juuxel.cubic.render.sprite;
 
 import juuxel.cubic.lib.Images;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Properties;
 
@@ -17,7 +16,7 @@ import java.util.Properties;
  */
 public final class SpriteMulti extends Sprite
 {
-    private Image image;
+    private BufferedImage image;
 
     public SpriteMulti(Properties props)
     {
@@ -44,7 +43,7 @@ public final class SpriteMulti extends Sprite
      * {@inheritDoc}
      */
     @Override
-    public Image getImage(Object owner)
+    public BufferedImage getImage(Object owner)
     {
         return image;
     }
