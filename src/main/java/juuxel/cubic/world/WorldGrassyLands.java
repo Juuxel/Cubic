@@ -71,6 +71,11 @@ public final class WorldGrassyLands extends World
 
             cloud.tick();
         }
+
+        for (int i = 0; i < GameWindow.getWidth() / 32 + 1; i++)
+        {
+            g.drawImage(Images.smallGrass.getImage(i), i * 32, (int) Utils.yOnScreen(96), 32, 32);
+        }
     }
 
     @Override
@@ -79,6 +84,12 @@ public final class WorldGrassyLands extends World
         enemyList.registerEnemy(EnemyType.NORMAL, EnemyNormal::new);
         enemyList.registerEnemy(EnemyType.NORMAL, EnemyBird::new);
         enemyList.registerEnemy(EnemyType.RARE, EnemyBouncing::new);
+    }
+
+    @Override
+    public boolean isGroundBehindDecorations()
+    {
+        return true;
     }
 
     private final class Cloud

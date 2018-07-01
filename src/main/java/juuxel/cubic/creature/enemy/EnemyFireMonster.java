@@ -7,10 +7,15 @@
 package juuxel.cubic.creature.enemy;
 
 import juuxel.cubic.Cubic;
+import juuxel.cubic.creature.Creature;
 import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.lib.Images;
 import juuxel.cubic.render.GameWindow;
+import juuxel.cubic.render.Graphics;
+import juuxel.cubic.render.sprite.Sprite;
 import juuxel.cubic.util.Direction;
+
+import java.awt.geom.AffineTransform;
 
 public final class EnemyFireMonster extends Enemy
 {
@@ -51,6 +56,7 @@ public final class EnemyFireMonster extends Enemy
     public final class Fireball extends Enemy
     {
         private final double targetY = EnemyFireMonster.this.y;
+        private int smokeDelay = 0;
 
         private Fireball()
         {
@@ -75,6 +81,14 @@ public final class EnemyFireMonster extends Enemy
                 Cubic.COLLIDING_ENEMIES.remove(this);
                 Cubic.CREATURES.remove(this);
             }
+
+            smokeDelay--;
+
+            if (smokeDelay <= 0)
+            {
+                smokeDelay = 40;
+                new Smoke(x, y);
+            }
         }
 
         @Override
@@ -89,6 +103,52 @@ public final class EnemyFireMonster extends Enemy
             Cubic.player.kill();
             Cubic.CREATURES.remove(this);
             Cubic.COLLIDING_ENEMIES.remove(this);
+        }
+    }
+
+    private static class Smoke extends Creature
+    {
+        private static final float MAX_AGE = 100f;
+
+        private float age = MAX_AGE;
+
+        private Smoke(double x, double y)
+        {
+            this.x = x;
+            this.y = y;
+            setSprite(Images.smoke);
+        }
+
+        @Override
+        protected void drawCreature(Graphics g, Sprite sprite)
+        {
+            int dx = (int) x;
+            int dy = (int) yOnScreen();
+            int width = (int) (spriteWidth * age / MAX_AGE);
+            int height = (int) (spriteHeight * age / MAX_AGE);
+
+            var transform = g.getGraphics2D().getTransform();
+            g.getGraphics2D().setTransform(
+                    AffineTransform.getRotateInstance(
+                            Math.toRadians(age / MAX_AGE * 360.0),
+                            dx, dy
+                    ));
+
+            g.drawImageWithAlpha(sprite.getImage(this),
+                                 dx - spriteWidth / 2,
+                                 dy - spriteHeight / 2,
+                                 width, height,
+                                 age / MAX_AGE * 0.85f);
+            g.getGraphics2D().setTransform(transform);
+        }
+
+        @Override
+        protected void logic()
+        {
+            age--;
+
+            if (age == 0)
+                Cubic.CREATURES.remove(this);
         }
     }
 }

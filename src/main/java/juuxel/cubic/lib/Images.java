@@ -14,6 +14,7 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public final class Images
@@ -47,6 +48,8 @@ public final class Images
     public static Sprite fly;
     public static Sprite crystal;
     public static Sprite backgroundCrystal;
+    public static Sprite smallGrass;
+    public static Sprite smoke;
 
     public static BufferedImage load(String file)
     {
@@ -54,9 +57,16 @@ public final class Images
 
         try
         {
-            image = ImageIO.read(Images.class.getResource(IMAGE_PREFIX + file));
+            var url = Images.class.getResource(IMAGE_PREFIX + file);
+
+            if (url == null)
+            {
+                throw new FileNotFoundException(String.format("Image file %s not found", file));
+            }
+
+            image = ImageIO.read(url);
         }
-        catch (IOException e)
+        catch (Exception e)
         {
             image = null;
             System.err.printf("Exception thrown while loading image '%s', setting to null%n", file);
@@ -87,11 +97,13 @@ public final class Images
         building = SpriteLoader.load("decorations/building");
         fireMonster = SpriteLoader.load("fire_monster");
         stone = SpriteLoader.load("stone");
-        caveWall = SpriteLoader.load("cave_wall");
+        caveWall = SpriteLoader.load("tiles/cave_wall");
         fireball = SpriteLoader.load("fireball");
         fly = SpriteLoader.load("fly");
         crystal = SpriteLoader.load("decorations/crystal");
         backgroundCrystal = SpriteLoader.load("decorations/background_crystal");
+        smallGrass = SpriteLoader.load("decorations/grass");
+        smoke = SpriteLoader.load("smoke");
 
         backButton = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
 

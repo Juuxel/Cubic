@@ -35,6 +35,7 @@ public final class RenderEngine
             {
                 int dx = GameWindow.getWidth() / 2, dy = GameWindow.getHeight() / 2;
                 Graphics2D g2D = g.getGraphics2D();
+                g2D.setColor(Cubic.world.getTextColor());
                 g2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
                 g2D.setFont(GameValues.FONT.deriveFont(36F));
                 g2D.drawString(Translator.translate("game.gameOver"), dx - 120, dy - 36);

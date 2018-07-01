@@ -44,15 +44,28 @@ public abstract class World
 
     /**
      * Draws this world to the {@link Graphics} object.
-     * The implementation calls {@link #drawDecoration(Graphics)} and then draws the ground.
+     * The implementation calls {@link #drawDecoration(Graphics)} and draws the ground
+     * in the order specified by {@link #isGroundBehindDecorations()}.
      * Subclasses don't need to call this.
      *
      * @param g the graphics object
      */
     public final void draw(Graphics g)
     {
-        drawDecoration(g);
+        if (isGroundBehindDecorations())
+        {
+            drawGround(g);
+            drawDecoration(g);
+        }
+        else
+        {
+            drawDecoration(g);
+            drawGround(g);
+        }
+    }
 
+    private void drawGround(Graphics g)
+    {
         for (int i = 0; i < GameWindow.getWidth() / 32 + 1; i++)
         {
             int x = i * 32, y = (int) Utils.yOnScreen(32);
@@ -157,5 +170,16 @@ public abstract class World
     public boolean isValidMenuBackground()
     {
         return true;
+    }
+
+    /**
+     * Returns true if the ground is drawn behind decorations.
+     * Controls the behavior of {@link #draw}.
+     *
+     * @return true if the ground is drawn behind decorations
+     */
+    public boolean isGroundBehindDecorations()
+    {
+        return false;
     }
 }

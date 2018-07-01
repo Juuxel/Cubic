@@ -76,7 +76,7 @@ public final class WorldCave extends World
             {
                 int x = i * 32, y = (int) Utils.yOnScreen(j * 32);
 
-                g.drawImage(Images.caveWall, x, y - 32, 32, 32);
+                g.drawImage(Images.caveWall.getImage(i * j * y), x, y - 32, 32, 32);
             }
         }
     }
