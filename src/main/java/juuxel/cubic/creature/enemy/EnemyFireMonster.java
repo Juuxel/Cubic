@@ -16,6 +16,7 @@ import juuxel.cubic.render.sprite.Sprite;
 import juuxel.cubic.util.Direction;
 
 import java.awt.geom.AffineTransform;
+import java.util.concurrent.ThreadLocalRandom;
 
 public final class EnemyFireMonster extends Enemy
 {
@@ -111,6 +112,7 @@ public final class EnemyFireMonster extends Enemy
         private static final float MAX_AGE = 100f;
 
         private float age = MAX_AGE;
+        private final float size = 0.5f + ThreadLocalRandom.current().nextFloat();
 
         private Smoke(double x, double y)
         {
@@ -124,8 +126,8 @@ public final class EnemyFireMonster extends Enemy
         {
             int dx = (int) x;
             int dy = (int) yOnScreen();
-            int width = (int) (spriteWidth * age / MAX_AGE);
-            int height = (int) (spriteHeight * age / MAX_AGE);
+            int width = (int) (spriteWidth * age / MAX_AGE * size);
+            int height = (int) (spriteHeight * age / MAX_AGE * size);
 
             var transform = g.getGraphics2D().getTransform();
             g.getGraphics2D().setTransform(
@@ -135,8 +137,8 @@ public final class EnemyFireMonster extends Enemy
                     ));
 
             g.drawImageWithAlpha(sprite.getImage(this),
-                                 dx - spriteWidth / 2,
-                                 dy - spriteHeight / 2,
+                                 dx - width / 2,
+                                 dy - height / 2,
                                  width, height,
                                  age / MAX_AGE * 0.85f);
             g.getGraphics2D().setTransform(transform);

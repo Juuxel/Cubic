@@ -43,7 +43,7 @@ public final class WorldCave extends World
 
     private Crystal createCrystal(int index)
     {
-        int size = (2 + ThreadLocalRandom.current().nextInt(4)) * 12;
+        int size = (2 + ThreadLocalRandom.current().nextInt(3)) * 12;
         int x = ThreadLocalRandom.current().nextInt(640 - size);
 
         for (int i = 0; i < index; i++)
