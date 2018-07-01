@@ -6,6 +6,7 @@
  */
 package juuxel.cubic.creature.fx;
 
+import juuxel.cubic.Cubic;
 import juuxel.cubic.render.Graphics;
 import juuxel.cubic.render.RenderEngine;
 
@@ -24,6 +25,7 @@ public final class EffectNumber extends Effect
     {
         String s = Integer.toString(number);
 
+        g.getGraphics2D().setColor(Cubic.world.getTextColor());
         RenderEngine.drawNumberString(g, s,
                                       (int) x - s.length() * 8 / 2,
                                       (int) yOnScreen(),

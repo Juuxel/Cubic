@@ -17,11 +17,11 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public final class WorldCave extends World
 {
-    private static final Color LIGHT_START = new Color(0, 255, 255, 180);
-    private static final Color LIGHT_END = new Color(0, 255, 255, 0);
+    private static final Color LIGHT_START = Color.CYAN;
+    private static final Color LIGHT_END = new Color(0, 0, 0, 0);
     private static final Color[] LIGHT_COLORS = new Color[] { LIGHT_START, LIGHT_END };
     private static final int LIGHT_RADIUS = 50;
-    private static final AlphaComposite TRANSLUCENT_COMPOSITE = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
+    private static final AlphaComposite LIGHT_COMPOSITE = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.15f);
     private static final AlphaComposite BG_CRYSTAL_COMPOSITE = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f);
 
     private final Crystal[] crystals;
@@ -34,7 +34,7 @@ public final class WorldCave extends World
         crystals = new Crystal[4 + ThreadLocalRandom.current().nextInt(3)];
 
         for (int i = 0; i < crystals.length; i++)
-            crystals[i] = createCrystal();
+            crystals[i] = createCrystal(i);
 
         backgroundCrystals = new BGCrystal[8 + ThreadLocalRandom.current().nextInt(5)];
 
@@ -42,10 +42,18 @@ public final class WorldCave extends World
             backgroundCrystals[i] = createBackgroundCrystal();
     }
 
-    private Crystal createCrystal()
+    private Crystal createCrystal(int index)
     {
         int size = (4 + ThreadLocalRandom.current().nextInt(-1, 1)) * 12;
         int x = ThreadLocalRandom.current().nextInt(640 - size);
+
+        for (int i = 0; i < index; i++)
+        {
+            var crystal = crystals[i];
+
+            if (Math.abs(crystal.x - x) < 64)
+                x = ThreadLocalRandom.current().nextInt(640 - size);
+        }
 
         return new Crystal(x, size);
     }
@@ -79,7 +87,7 @@ public final class WorldCave extends World
         {
             int y = (int) Utils.yOnScreen(64 + crystal.size);
 
-            g.getGraphics2D().setComposite(TRANSLUCENT_COMPOSITE);
+            g.getGraphics2D().setComposite(LIGHT_COMPOSITE);
             g.getGraphics2D().setPaint(new RadialGradientPaint(crystal.x, y + crystal.size / 2, LIGHT_RADIUS,
                                                                new float[] { 0f, 1f },
                                                                LIGHT_COLORS));

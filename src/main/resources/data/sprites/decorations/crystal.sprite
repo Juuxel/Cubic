@@ -1,1 +1,2 @@
-textures=decorations/crystal
+type=random
+textures=decorations/crystalA, decorations/crystalB
