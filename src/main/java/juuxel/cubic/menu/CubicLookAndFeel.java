@@ -26,11 +26,11 @@ public final class CubicLookAndFeel extends MetalLookAndFeel
 
     static
     {
-        Font f = Font.decode("Arial");
+        Font f = Font.decode("Arial 16");
 
         try
         {
-            f = Font.createFont(Font.TRUETYPE_FONT, CubicLookAndFeel.class.getResourceAsStream("/data/fonts/Pusab.otf"))
+            f = Font.createFont(Font.TRUETYPE_FONT, CubicLookAndFeel.class.getResourceAsStream("/data/fonts/Sansus Webissimo-Regular.otf"))
                     .deriveFont(16F);
         }
         catch (FontFormatException | IOException e)

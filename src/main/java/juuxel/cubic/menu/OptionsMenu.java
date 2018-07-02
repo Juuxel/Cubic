@@ -59,6 +59,7 @@ public final class OptionsMenu extends CPanel
             Translator.setLanguage(comboBox.getSelectedIndex());
             Translator.reloadStrings();
         });
+        comboBox.setFont(CubicLookAndFeel.FONT);
 
         languagePanel.add(comboBox);
 
