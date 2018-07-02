@@ -7,6 +7,7 @@
 package juuxel.cubic.world;
 
 import juuxel.cubic.creature.enemy.EnemyList;
+import juuxel.cubic.menu.CubicLookAndFeel;
 import juuxel.cubic.render.GameWindow;
 import juuxel.cubic.render.Graphics;
 import juuxel.cubic.render.RenderEngine;
@@ -159,7 +160,7 @@ public abstract class World
      */
     public Color getTextColor()
     {
-        return Color.BLACK;
+        return CubicLookAndFeel.TEXT_COLOR;
     }
 
     /**

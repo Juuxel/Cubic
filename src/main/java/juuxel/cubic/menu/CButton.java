@@ -7,7 +7,6 @@
 package juuxel.cubic.menu;
 
 import juuxel.cubic.event.EventBus;
-import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.event.LanguageChangeEvent;
 import juuxel.cubic.util.Translator;
 import juuxel.cubic.util.Utils;
@@ -21,8 +20,8 @@ import java.awt.*;
 public class CButton extends JButton
 {
     static final Color BACKGROUND = CubicLookAndFeel.PRIMARY;
-    static final Color BACKGROUND_PRESSED = Utils.withAlpha(CubicLookAndFeel.ACCENT, 0.6f);
-    static final Color BACKGROUND_HOVER = CubicLookAndFeel.ACCENT;
+    private static final Color BACKGROUND_PRESSED = Utils.withAlpha(CubicLookAndFeel.ACCENT, 0.6f);
+    private static final Color BACKGROUND_HOVER = CubicLookAndFeel.ACCENT;
 
     private String translationKey = "ui.button";
 
@@ -32,7 +31,7 @@ public class CButton extends JButton
 
         this.translationKey = translationKey;
 
-        setFont(GameValues.FONT);
+        setFont(CubicLookAndFeel.FONT);
         setContentAreaFilled(false);
         setFocusPainted(false);
         setBorder(new ButtonBorder());
@@ -42,7 +41,7 @@ public class CButton extends JButton
 
     public CButton(String label)
     {
-        this(label, Color.BLACK);
+        this(label, CubicLookAndFeel.TEXT_COLOR);
     }
 
     public CButton(Icon icon)

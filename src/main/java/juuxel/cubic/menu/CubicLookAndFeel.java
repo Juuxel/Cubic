@@ -13,11 +13,33 @@ import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 import javax.swing.plaf.metal.OceanTheme;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.io.IOException;
 
 public final class CubicLookAndFeel extends MetalLookAndFeel
 {
+    public static final Font FONT;
     static final Color PRIMARY = new Color(0xFFFFFF);
     static final Color ACCENT = new Color(0x16b7fc);
+    public static final Color TEXT_COLOR = new Color(0x222222);
+
+    static
+    {
+        Font f = Font.decode("Arial");
+
+        try
+        {
+            f = Font.createFont(Font.TRUETYPE_FONT, CubicLookAndFeel.class.getResourceAsStream("/data/fonts/Pusab.otf"))
+                    .deriveFont(16F);
+        }
+        catch (FontFormatException | IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        FONT = f;
+    }
 
     public static void init()
     {

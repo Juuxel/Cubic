@@ -8,7 +8,6 @@ package juuxel.cubic.menu;
 
 import juuxel.cubic.Cubic;
 import juuxel.cubic.world.World;
-import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.lib.Images;
 
 import javax.swing.*;
@@ -30,7 +29,7 @@ public final class WorldMenu extends CPanel
         CLabel title = new CLabel("mainMenu.selectWorld");
         CButton backButton = new CButton(new ImageIcon(Images.backButton));
 
-        title.setFont(GameValues.FONT.deriveFont(32F));
+        title.setFont(CubicLookAndFeel.FONT.deriveFont(32F));
         backButton.addActionListener(e -> Cubic.selectScreen("MainMenu"));
 
         titlePanel.add(backButton);
@@ -42,7 +41,7 @@ public final class WorldMenu extends CPanel
 
         World.WORLDS.forEach(level -> {
             CButton button = new CButton(level.getNameKey());
-            button.setFont(GameValues.FONT.deriveFont(24F));
+            button.setFont(CubicLookAndFeel.FONT.deriveFont(24F));
             button.setBackground(new Color(0x7ceeebaa));
             button.setAlignmentX(Component.CENTER_ALIGNMENT);
 

@@ -7,15 +7,12 @@
 package juuxel.cubic.menu;
 
 import juuxel.cubic.Cubic;
-import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.lib.Images;
 import juuxel.cubic.options.*;
 import juuxel.cubic.util.Translator;
 
 import javax.swing.*;
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +37,9 @@ public final class OptionsMenu extends CPanel
             Options.reloadAndWriteOptions();
         });
 
-        title.setFont(GameValues.FONT.deriveFont(32F));
+        title.setFont(CubicLookAndFeel.FONT.deriveFont(32F));
+        titlePanel.setMaximumSize(new Dimension(titlePanel.getMaximumSize().width, 40));
+        titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.X_AXIS));
 
         titlePanel.add(backButton);
         titlePanel.add(title);
@@ -53,7 +52,7 @@ public final class OptionsMenu extends CPanel
         JComboBox<String> comboBox = new JComboBox<>(Translator.getLanguageNames().toArray(new String[]{}));
 
         languageTitle.setAlignmentX(CENTER_ALIGNMENT);
-        languageTitle.setFont(GameValues.FONT.deriveFont(24F));
+        languageTitle.setFont(CubicLookAndFeel.FONT.deriveFont(24F));
         languageTitle.setIcon(new ImageIcon(Images.languageSelection));
         comboBox.setSelectedIndex(Translator.getLanguageIndex());
         comboBox.addActionListener(e -> {
@@ -69,7 +68,7 @@ public final class OptionsMenu extends CPanel
         CPanel controlsPanel = new CPanel(new GridLayout(0, 2, 10, 5));
         CLabel controlsTitle = new CLabel("options.controls");
         controlsPanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
-        controlsTitle.setFont(GameValues.FONT.deriveFont(24F));
+        controlsTitle.setFont(CubicLookAndFeel.FONT.deriveFont(24F));
         controlsTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
         controlsTitle.setIcon(new ImageIcon(Images.keyboard));
 

@@ -36,12 +36,14 @@ public final class MainMenu extends CPanel
         CButton quitButton = new CButton("mainMenu.exit");
         continueButton = new CButton("mainMenu.continue");
         CButton aboutButton = new CButton("mainMenu.about");
+        CButton newsButton = new CButton("mainMenu.news");
 
         playButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         optionsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         quitButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         continueButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         aboutButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        newsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         playButton.addActionListener(e -> Cubic.selectScreen("WorldMenu"));
         optionsButton.addActionListener(e -> Cubic.selectScreen("OptionsMenu"));
@@ -52,11 +54,13 @@ public final class MainMenu extends CPanel
             Cubic.selectScreen("Game");
             continueButton.setVisible(false);
         });
+        newsButton.addActionListener(e -> Cubic.selectScreen("NewsScreen"));
 
         playButton.setIcon(new ImageIcon(Images.playButton));
         aboutButton.setIcon(new ImageIcon(Images.aboutButton));
         optionsButton.setIcon(new ImageIcon(Images.optionsButton));
         quitButton.setIcon(new ImageIcon(Images.closeButton));
+        newsButton.setIcon(new ImageIcon(Images.newsButton));
         continueButton.setVisible(false);
 
         add(continueButton);
@@ -66,6 +70,8 @@ public final class MainMenu extends CPanel
         add(optionsButton);
         add(Box.createVerticalStrut(5));
         add(aboutButton);
+        add(Box.createVerticalStrut(5));
+        add(newsButton);
         add(Box.createVerticalStrut(5));
         add(quitButton);
         add(Box.createVerticalGlue());

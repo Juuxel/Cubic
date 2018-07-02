@@ -98,6 +98,7 @@ public final class GameWindow
             add(new OptionsMenu(), "OptionsMenu");
             add(new WorldMenu(), "WorldMenu");
             add(new AboutScreen(), "AboutScreen");
+            add(new NewsScreen(), "NewsScreen");
             add(gamePane, "Game");
             layout.show(this, "MainMenu");
             addKeyListener(new Keyboard());

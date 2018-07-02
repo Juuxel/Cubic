@@ -7,7 +7,6 @@
 package juuxel.cubic.menu;
 
 import juuxel.cubic.Cubic;
-import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.lib.Images;
 import juuxel.cubic.util.Translator;
 
@@ -32,7 +31,7 @@ public final class AboutScreen extends CPanel
         CButton backButton = new CButton(new ImageIcon(Images.backButton));
 
         titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.X_AXIS));
-        title.setFont(GameValues.FONT.deriveFont(32F));
+        title.setFont(CubicLookAndFeel.FONT.deriveFont(32F));
         backButton.addActionListener(e -> Cubic.selectScreen("MainMenu"));
 
         titlePanel.add(backButton);

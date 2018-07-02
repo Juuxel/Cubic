@@ -7,8 +7,8 @@
 package juuxel.cubic.render;
 
 import juuxel.cubic.Cubic;
-import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.lib.Images;
+import juuxel.cubic.menu.CubicLookAndFeel;
 import juuxel.cubic.util.Translator;
 
 import java.awt.*;
@@ -37,7 +37,7 @@ public final class RenderEngine
                 Graphics2D g2D = g.getGraphics2D();
                 g2D.setColor(Cubic.world.getTextColor());
                 g2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
-                g2D.setFont(GameValues.FONT.deriveFont(36F));
+                g2D.setFont(CubicLookAndFeel.FONT.deriveFont(36F));
                 g2D.drawString(Translator.translate("game.gameOver"), dx - 120, dy - 36);
 
                 Cubic.running = false;
@@ -86,7 +86,7 @@ public final class RenderEngine
         g.getGraphics2D().setRenderingHint(
                 RenderingHints.KEY_TEXT_ANTIALIASING,
                 RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        g.getGraphics2D().setFont(GameValues.FONT);
+        g.getGraphics2D().setFont(CubicLookAndFeel.FONT);
         g.getGraphics2D().drawString(s, x, y + 12);
 
         g.getGraphics2D().setComposite(AlphaComposite.SrcOver);

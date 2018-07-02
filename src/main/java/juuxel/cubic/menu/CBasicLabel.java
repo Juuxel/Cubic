@@ -6,14 +6,12 @@
  */
 package juuxel.cubic.menu;
 
-import juuxel.cubic.lib.GameValues;
-
 import javax.swing.*;
 
 public class CBasicLabel extends JLabel
 {
     {
-        setFont(GameValues.FONT);
+        setFont(CubicLookAndFeel.FONT);
     }
 
     public CBasicLabel(String text)
