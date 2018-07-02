@@ -87,14 +87,14 @@ public final class MainMenu extends CPanel
         constraints.gridwidth = 1;
         constraints.gridx = 0;
         constraints.gridy = 2;
-        buttonPanel.add(aboutButton, constraints);
+        buttonPanel.add(newsButton, constraints);
 
         constraints.gridx = GridBagConstraints.RELATIVE;
-        buttonPanel.add(newsButton, constraints);
+        buttonPanel.add(optionsButton, constraints);
 
         constraints.gridx = 0;
         constraints.gridy = 3;
-        buttonPanel.add(optionsButton, constraints);
+        buttonPanel.add(aboutButton, constraints);
 
         constraints.gridx = GridBagConstraints.RELATIVE;
         buttonPanel.add(quitButton, constraints);
