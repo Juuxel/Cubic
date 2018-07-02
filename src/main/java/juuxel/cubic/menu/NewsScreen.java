@@ -32,7 +32,7 @@ public final class NewsScreen extends CPanel
         textArea.setEditable(false);
         textArea.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        add(new CMenuHeader("news.title"), BorderLayout.NORTH);
+        add(new CMenuHeader("news.title", new ImageIcon(Images.newsButton)), BorderLayout.NORTH);
         add(textArea, BorderLayout.CENTER);
     }
 }

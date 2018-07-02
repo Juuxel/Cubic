@@ -72,7 +72,7 @@ public final class OptionsMenu extends CPanel
             }
         }
 
-        add(new CMenuHeader("mainMenu.options", e -> {
+        add(new CMenuHeader("mainMenu.options", new ImageIcon(Images.optionsButton), e -> {
             choosers.forEach(c -> c.onChange(c.binding));
             Options.selectKeyBinding(null);
             Options.reloadAndWriteOptions();

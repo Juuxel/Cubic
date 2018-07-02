@@ -7,6 +7,7 @@
 package juuxel.cubic.menu;
 
 import juuxel.cubic.Cubic;
+import juuxel.cubic.lib.Images;
 import juuxel.cubic.world.World;
 
 import javax.swing.*;
@@ -36,7 +37,7 @@ public final class WorldMenu extends CPanel
 
         panel.add(Box.createVerticalGlue());
 
-        add(new CMenuHeader("mainMenu.selectWorld"), BorderLayout.NORTH);
+        add(new CMenuHeader("mainMenu.selectWorld", new ImageIcon(Images.world)), BorderLayout.NORTH);
         add(panel, BorderLayout.CENTER);
     }
 }

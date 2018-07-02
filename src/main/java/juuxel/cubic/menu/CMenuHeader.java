@@ -14,12 +14,12 @@ import java.awt.event.ActionListener;
 
 final class CMenuHeader extends CPanel
 {
-    CMenuHeader(String title)
+    CMenuHeader(String title, Icon icon)
     {
-        this(title, null);
+        this(title, icon, null);
     }
 
-    CMenuHeader(String title, ActionListener backButtonListener)
+    CMenuHeader(String title, Icon icon, ActionListener backButtonListener)
     {
         CLabel titleLabel = new CLabel(title);
         CButton backButton = new CButton(new ImageIcon(Images.backButton));
@@ -27,6 +27,7 @@ final class CMenuHeader extends CPanel
         setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         titleLabel.setFont(CubicLookAndFeel.FONT.deriveFont(32F));
+        titleLabel.setIcon(icon);
         backButton.addActionListener(e -> Cubic.selectScreen("MainMenu"));
 
         if (backButtonListener != null)

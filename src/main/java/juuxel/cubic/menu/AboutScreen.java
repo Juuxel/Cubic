@@ -6,6 +6,7 @@
  */
 package juuxel.cubic.menu;
 
+import juuxel.cubic.lib.Images;
 import juuxel.cubic.util.Translator;
 
 import javax.swing.*;
@@ -68,7 +69,7 @@ public final class AboutScreen extends CPanel
                 BorderFactory.createLineBorder(CubicLookAndFeel.PRIMARY.darker())));
         scrollPane.setOpaque(false);
 
-        add(new CMenuHeader("about.title"), BorderLayout.NORTH);
+        add(new CMenuHeader("about.title", new ImageIcon(Images.aboutButton)), BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
     }
 }
