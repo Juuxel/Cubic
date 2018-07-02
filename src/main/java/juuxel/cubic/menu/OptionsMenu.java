@@ -52,6 +52,8 @@ public final class OptionsMenu extends CPanel
         CLabel languageTitle = new CLabel("options.language");
         JComboBox<String> comboBox = new JComboBox<>(Translator.getLanguageNames().toArray(new String[]{}));
 
+        languageTitle.setAlignmentX(CENTER_ALIGNMENT);
+        languageTitle.setFont(GameValues.FONT.deriveFont(24F));
         languageTitle.setIcon(new ImageIcon(Images.languageSelection));
         comboBox.setSelectedIndex(Translator.getLanguageIndex());
         comboBox.addActionListener(e -> {
@@ -59,9 +61,9 @@ public final class OptionsMenu extends CPanel
             Translator.reloadStrings();
         });
 
-        languagePanel.add(languageTitle);
         languagePanel.add(comboBox);
 
+        panel.add(languageTitle);
         panel.add(languagePanel);
 
         CPanel controlsPanel = new CPanel(new GridLayout(0, 2, 10, 5));

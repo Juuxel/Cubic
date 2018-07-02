@@ -74,7 +74,13 @@ public final class AboutScreen extends CPanel
             }
         });
 
+        var scrollPane = new JScrollPane(textArea);
+        scrollPane.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createEmptyBorder(20, 20, 20, 20),
+                BorderFactory.createLineBorder(CubicLookAndFeel.PRIMARY.darker())));
+        scrollPane.setOpaque(false);
+
         add(titlePanel, BorderLayout.NORTH);
-        add(new JScrollPane(textArea), BorderLayout.CENTER);
+        add(scrollPane, BorderLayout.CENTER);
     }
 }

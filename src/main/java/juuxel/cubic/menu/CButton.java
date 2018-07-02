@@ -10,29 +10,26 @@ import juuxel.cubic.event.EventBus;
 import juuxel.cubic.lib.GameValues;
 import juuxel.cubic.event.LanguageChangeEvent;
 import juuxel.cubic.util.Translator;
+import juuxel.cubic.util.Utils;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.plaf.ComponentUI;
+import javax.swing.plaf.metal.MetalButtonUI;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class CButton extends JButton
 {
-    private static final Color BACKGROUND = new Color(0xFFFFFF);
-    private static final Color BACKGROUND_PRESSED = BACKGROUND.darker();
-    private static final Color BACKGROUND_HOVER = new Color(0x16b7fc);
+    static final Color BACKGROUND = CubicLookAndFeel.PRIMARY;
+    static final Color BACKGROUND_PRESSED = Utils.withAlpha(CubicLookAndFeel.ACCENT, 0.6f);
+    static final Color BACKGROUND_HOVER = CubicLookAndFeel.ACCENT;
 
-    private final Color baseColor;
-    private Color buttonColor;
     private String translationKey = "ui.button";
 
     public CButton(String translationKey, Color color)
     {
         super(Translator.translate(translationKey));
 
-        baseColor = color;
-        buttonColor = color;
         this.translationKey = translationKey;
 
         setFont(GameValues.FONT);
@@ -40,7 +37,6 @@ public class CButton extends JButton
         setFocusPainted(false);
         setBorder(new ButtonBorder());
         setForeground(color);
-        addMouseListener(new Mouse());
         EventBus.subscribe(LanguageChangeEvent.class, e -> onLanguageChange());
     }
 
@@ -53,13 +49,9 @@ public class CButton extends JButton
     {
         super(icon);
 
-        baseColor = Color.BLACK;
-        buttonColor = Color.BLACK;
-
         setContentAreaFilled(false);
         setFocusPainted(false);
         setBorder(new ButtonBorder());
-        addMouseListener(new Mouse());
     }
 
     protected void onLanguageChange()
@@ -129,20 +121,50 @@ public class CButton extends JButton
         }
     }
 
-    private class Mouse extends MouseAdapter
+    /**
+     * A {@code ComponentUI} for drawing any {@code AbstractButton} like a {@link CButton}.
+     * This class is not used for {@code CButton}s, which already contain the drawing code.
+     */
+    public static final class UI extends MetalButtonUI
     {
-        @Override
-        public void mouseEntered(MouseEvent e)
+        @SuppressWarnings("unused")
+        public static ComponentUI createUI(JComponent c)
         {
-            buttonColor = baseColor.brighter();
-            setForeground(baseColor.brighter());
+            if (c instanceof CButton)
+                return new MetalButtonUI();
+
+            return new UI();
         }
 
         @Override
-        public void mouseExited(MouseEvent e)
+        public void update(Graphics graphics, JComponent c)
         {
-            buttonColor = baseColor;
-            setForeground(baseColor);
+            Graphics2D g = (Graphics2D) graphics.create();
+            AbstractButton b = (AbstractButton) c;
+            paintButton(g, b);
+            paint(graphics, c);
+        }
+
+        @Override
+        protected void paintButtonPressed(Graphics g, AbstractButton b)
+        {
+            paintButton((Graphics2D) g, b);
+        }
+
+        private void paintButton(Graphics2D g, AbstractButton b)
+        {
+            Color color = BACKGROUND;
+
+            if (b.getModel().isPressed())
+                color = BACKGROUND_PRESSED;
+            else if (b.getModel().isRollover())
+                color = BACKGROUND_HOVER;
+
+            g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.6f));
+            g.setPaint(new GradientPaint(new Point(0, 0), color,
+                                         new Point(0, b.getHeight()), color.darker()));
+            g.fillRect(0, 0, b.getWidth(), b.getHeight());
+            g.setComposite(AlphaComposite.SrcOver);
         }
     }
 }

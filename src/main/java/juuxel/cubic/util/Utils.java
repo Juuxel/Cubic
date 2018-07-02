@@ -8,6 +8,8 @@ package juuxel.cubic.util;
 
 import juuxel.cubic.render.GameWindow;
 
+import java.awt.Color;
+
 /**
  * {@code Utils} contains different utility methods.
  */
@@ -75,5 +77,19 @@ public final class Utils
             return max;
         else
             return n;
+    }
+
+    /**
+     * Returns the {@code color} with the same RGB values, but the alpha value is changed to {@code alpha}.
+     *
+     * @param color the color
+     * @param alpha the alpha
+     * @return a new color
+     */
+    public static Color withAlpha(Color color, float alpha)
+    {
+        float[] components = color.getRGBComponents(null);
+
+        return new Color(components[0], components[1], components[2], alpha);
     }
 }

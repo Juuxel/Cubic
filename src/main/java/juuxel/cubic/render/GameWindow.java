@@ -9,10 +9,7 @@ package juuxel.cubic.render;
 import juuxel.cubic.Cubic;
 import juuxel.cubic.lib.GameInfo;
 import juuxel.cubic.lib.Images;
-import juuxel.cubic.menu.AboutScreen;
-import juuxel.cubic.menu.MainMenu;
-import juuxel.cubic.menu.OptionsMenu;
-import juuxel.cubic.menu.WorldMenu;
+import juuxel.cubic.menu.*;
 import juuxel.cubic.options.Options;
 import juuxel.cubic.world.World;
 import juuxel.cubic.world.WorldGrassyLands;
@@ -37,6 +34,8 @@ public final class GameWindow
     {
         if (hasInit)
             throw new IllegalStateException("The game window has already been initialized");
+
+        CubicLookAndFeel.init();
 
         gamePane = new GamePane();
         windowPane = new WindowPane();
@@ -140,6 +139,7 @@ public final class GameWindow
         public void paintComponent(java.awt.Graphics g)
         {
             super.paintComponent(g);
+            // TODO Resolution code here?
             RenderEngine.repaint(Graphics.fromAWTGraphics(g));
         }
     }
