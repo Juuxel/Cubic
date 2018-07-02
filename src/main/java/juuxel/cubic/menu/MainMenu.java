@@ -76,7 +76,7 @@ public final class MainMenu extends CPanel
         constraints.insets = new Insets(7, 7, 7, 7);
         constraints.fill = GridBagConstraints.BOTH;
 
-        constraints.gridwidth = 4;
+        constraints.gridwidth = 2;
         constraints.gridx = 0;
         constraints.gridy = 0;
         buttonPanel.add(continueButton, constraints);
