@@ -12,30 +12,16 @@ import juuxel.cubic.lib.Images;
 import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
-public class NewsScreen extends CPanel
+public final class NewsScreen extends CPanel
 {
     public NewsScreen()
     {
         setLayout(new BorderLayout());
-
-        CPanel titlePanel = new CPanel();
-        CLabel title = new CLabel("news.title");
-        CButton backButton = new CButton(new ImageIcon(Images.backButton));
-
-        titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.X_AXIS));
-        titlePanel.setMaximumSize(new Dimension(titlePanel.getMaximumSize().width, 40));
-        title.setFont(CubicLookAndFeel.FONT.deriveFont(32F));
-        backButton.addActionListener(e -> Cubic.selectScreen("MainMenu"));
-
-        titlePanel.add(backButton);
-        titlePanel.add(Box.createHorizontalStrut(64));
-        titlePanel.add(title);
 
         InputStream stream = this.getClass().getResourceAsStream("/data/text/changelog.txt");
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
@@ -46,7 +32,7 @@ public class NewsScreen extends CPanel
         textArea.setEditable(false);
         textArea.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        add(titlePanel, BorderLayout.NORTH);
+        add(new CMenuHeader("news.title"), BorderLayout.NORTH);
         add(textArea, BorderLayout.CENTER);
     }
 }

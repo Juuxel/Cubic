@@ -6,8 +6,6 @@
  */
 package juuxel.cubic.menu;
 
-import juuxel.cubic.Cubic;
-import juuxel.cubic.lib.Images;
 import juuxel.cubic.util.Translator;
 
 import javax.swing.*;
@@ -25,18 +23,6 @@ public final class AboutScreen extends CPanel
     public AboutScreen()
     {
         setLayout(new BorderLayout());
-
-        CPanel titlePanel = new CPanel();
-        CLabel title = new CLabel("about.title");
-        CButton backButton = new CButton(new ImageIcon(Images.backButton));
-
-        titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.X_AXIS));
-        title.setFont(CubicLookAndFeel.FONT.deriveFont(32F));
-        backButton.addActionListener(e -> Cubic.selectScreen("MainMenu"));
-
-        titlePanel.add(backButton);
-        titlePanel.add(Box.createHorizontalStrut(64));
-        titlePanel.add(title);
 
         JTextPane textArea = new JTextPane();
 
@@ -82,7 +68,7 @@ public final class AboutScreen extends CPanel
                 BorderFactory.createLineBorder(CubicLookAndFeel.PRIMARY.darker())));
         scrollPane.setOpaque(false);
 
-        add(titlePanel, BorderLayout.NORTH);
+        add(new CMenuHeader("about.title"), BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
     }
 }

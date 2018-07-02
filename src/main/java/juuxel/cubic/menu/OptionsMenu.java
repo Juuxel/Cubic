@@ -26,24 +26,6 @@ public final class OptionsMenu extends CPanel
     {
         setLayout(new BorderLayout());
 
-        CPanel titlePanel = new CPanel();
-        CButton backButton = new CButton(new ImageIcon(Images.backButton));
-        CLabel title = new CLabel("mainMenu.options");
-
-        backButton.addActionListener(e -> {
-            Cubic.selectScreen("MainMenu");
-            choosers.forEach(c -> c.onChange(c.binding));
-            Options.selectKeyBinding(null);
-            Options.reloadAndWriteOptions();
-        });
-
-        title.setFont(CubicLookAndFeel.FONT.deriveFont(32F));
-        titlePanel.setMaximumSize(new Dimension(titlePanel.getMaximumSize().width, 40));
-        titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.X_AXIS));
-
-        titlePanel.add(backButton);
-        titlePanel.add(title);
-
         CPanel panel = new CPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
@@ -91,7 +73,11 @@ public final class OptionsMenu extends CPanel
             }
         }
 
-        add(titlePanel, BorderLayout.NORTH);
+        add(new CMenuHeader("mainMenu.options", e -> {
+            choosers.forEach(c -> c.onChange(c.binding));
+            Options.selectKeyBinding(null);
+            Options.reloadAndWriteOptions();
+        }), BorderLayout.NORTH);
         add(panel, BorderLayout.CENTER);
 
         addKeyListener(new Keyboard());

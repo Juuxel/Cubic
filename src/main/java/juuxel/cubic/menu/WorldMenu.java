@@ -8,36 +8,19 @@ package juuxel.cubic.menu;
 
 import juuxel.cubic.Cubic;
 import juuxel.cubic.world.World;
-import juuxel.cubic.lib.Images;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public final class WorldMenu extends CPanel
 {
     public WorldMenu()
     {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBorder(new EmptyBorder(10, 10, 10, 10));
+        setLayout(new BorderLayout());
+        var panel = new CPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
-        CPanel titlePanel = new CPanel();
-
-        titlePanel.setMaximumSize(new Dimension(titlePanel.getMaximumSize().width, 40));
-        titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.X_AXIS));
-
-        CLabel title = new CLabel("mainMenu.selectWorld");
-        CButton backButton = new CButton(new ImageIcon(Images.backButton));
-
-        title.setFont(CubicLookAndFeel.FONT.deriveFont(32F));
-        backButton.addActionListener(e -> Cubic.selectScreen("MainMenu"));
-
-        titlePanel.add(backButton);
-        titlePanel.add(Box.createHorizontalStrut(20));
-        titlePanel.add(title);
-
-        add(titlePanel);
-        add(Box.createVerticalGlue());
+        panel.add(Box.createVerticalGlue());
 
         World.WORLDS.forEach(level -> {
             CButton button = new CButton(level.getNameKey());
@@ -47,10 +30,13 @@ public final class WorldMenu extends CPanel
 
             button.addActionListener(e -> Cubic.newGame(level));
 
-            add(button);
-            add(Box.createVerticalStrut(10));
+            panel.add(button);
+            panel.add(Box.createVerticalStrut(10));
         });
 
-        add(Box.createVerticalGlue());
+        panel.add(Box.createVerticalGlue());
+
+        add(new CMenuHeader("mainMenu.selectWorld"), BorderLayout.NORTH);
+        add(panel, BorderLayout.CENTER);
     }
 }
