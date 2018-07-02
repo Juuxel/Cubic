@@ -48,10 +48,10 @@ public final class Images
     public static Sprite backgroundCrystal;
     public static Sprite smallGrass;
     public static Sprite smoke;
-    public static BufferedImage playButton;
-    public static BufferedImage optionsButton;
-    public static BufferedImage aboutButton;
-    public static BufferedImage closeButton;
+    public static Image playButton;
+    public static Image optionsButton;
+    public static Image aboutButton;
+    public static Image closeButton;
     public static Image languageSelection;
     public static Image keyboard;
     public static Image camera;
@@ -113,14 +113,14 @@ public final class Images
         backgroundCrystal = SpriteLoader.load("decorations/background_crystal");
         smallGrass = SpriteLoader.load("decorations/grass");
         smoke = SpriteLoader.load("smoke");
-        playButton = SpriteLoader.load("gui/play_button").getImage();
-        optionsButton = SpriteLoader.load("gui/options_button").getImage();
-        aboutButton = SpriteLoader.load("gui/about_button").getImage();
-        closeButton = SpriteLoader.load("gui/close_button").getImage();
+        playButton = SpriteLoader.load("gui/play_button").getImage().getScaledInstance(32, 32, Image.SCALE_FAST);
+        optionsButton = SpriteLoader.load("gui/options_button").getImage().getScaledInstance(32, 32, Image.SCALE_FAST);
+        aboutButton = SpriteLoader.load("gui/about_button").getImage().getScaledInstance(32, 32, Image.SCALE_FAST);
+        closeButton = SpriteLoader.load("gui/close_button").getImage().getScaledInstance(32, 32, Image.SCALE_FAST);
         languageSelection = SpriteLoader.load("gui/language").getImage().getScaledInstance(32, 32, Image.SCALE_FAST);
         keyboard = SpriteLoader.load("gui/keyboard").getImage().getScaledInstance(32, 32, Image.SCALE_FAST);
         camera = SpriteLoader.load("gui/camera").getImage().getScaledInstance(32, 32, Image.SCALE_FAST);
-        newsButton = SpriteLoader.load("gui/news").getImage().getScaledInstance(24, 24, Image.SCALE_FAST);
+        newsButton = SpriteLoader.load("gui/news").getImage().getScaledInstance(32, 32, Image.SCALE_FAST);
 
         backButton = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
 

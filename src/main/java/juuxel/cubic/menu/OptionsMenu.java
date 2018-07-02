@@ -6,7 +6,6 @@
  */
 package juuxel.cubic.menu;
 
-import juuxel.cubic.Cubic;
 import juuxel.cubic.lib.Images;
 import juuxel.cubic.options.*;
 import juuxel.cubic.util.Translator;

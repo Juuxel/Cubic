@@ -12,8 +12,7 @@ import juuxel.cubic.lib.Images;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.Component;
-import java.awt.Image;
+import java.awt.*;
 
 public final class MainMenu extends CPanel
 {
@@ -26,9 +25,15 @@ public final class MainMenu extends CPanel
 
         add(Box.createVerticalStrut(20));
 
-        add(new CBasicLabel(new ImageIcon(Images.LOGO.getScaledInstance(128, 64, Image.SCALE_FAST))));
+        var logoLabel = new CBasicLabel(new ImageIcon(Images.LOGO.getScaledInstance(128, 64, Image.SCALE_FAST)));
+        var versionLabel = new CLabel("mainMenu.version", GameInfo.VERSION);
+
+        logoLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        versionLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        add(logoLabel);
         add(Box.createVerticalStrut(5));
-        add(new CLabel("mainMenu.version", GameInfo.VERSION));
+        add(versionLabel);
         add(Box.createVerticalGlue());
 
         CButton playButton = new CButton("mainMenu.play");
@@ -63,17 +68,38 @@ public final class MainMenu extends CPanel
         newsButton.setIcon(new ImageIcon(Images.newsButton));
         continueButton.setVisible(false);
 
-        add(continueButton);
-        add(Box.createVerticalStrut(5));
-        add(playButton);
-        add(Box.createVerticalStrut(5));
-        add(optionsButton);
-        add(Box.createVerticalStrut(5));
-        add(aboutButton);
-        add(Box.createVerticalStrut(5));
-        add(newsButton);
-        add(Box.createVerticalStrut(5));
-        add(quitButton);
+        var buttonPanel = new CPanel();
+        buttonPanel.setLayout(new GridBagLayout());
+        buttonPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        var constraints = new GridBagConstraints();
+
+        constraints.insets = new Insets(7, 7, 7, 7);
+        constraints.fill = GridBagConstraints.BOTH;
+
+        constraints.gridwidth = 4;
+        constraints.gridx = 0;
+        constraints.gridy = 0;
+        buttonPanel.add(continueButton, constraints);
+
+        constraints.gridy = 1;
+        buttonPanel.add(playButton, constraints);
+
+        constraints.gridwidth = 1;
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        buttonPanel.add(aboutButton, constraints);
+
+        constraints.gridx = GridBagConstraints.RELATIVE;
+        buttonPanel.add(newsButton, constraints);
+
+        constraints.gridx = 0;
+        constraints.gridy = 3;
+        buttonPanel.add(optionsButton, constraints);
+
+        constraints.gridx = GridBagConstraints.RELATIVE;
+        buttonPanel.add(quitButton, constraints);
+
+        add(buttonPanel);
         add(Box.createVerticalGlue());
     }
 }

@@ -140,7 +140,6 @@ public final class GameWindow
         public void paintComponent(java.awt.Graphics g)
         {
             super.paintComponent(g);
-            // TODO Resolution code here?
             RenderEngine.repaint(Graphics.fromAWTGraphics(g));
         }
     }
