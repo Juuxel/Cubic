@@ -6,6 +6,7 @@
  */
 package juuxel.cubic.options;
 
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,6 +22,7 @@ public final class Option<T>
     private final String name;
     private T value;
     private final List<ChangeListener<T>> listeners = new ArrayList<>();
+    private final Image icon;
 
     /**
      * {@code true} if this option is a keyboard key and changeable in the option menu.
@@ -33,11 +35,11 @@ public final class Option<T>
      *
      * @param name the name
      * @param defaultValue the initial value
-     * @see Option#Option(String, Object, boolean)
+     * @see Option#Option(String, Object, boolean, Image)
      */
     Option(String name, T defaultValue)
     {
-        this(name, defaultValue, false);
+        this(name, defaultValue, false, null);
     }
 
     /**
@@ -46,13 +48,15 @@ public final class Option<T>
      * @param name the option name
      * @param defaultValue the initial value
      * @param isKey {@code true} this option is a keyboard key
+     * @param icon the icon, {@code null} if none
      * @throws IllegalArgumentException if {@code isKey} is true and {@code defaultValue} is not an {@code Integer}
      */
-    Option(String name, T defaultValue, boolean isKey)
+    Option(String name, T defaultValue, boolean isKey, Image icon)
     {
         this.name = name;
         this.value = defaultValue;
         this.isKey = isKey;
+        this.icon = icon;
 
         if (isKey && !(defaultValue instanceof Integer))
             throw new IllegalArgumentException("Key bindings must be instances of Option<Integer>");
@@ -87,6 +91,15 @@ public final class Option<T>
     {
         this.value = value;
         listeners.forEach(l -> l.onChange(this));
+    }
+
+    /**
+     * Gets the option icon, which may be {@code null}.
+     * @return the icon
+     */
+    public Image getIcon()
+    {
+        return icon;
     }
 
     /**

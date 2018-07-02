@@ -35,22 +35,34 @@ public final class SpriteLoader
     /**
      * Gets a Sprite from the classpath using the sprite file's <code>function</code> property.
      * The location this method looks for is <code>"/data/sprites/" + sprite + ".sprite"</code>
-     * If no type matching the property is found, returns null.
+     * If no type matching the property is found, throws an exception.
      *
      * If the sprite file is not found, tries to construct a Sprite from the {@code sprite} parameter.
      * This method looks for an image file in the {@code /data/images} directory. If one is found, returns
      * a new Sprite.
      *
      * @param sprite the sprite name
-     * @return the sprite, or null if type not found
+     * @return the sprite
      */
     public static Sprite load(String sprite)
     {
         try
         {
             Properties props = new Properties();
+            String path = "/data/sprites/" + sprite + ".sprite";
 
-            props.load(SpriteLoader.class.getResourceAsStream("/data/sprites/" + sprite + ".sprite"));
+            if (SpriteLoader.class.getResource(path) == null)
+            {
+                // Try to construct the missing sprite from the texture
+
+                Properties p = new Properties();
+                p.setProperty("type", "default");
+                p.setProperty("textures", sprite);
+
+                return new SpriteDefault(p);
+            }
+
+            props.load(SpriteLoader.class.getResourceAsStream(path));
 
             String type = props.getProperty("type");
 
@@ -65,29 +77,12 @@ public final class SpriteLoader
                 }
             }
 
-            System.err.printf("Invalid type '%s' in sprite %s. %n", type, sprite);
+            throw new IllegalArgumentException(String.format("Invalid type '%s' in sprite %s. %n", type, sprite));
         }
         catch (IOException e)
         {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        catch (Exception e)
-        {
-            // Try to construct the missing sprite from the texture
-
-            Properties p = new Properties();
-            p.setProperty("type", "default");
-            p.setProperty("textures", sprite);
-
-            Sprite s = new SpriteDefault(p);
-
-            if (s.getImage() == null)
-                e.printStackTrace();
-            else
-                return s;
-        }
-
-        return null;
     }
 
     /**

@@ -19,9 +19,9 @@ import java.awt.event.MouseEvent;
 
 public class CButton extends JButton
 {
-    private static final Color BACKGROUND = new Color(0x16b7fc);
+    private static final Color BACKGROUND = new Color(0xFFFFFF);
     private static final Color BACKGROUND_PRESSED = BACKGROUND.darker();
-    private static final Color BACKGROUND_HOVER = BACKGROUND.brighter();
+    private static final Color BACKGROUND_HOVER = new Color(0x16b7fc);
 
     private final Color baseColor;
     private Color buttonColor;
@@ -72,20 +72,24 @@ public class CButton extends JButton
     {
         Graphics2D g = (Graphics2D) graphics.create();
 
-        Color color = BACKGROUND;
-
-        if (getModel().isPressed())
-            color = BACKGROUND_PRESSED;
-        else if (getModel().isRollover())
-            color = BACKGROUND_HOVER;
-
-        g.setPaint(new GradientPaint(new Point(0, 0), new Color(0, 0, 0, 0),
-                                     new Point(0, getHeight()), color));
-        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5F));
-        g.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
+        Color color = getBackgroundColor();
+        g.setPaint(new GradientPaint(new Point(0, 0), color,
+                                     new Point(0, getHeight()), color.darker()));
+        g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.6f));
+        g.fillRect(0, 0, getWidth(), getHeight());
         g.dispose();
 
         super.paintComponent(graphics);
+    }
+
+    private Color getBackgroundColor()
+    {
+        if (getModel().isPressed())
+            return BACKGROUND_PRESSED;
+        else if (getModel().isRollover())
+            return BACKGROUND_HOVER;
+        else
+            return BACKGROUND;
     }
 
     public static class Basic extends CButton
@@ -108,8 +112,8 @@ public class CButton extends JButton
         @Override
         public void paintBorder(Component c, Graphics g, int x, int y, int width, int height)
         {
-            g.setColor(buttonColor);
-            g.drawRoundRect(x, y, width - 1, height - 1, 5, 5);
+            g.setColor(getBackgroundColor().darker());
+            g.drawRect(x, y, width - 1, height - 1);
         }
 
         @Override

@@ -6,16 +6,14 @@
  */
 package juuxel.cubic.lib;
 
+import juuxel.cubic.render.Graphics;
 import juuxel.cubic.render.sprite.Sprite;
 import juuxel.cubic.render.sprite.SpriteLoader;
 
 import javax.imageio.ImageIO;
-import java.awt.Color;
-import java.awt.Image;
-import java.awt.RenderingHints;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 public final class Images
 {
@@ -50,6 +48,16 @@ public final class Images
     public static Sprite backgroundCrystal;
     public static Sprite smallGrass;
     public static Sprite smoke;
+    public static BufferedImage playButton;
+    public static BufferedImage optionsButton;
+    public static BufferedImage aboutButton;
+    public static BufferedImage closeButton;
+    public static Image languageSelection;
+    public static Image keyboard;
+    public static Image camera;
+    public static BufferedImage jump;
+    public static BufferedImage moveLeft;
+    public static BufferedImage moveRight;
 
     public static BufferedImage load(String file)
     {
@@ -96,7 +104,7 @@ public final class Images
         cloud = SpriteLoader.load("decorations/cloud");
         building = SpriteLoader.load("decorations/building");
         fireMonster = SpriteLoader.load("fire_monster");
-        stone = SpriteLoader.load("stone");
+        stone = SpriteLoader.load("tiles/stone");
         caveWall = SpriteLoader.load("tiles/cave_wall");
         fireball = SpriteLoader.load("fireball");
         fly = SpriteLoader.load("fly");
@@ -104,6 +112,13 @@ public final class Images
         backgroundCrystal = SpriteLoader.load("decorations/background_crystal");
         smallGrass = SpriteLoader.load("decorations/grass");
         smoke = SpriteLoader.load("smoke");
+        playButton = SpriteLoader.load("gui/play_button").getImage();
+        optionsButton = SpriteLoader.load("gui/options_button").getImage();
+        aboutButton = SpriteLoader.load("gui/about_button").getImage();
+        closeButton = SpriteLoader.load("gui/close_button").getImage();
+        languageSelection = SpriteLoader.load("gui/language").getImage().getScaledInstance(32, 32, Image.SCALE_FAST);
+        keyboard = SpriteLoader.load("gui/keyboard").getImage().getScaledInstance(32, 32, Image.SCALE_FAST);
+        camera = SpriteLoader.load("gui/camera").getImage().getScaledInstance(32, 32, Image.SCALE_FAST);
 
         backButton = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
 
@@ -112,6 +127,34 @@ public final class Images
         graphics.setColor(Color.BLACK);
         graphics.fillPolygon(new int[] { 11, 11, 0 }, new int[] { 4, 20, 12 }, 3);
         graphics.fillRect(11, 11, 12, 3);
+        graphics.dispose();
+
+        moveLeft = backButton;
+        moveRight = new BufferedImage(moveLeft.getWidth(), moveLeft.getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+        var g = Graphics.fromGraphics2D(moveRight.createGraphics());
+        g.drawFlippedImage(moveLeft, 0, 0, 25, 25);
+        g.getGraphics2D().dispose();
+
+        jump = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
+        graphics = jump.createGraphics();
+
+        graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        graphics.setColor(Color.BLACK);
+
+        // The line
+        graphics.setStroke(new BasicStroke(3));
+        graphics.drawOval(5, 12, 25, 25);
+
+        // Clear away excess
+        graphics.setComposite(AlphaComposite.Clear);
+        graphics.setColor(new Color(0, 0, 0, 0));
+        graphics.fillRect(22, 8, 4, 10);
+        graphics.setColor(Color.BLACK);
+        graphics.setComposite(AlphaComposite.SrcOver);
+
+        // The triangle
+        graphics.fillPolygon(new int[] { 16, 16, 25 }, new int[] { 5, 21, 12 }, 3);
         graphics.dispose();
     }
 }

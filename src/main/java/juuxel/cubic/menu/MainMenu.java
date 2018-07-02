@@ -53,6 +53,10 @@ public final class MainMenu extends CPanel
             continueButton.setVisible(false);
         });
 
+        playButton.setIcon(new ImageIcon(Images.playButton));
+        aboutButton.setIcon(new ImageIcon(Images.aboutButton));
+        optionsButton.setIcon(new ImageIcon(Images.optionsButton));
+        quitButton.setIcon(new ImageIcon(Images.closeButton));
         continueButton.setVisible(false);
 
         add(continueButton);

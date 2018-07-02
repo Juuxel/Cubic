@@ -6,6 +6,7 @@
  */
 package juuxel.cubic.options;
 
+import juuxel.cubic.lib.Images;
 import juuxel.cubic.util.Translator;
 
 import java.awt.event.KeyEvent;
@@ -20,10 +21,14 @@ import static java.awt.event.KeyEvent.*;
 
 public final class Options
 {
-    public static final Option<Integer> moveLeft       = new Option<>("controls.moveLeft", VK_A, true);
-    public static final Option<Integer> moveRight      = new Option<>("controls.moveRight", VK_D, true);
-    public static final Option<Integer> jump           = new Option<>("controls.jump", VK_SPACE, true);
-    public static final Option<Integer> takeScreenshot = new Option<>("controls.takeScreenshot", VK_F12, true);
+    // Key bindings
+    public static final Option<Integer> moveLeft       = new Option<>("controls.moveLeft", VK_A, true, Images.moveLeft);
+    public static final Option<Integer> moveRight      = new Option<>("controls.moveRight", VK_D, true, Images.moveRight);
+    public static final Option<Integer> jump           = new Option<>("controls.jump", VK_SPACE, true, Images.jump);
+    public static final Option<Integer> takeScreenshot = new Option<>("controls.takeScreenshot", VK_F12, true,
+                                                                      Images.camera);
+
+    // Other options
     public static final Option<Boolean> captureFrame   = new Option<>("captureFrame", false);
     public static final Option<Integer> fps            = new Option<>("fps", 60);
 

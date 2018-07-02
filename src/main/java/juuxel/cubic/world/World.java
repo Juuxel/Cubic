@@ -70,7 +70,7 @@ public abstract class World
         {
             int x = i * 32, y = (int) Utils.yOnScreen(32);
 
-            g.drawImage(ground, x, y - 32, 32, 32);
+            g.drawImage(ground.getImage(i), x, y - 32, 32, 32);
         }
     }
 

@@ -49,16 +49,17 @@ public final class OptionsMenu extends CPanel
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
         CPanel languagePanel = new CPanel();
+        CLabel languageTitle = new CLabel("options.language");
         JComboBox<String> comboBox = new JComboBox<>(Translator.getLanguageNames().toArray(new String[]{}));
 
+        languageTitle.setIcon(new ImageIcon(Images.languageSelection));
         comboBox.setSelectedIndex(Translator.getLanguageIndex());
-
         comboBox.addActionListener(e -> {
             Translator.setLanguage(comboBox.getSelectedIndex());
             Translator.reloadStrings();
         });
 
-        languagePanel.add(new CLabel("options.language"));
+        languagePanel.add(languageTitle);
         languagePanel.add(comboBox);
 
         panel.add(languagePanel);
@@ -68,6 +69,7 @@ public final class OptionsMenu extends CPanel
         controlsPanel.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
         controlsTitle.setFont(GameValues.FONT.deriveFont(24F));
         controlsTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+        controlsTitle.setIcon(new ImageIcon(Images.keyboard));
 
         panel.add(controlsTitle);
         panel.add(controlsPanel);
@@ -77,8 +79,12 @@ public final class OptionsMenu extends CPanel
             if (option.isKey)
             {
                 var binding = (Option<Integer>) option;
+                var label = new CLabel(binding.getName());
 
-                controlsPanel.add(new CLabel(binding.getName()));
+                if (binding.getIcon() != null)
+                    label.setIcon(new ImageIcon(binding.getIcon()));
+
+                controlsPanel.add(label);
                 controlsPanel.add(new KeyChooser(binding));
             }
         }

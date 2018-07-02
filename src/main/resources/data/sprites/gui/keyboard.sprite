@@ -1,0 +1,5 @@
+type=multi
+size=16
+textures=gui_buttons
+xPos=1
+yPos=0
