@@ -23,8 +23,6 @@ public final class MainMenu extends CPanel
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(new EmptyBorder(10, 10, 10, 10));
 
-        add(Box.createVerticalStrut(20));
-
         var logoLabel = new CBasicLabel(new ImageIcon(Images.LOGO.getScaledInstance(128, 64, Image.SCALE_FAST)));
         var versionLabel = new CLabel("mainMenu.version", GameInfo.VERSION);
 
