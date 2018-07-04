@@ -9,6 +9,7 @@ package juuxel.cubic.menu;
 import juuxel.cubic.Cubic;
 import juuxel.cubic.lib.GameInfo;
 import juuxel.cubic.lib.Images;
+import juuxel.cubic.util.Sounds;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -65,6 +66,7 @@ public final class MainMenu extends CPanel
         quitButton.setIcon(new ImageIcon(Images.closeButton));
         newsButton.setIcon(new ImageIcon(Images.newsButton));
         continueButton.setVisible(false);
+        continueButton.setSound(Sounds.UI_BACK);
 
         var buttonPanel = new CPanel();
         buttonPanel.setLayout(new GridBagLayout());

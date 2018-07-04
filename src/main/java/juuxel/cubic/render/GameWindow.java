@@ -11,9 +11,11 @@ import juuxel.cubic.lib.GameInfo;
 import juuxel.cubic.lib.Images;
 import juuxel.cubic.menu.*;
 import juuxel.cubic.options.Options;
+import juuxel.cubic.util.Sounds;
 import juuxel.cubic.world.World;
 import juuxel.cubic.world.WorldGrassyLands;
 
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.CardLayout;
 import java.awt.event.KeyAdapter;
@@ -44,6 +46,7 @@ public final class GameWindow
         SwingUtilities.invokeLater(() -> {
             frame.setVisible(true);
             gamePane.requestFocusInWindow();
+            Sounds.MAIN_LOOP.loop(Clip.LOOP_CONTINUOUSLY);
         });
 
         hasInit = true;

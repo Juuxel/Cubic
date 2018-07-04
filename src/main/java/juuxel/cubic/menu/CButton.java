@@ -8,22 +8,29 @@ package juuxel.cubic.menu;
 
 import juuxel.cubic.event.EventBus;
 import juuxel.cubic.event.LanguageChangeEvent;
+import juuxel.cubic.util.Sounds;
 import juuxel.cubic.util.Translator;
 import juuxel.cubic.util.Utils;
 
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineEvent;
+import javax.sound.sampled.LineListener;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.ComponentUI;
 import javax.swing.plaf.metal.MetalButtonUI;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class CButton extends JButton
+public class CButton extends JButton implements ActionListener
 {
     static final Color BACKGROUND = CubicLookAndFeel.PRIMARY;
     private static final Color BACKGROUND_PRESSED = Utils.withAlpha(CubicLookAndFeel.ACCENT, 0.6f);
     private static final Color BACKGROUND_HOVER = CubicLookAndFeel.ACCENT;
 
     private String translationKey = "ui.button";
+    private Clip sound = Sounds.UI_CLICK;
 
     public CButton(String translationKey, Color color)
     {
@@ -37,6 +44,7 @@ public class CButton extends JButton
         setBorder(new ButtonBorder());
         setForeground(color);
         EventBus.subscribe(LanguageChangeEvent.class, e -> onLanguageChange());
+        addActionListener(this);
     }
 
     public CButton(String label)
@@ -51,6 +59,7 @@ public class CButton extends JButton
         setContentAreaFilled(false);
         setFocusPainted(false);
         setBorder(new ButtonBorder());
+        addActionListener(this);
     }
 
     protected void onLanguageChange()
@@ -81,6 +90,17 @@ public class CButton extends JButton
             return BACKGROUND_HOVER;
         else
             return BACKGROUND;
+    }
+
+    public void setSound(Clip sound)
+    {
+        this.sound = sound;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+        sound.start();
     }
 
     public static class Basic extends CButton

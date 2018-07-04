@@ -15,9 +15,11 @@ import juuxel.cubic.mod.ModLoader;
 import juuxel.cubic.options.Options;
 import juuxel.cubic.render.GameWindow;
 import juuxel.cubic.render.sprite.SpriteLoader;
+import juuxel.cubic.util.Sounds;
 import juuxel.cubic.util.Translator;
 import juuxel.cubic.world.World;
 
+import javax.sound.sampled.Clip;
 import java.awt.CardLayout;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -119,6 +121,11 @@ public final class Cubic
         CardLayout layout = GameWindow.getWindowPane().getLayout();
 
         layout.show(GameWindow.getWindowPane(), screen);
+
+        if (screen.equals("Game"))
+            Sounds.MAIN_LOOP.stop();
+        else if (!Sounds.MAIN_LOOP.isRunning())
+            Sounds.MAIN_LOOP.loop(Clip.LOOP_CONTINUOUSLY);
     }
 
     public static int getTick()

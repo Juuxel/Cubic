@@ -1,0 +1,2 @@
+ui_*.wav: Made by paep3nguin (https://freesound.org/people/paep3nguin/)
+main_loop.wav: "Happy 8bit Loop 01" by Tristan Lohengrin : https://www.tristanlohengrin.fr/

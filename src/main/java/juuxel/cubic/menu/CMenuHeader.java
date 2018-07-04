@@ -8,6 +8,7 @@ package juuxel.cubic.menu;
 
 import juuxel.cubic.Cubic;
 import juuxel.cubic.lib.Images;
+import juuxel.cubic.util.Sounds;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
@@ -28,6 +29,7 @@ final class CMenuHeader extends CPanel
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         titleLabel.setFont(CubicLookAndFeel.FONT.deriveFont(32F));
         titleLabel.setIcon(icon);
+        backButton.setSound(Sounds.UI_BACK);
         backButton.addActionListener(e -> Cubic.selectScreen("MainMenu"));
 
         if (backButtonListener != null)
