@@ -6,5 +6,5 @@ grassy_lands_loop.wav: "Little, happy tune - 22.10.2015" by https://freesound.or
 enemy_killed.wav: "jump2.wav" by https://freesound.org/people/LloydEvans09
 player_killed.wav: "Hit_03.wav" by https://freesound.org/people/LittleRobotSoundFactory
 fireball.wav: "Fireball Explosion.wav" by https://freesound.org/people/HighPixel
-crystal_cave_loop.wav: "Organ Ambience, Calm, A.wav" by https://freesound.org/people/InspectorJ
+crystal_cave_loop.wav: "clinthammermusic-gamerstep-chords-2" by https://freesound.org/people/Clinthammer
 game_over.wav: "Jingle_Lose_00.wav" by https://freesound.org/people/LittleRobotSoundFactory
