@@ -18,8 +18,11 @@ import juuxel.cubic.render.Graphics;
 import juuxel.cubic.util.Direction;
 import juuxel.cubic.util.Sounds;
 
+import java.awt.AlphaComposite;
+
 public final class Player extends Creature
 {
+    private static final int MAX_INVINCIBLE_TIME = 200;
     private int invincibleTime = 0;
     private boolean jumpPressed = false;
     private boolean jumpWasPressed = false;
@@ -42,8 +45,16 @@ public final class Player extends Creature
     @Override
     public void draw(Graphics g)
     {
-        if (invincibleTime % 2 == 0)
-            drawCreature(g, getSprite());
+        if (invincibleTime > 0)
+        {
+            float alpha = 1.0f - ((float) invincibleTime) / ((float) MAX_INVINCIBLE_TIME);
+            g.getGraphics2D().setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+        }
+
+        drawCreature(g, getSprite());
+
+        if (invincibleTime > 0)
+            g.getGraphics2D().setComposite(AlphaComposite.SrcOver);
     }
 
     @Override
@@ -111,8 +122,15 @@ public final class Player extends Creature
         deaths++;
         lives--;
         new EffectDeath(x, y);
-        invincibleTime = 200;
-        Sounds.PLAYER_KILLED.start();
+        invincibleTime = MAX_INVINCIBLE_TIME;
+
+        if (lives > 0)
+            Sounds.PLAYER_KILLED.start();
+        else
+        {
+            Cubic.world.getMusicLoop().stop();
+            Sounds.GAME_OVER.start();
+        }
     }
 
     public void levelUp()

@@ -28,7 +28,7 @@ public final class Cubic
 {
     public static Player player;
     public static World world;
-    public static boolean inStartScreen = true, running = true, moveKeyDown, jumpKeyDown;
+    public static boolean inStartScreen = true, moveKeyDown, jumpKeyDown;
     public static final List<Creature> CREATURES = new CopyOnWriteArrayList<>();
     public static final List<Enemy> ENEMIES = new CopyOnWriteArrayList<>();
     public static final List<Enemy> COLLIDING_ENEMIES = new CopyOnWriteArrayList<>();
@@ -126,7 +126,9 @@ public final class Cubic
         if (screen.equals("Game"))
         {
             Sounds.MAIN_LOOP.stop();
-            world.getMusicLoop().loop(Clip.LOOP_CONTINUOUSLY);
+
+            if (player.lives > 0)
+                world.getMusicLoop().loop(Clip.LOOP_CONTINUOUSLY);
         }
         else if (!Sounds.MAIN_LOOP.isRunning())
         {

@@ -39,8 +39,6 @@ public final class RenderEngine
                 g2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
                 g2D.setFont(CubicLookAndFeel.FONT.deriveFont(36F));
                 g2D.drawString(Translator.translate("game.gameOver"), dx - 120, dy - 36);
-
-                Cubic.running = false;
             }
         }
     }
