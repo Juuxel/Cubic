@@ -10,8 +10,10 @@ import juuxel.cubic.creature.enemy.*;
 import juuxel.cubic.lib.Images;
 import juuxel.cubic.render.GameWindow;
 import juuxel.cubic.render.Graphics;
+import juuxel.cubic.util.Sounds;
 import juuxel.cubic.util.Utils;
 
+import javax.sound.sampled.Clip;
 import java.awt.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -140,6 +142,12 @@ public final class WorldCave extends World
     public Color getTextColor()
     {
         return Color.WHITE;
+    }
+
+    @Override
+    public Clip getMusicLoop()
+    {
+        return Sounds.CRYSTAL_CAVE_LOOP;
     }
 
     private static final class Crystal

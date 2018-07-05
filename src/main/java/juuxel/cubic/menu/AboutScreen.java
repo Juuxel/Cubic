@@ -43,25 +43,42 @@ public final class AboutScreen extends CPanel
                     "See: https://creativecommons.org/licenses/by/3.0/\n\n", null);
             doc.insertString(0, "Copyright \u00a92016-2018 Juuxel\n\n", attributes);
             doc.insertString(0, Translator.translate("about.text") + "\n\n", attributes);
+            doc.insertString(doc.getLength(), "Sounds\n", attributes);
+
+            InputStream soundStream = this.getClass().getResourceAsStream("/data/text/sounds.txt");
+            BufferedReader soundReader = new BufferedReader(new InputStreamReader(soundStream));
+
+            soundReader.lines().forEach(s -> {
+                try
+                {
+                    doc.insertString(doc.getLength(), s + '\n', null);
+                }
+                catch (BadLocationException e)
+                {
+                    e.printStackTrace();
+                }
+            });
+
+            InputStream licenseStream = this.getClass().getResourceAsStream("/data/text/LICENSE");
+            BufferedReader licenseReader = new BufferedReader(new InputStreamReader(licenseStream));
+
+            doc.insertString(doc.getLength(), "\nLicense\n", attributes);
+
+            licenseReader.lines().forEach(s -> {
+                try
+                {
+                    doc.insertString(doc.getLength(), s + '\n', null);
+                }
+                catch (BadLocationException e)
+                {
+                    e.printStackTrace();
+                }
+            });
         }
         catch (BadLocationException e)
         {
             e.printStackTrace();
         }
-
-        InputStream stream = this.getClass().getResourceAsStream("/data/text/LICENSE");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-
-        reader.lines().forEach(s -> {
-            try
-            {
-                doc.insertString(doc.getLength(), s + '\n', null);
-            }
-            catch (BadLocationException e)
-            {
-                e.printStackTrace();
-            }
-        });
 
         var scrollPane = new JScrollPane(textArea);
         scrollPane.setBorder(BorderFactory.createCompoundBorder(

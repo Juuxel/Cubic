@@ -24,6 +24,7 @@ public final class Sounds
     public static final Clip ENEMY_KILLED = load("enemy_killed");
     public static final Clip PLAYER_KILLED = load("player_killed");
     public static final Clip FIREBALL = load("fireball");
+    public static final Clip CRYSTAL_CAVE_LOOP = load("crystal_cave_loop");
     public static float minVolume;
     public static float maxVolume;
     private static float volume = 0;

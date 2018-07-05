@@ -49,7 +49,6 @@ public final class OptionsMenu extends CPanel
         panel.add(languageTitle);
         panel.add(languagePanel);
 
-        // TODO Add volume as a saved option
         var volumePanel = new CPanel();
         var volumeTitle = new CLabel("options.volume");
         volumeTitle.setAlignmentX(CENTER_ALIGNMENT);

@@ -125,7 +125,7 @@ public final class Cubic
         if (screen.equals("Game"))
         {
             Sounds.MAIN_LOOP.stop();
-            world.getMusicLoop().start();
+            world.getMusicLoop().loop(Clip.LOOP_CONTINUOUSLY);
         }
         else if (!Sounds.MAIN_LOOP.isRunning())
         {
