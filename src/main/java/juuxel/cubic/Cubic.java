@@ -79,6 +79,7 @@ public final class Cubic
             public void run()
             {
                 GameWindow.repaint();
+                world.tick();
                 tick = (tick + 1) % 60;
             }
         }, 0L, 1000L / (long) Options.fps.getValue());

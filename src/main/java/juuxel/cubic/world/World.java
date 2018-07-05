@@ -195,4 +195,10 @@ public abstract class World
     {
         return false;
     }
+
+    /**
+     * This method is run on each drawing frame, after painting.
+     */
+    public void tick()
+    {}
 }

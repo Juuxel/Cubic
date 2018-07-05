@@ -68,14 +68,19 @@ public final class WorldGrassyLands extends World
                                  80 * cloud.size,
                                  40 * cloud.size,
                                  cloud.baseAlpha * cloud.lifeAlpha);
-
-            cloud.tick();
         }
 
         for (int i = 0; i < GameWindow.getWidth() / 32 + 1; i++)
         {
             g.drawImage(Images.smallGrass.getImage(i), i * 32, (int) Utils.yOnScreen(96), 32, 32);
         }
+    }
+
+    @Override
+    public void tick()
+    {
+        for (Cloud cloud : clouds)
+            cloud.tick();
     }
 
     @Override
