@@ -16,6 +16,7 @@ import juuxel.cubic.lib.Images;
 import juuxel.cubic.render.GameWindow;
 import juuxel.cubic.render.Graphics;
 import juuxel.cubic.util.Direction;
+import juuxel.cubic.util.Sounds;
 
 public final class Player extends Creature
 {
@@ -111,6 +112,7 @@ public final class Player extends Creature
         lives--;
         new EffectDeath(x, y);
         invincibleTime = 200;
+        Sounds.PLAYER_KILLED.start();
     }
 
     public void levelUp()

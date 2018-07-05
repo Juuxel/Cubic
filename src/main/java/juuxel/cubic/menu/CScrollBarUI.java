@@ -13,6 +13,8 @@ import java.awt.*;
 
 public final class CScrollBarUI extends MetalScrollBarUI
 {
+    private CScrollBarUI() {}
+
     @SuppressWarnings("unused")
     public static ComponentUI createUI(JComponent c)
     {
@@ -25,10 +27,12 @@ public final class CScrollBarUI extends MetalScrollBarUI
         var g = (Graphics2D) graphics;
         Color color = CButton.BACKGROUND;
 
-        g.setColor(color);
+        g.setPaint(new GradientPaint(0, thumbBounds.y, CubicLookAndFeel.PRIMARY,
+                                     0, thumbBounds.y + thumbBounds.height,
+                                     CubicLookAndFeel.PRIMARY.darker()));
         g.fill(thumbBounds);
 
-        g.setColor(color.darker());
+        g.setPaint(color.darker());
         g.setStroke(new BasicStroke(2));
         g.draw(thumbBounds);
     }

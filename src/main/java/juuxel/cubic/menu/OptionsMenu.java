@@ -8,6 +8,7 @@ package juuxel.cubic.menu;
 
 import juuxel.cubic.lib.Images;
 import juuxel.cubic.options.*;
+import juuxel.cubic.util.Sounds;
 import juuxel.cubic.util.Translator;
 
 import javax.swing.*;
@@ -39,6 +40,7 @@ public final class OptionsMenu extends CPanel
         comboBox.addActionListener(e -> {
             Translator.setLanguage(comboBox.getSelectedIndex());
             Translator.reloadStrings();
+            Sounds.UI_CLICK.start();
         });
         comboBox.setFont(CubicLookAndFeel.FONT);
 
@@ -46,6 +48,28 @@ public final class OptionsMenu extends CPanel
 
         panel.add(languageTitle);
         panel.add(languagePanel);
+
+        // TODO Add volume as a saved option
+        var volumePanel = new CPanel();
+        var volumeTitle = new CLabel("options.volume");
+        volumeTitle.setAlignmentX(CENTER_ALIGNMENT);
+        volumeTitle.setFont(CubicLookAndFeel.FONT.deriveFont(24F));
+        volumeTitle.setIcon(new ImageIcon(Images.volume));
+
+        JSlider slider = new JSlider(Math.max(-40, (int) Sounds.minVolume), (int) Sounds.maxVolume, 0);
+        slider.setPaintLabels(false);
+        slider.addChangeListener(e -> {
+            float volume = slider.getValue();
+
+            if (volume <= -40)
+                volume = Sounds.minVolume;
+
+            Sounds.setVolume(volume);
+        });
+
+        volumePanel.add(slider);
+        panel.add(volumeTitle);
+        panel.add(volumePanel);
 
         CPanel controlsPanel = new CPanel(new GridLayout(0, 2, 10, 5));
         CLabel controlsTitle = new CLabel("options.controls");

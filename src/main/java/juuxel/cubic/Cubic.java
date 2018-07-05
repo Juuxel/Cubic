@@ -123,9 +123,15 @@ public final class Cubic
         layout.show(GameWindow.getWindowPane(), screen);
 
         if (screen.equals("Game"))
+        {
             Sounds.MAIN_LOOP.stop();
+            world.getMusicLoop().start();
+        }
         else if (!Sounds.MAIN_LOOP.isRunning())
+        {
+            world.getMusicLoop().stop();
             Sounds.MAIN_LOOP.loop(Clip.LOOP_CONTINUOUSLY);
+        }
     }
 
     public static int getTick()

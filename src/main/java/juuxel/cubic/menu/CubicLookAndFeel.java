@@ -63,7 +63,9 @@ public final class CubicLookAndFeel extends MetalLookAndFeel
 
         Object[] defaults = {
                 "ButtonUI", CButton.UI.class.getName(),
-                "ScrollBarUI", CScrollBarUI.class.getName()
+                "ScrollBarUI", CScrollBarUI.class.getName(),
+                "ComboBoxUI", CComboBoxUI.class.getName(),
+                "SliderUI", CSliderUI.class.getName()
         };
 
         table.putDefaults(defaults);

@@ -12,8 +12,10 @@ import juuxel.cubic.render.GameWindow;
 import juuxel.cubic.render.Graphics;
 import juuxel.cubic.render.RenderEngine;
 import juuxel.cubic.render.sprite.Sprite;
+import juuxel.cubic.util.Sounds;
 import juuxel.cubic.util.Utils;
 
+import javax.sound.sampled.Clip;
 import java.awt.Color;
 import java.util.*;
 
@@ -106,6 +108,16 @@ public abstract class World
      * @param enemyList the enemy list
      */
     protected abstract void initEnemyList(EnemyList enemyList);
+
+    /**
+     * Gets the loop that plays when the player plays in this world.
+     *
+     * @return a looping {@code Clip}
+     */
+    public Clip getMusicLoop()
+    {
+        return Sounds.GRASSY_LANDS_LOOP;
+    }
 
     /**
      * Gets the {@link EnemyList enemy list} of this level.

@@ -12,6 +12,7 @@ import juuxel.cubic.creature.fx.EffectLife;
 import juuxel.cubic.creature.fx.EffectNumber;
 import juuxel.cubic.render.GameWindow;
 import juuxel.cubic.util.Direction;
+import juuxel.cubic.util.Sounds;
 
 public abstract class Enemy extends Creature
 {
@@ -60,7 +61,7 @@ public abstract class Enemy extends Creature
     }
 
     @Override
-    public void kill()
+    public final void kill()
     {
         new EffectNumber(x, y, getScore());
 
@@ -80,6 +81,8 @@ public abstract class Enemy extends Creature
             new EffectLife(x, y);
             Cubic.player.lives++;
         }
+
+        Sounds.ENEMY_KILLED.start();
     }
 
     /**

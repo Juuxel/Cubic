@@ -13,8 +13,6 @@ import juuxel.cubic.util.Translator;
 import juuxel.cubic.util.Utils;
 
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineEvent;
-import javax.sound.sampled.LineListener;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.ComponentUI;
@@ -146,6 +144,8 @@ public class CButton extends JButton implements ActionListener
      */
     public static final class UI extends MetalButtonUI
     {
+        private UI() {}
+
         @SuppressWarnings("unused")
         public static ComponentUI createUI(JComponent c)
         {

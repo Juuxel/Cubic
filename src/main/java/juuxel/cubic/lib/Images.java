@@ -60,6 +60,7 @@ public final class Images
     public static BufferedImage moveRight;
     public static Image newsButton;
     public static Image world;
+    public static Image volume;
 
     public static BufferedImage load(String file)
     {
@@ -123,6 +124,7 @@ public final class Images
         camera = SpriteLoader.load("gui/camera").getImage().getScaledInstance(32, 32, Image.SCALE_FAST);
         newsButton = SpriteLoader.load("gui/news").getImage().getScaledInstance(32, 32, Image.SCALE_FAST);
         world = SpriteLoader.load("gui/world").getImage().getScaledInstance(32, 32, Image.SCALE_FAST);
+        volume = SpriteLoader.load("gui/volume").getImage().getScaledInstance(32, 32, Image.SCALE_FAST);
 
         backButton = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
 
