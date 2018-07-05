@@ -41,6 +41,7 @@ public final class AboutScreen extends CPanel
             doc.insertString(0, "Cubic includes the Sansus Webissimo font by Sergiy S. Tkachenko, " +
                     "licensed under the CC-BY 3.0 license. " +
                     "See: https://creativecommons.org/licenses/by/3.0/\n\n", null);
+            doc.insertString(0, "Font\n", attributes);
             doc.insertString(0, "Copyright \u00a92016-2018 Juuxel\n\n", attributes);
             doc.insertString(0, Translator.translate("about.text") + "\n\n", attributes);
             doc.insertString(doc.getLength(), "Sounds\n", attributes);

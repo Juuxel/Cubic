@@ -18,6 +18,7 @@ import juuxel.cubic.render.sprite.SpriteLoader;
 import juuxel.cubic.util.Sounds;
 import juuxel.cubic.util.Translator;
 import juuxel.cubic.world.World;
+import juuxel.cubic.world.WorldGrassyLands;
 
 import javax.sound.sampled.Clip;
 import java.awt.CardLayout;
@@ -73,13 +74,18 @@ public final class Cubic
         Options.init();
         GameWindow.init();
 
-        new java.util.Timer().scheduleAtFixedRate(new TimerTask()
+        new Timer().scheduleAtFixedRate(new TimerTask()
         {
             @Override
             public void run()
             {
                 GameWindow.repaint();
-                world.tick();
+                var w = world;
+
+                if (inStartScreen && !w.isValidMenuBackground())
+                    w = World.getInstance(WorldGrassyLands.class);
+
+                w.tick();
                 tick = (tick + 1) % 60;
             }
         }, 0L, 1000L / (long) Options.fps.getValue());
@@ -102,7 +108,7 @@ public final class Cubic
 
         if (!hasTimerBeenCreated)
         {
-            new java.util.Timer().scheduleAtFixedRate(new TimerTask()
+            new Timer().scheduleAtFixedRate(new TimerTask()
             {
                 @Override
                 public void run()
