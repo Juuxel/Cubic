@@ -7,6 +7,7 @@
 package juuxel.cubic.options;
 
 import juuxel.cubic.lib.Images;
+import juuxel.cubic.util.Sounds;
 import juuxel.cubic.util.Translator;
 
 import java.awt.event.KeyEvent;
@@ -50,6 +51,7 @@ public final class Options
         properties.put("captureFrame", captureFrame.getValue().toString());
         properties.put("language", Translator.getLanguage());
         properties.put("fps", fps.getValue().toString());
+        properties.put("volume", Float.toString(Sounds.getVolume()));
 
         try
         {
@@ -62,13 +64,14 @@ public final class Options
             else
             {
                 properties.load(Files.newBufferedReader(path));
-                moveLeft.setValue(Integer.parseInt(properties.getProperty("controls.moveLeft")));
-                moveRight.setValue(Integer.parseInt(properties.getProperty("controls.moveRight")));
-                jump.setValue(Integer.parseInt(properties.getProperty("controls.jump")));
-                takeScreenshot.setValue(Integer.parseInt(properties.getProperty("controls.takeScreenshot")));
+                moveLeft.setValue(Integer.valueOf(properties.getProperty("controls.moveLeft")));
+                moveRight.setValue(Integer.valueOf(properties.getProperty("controls.moveRight")));
+                jump.setValue(Integer.valueOf(properties.getProperty("controls.jump")));
+                takeScreenshot.setValue(Integer.valueOf(properties.getProperty("controls.takeScreenshot")));
 
                 captureFrame.setValue(Boolean.parseBoolean(properties.getProperty("captureFrame")));
-                fps.setValue(Integer.parseInt(properties.getProperty("fps")));
+                fps.setValue(Integer.valueOf(properties.getProperty("fps")));
+                Sounds.setVolume(Float.parseFloat(properties.getProperty("volume")));
 
                 Translator.setLanguage(properties.getProperty("language"));
                 Translator.reloadStrings();
@@ -108,6 +111,7 @@ public final class Options
         properties.put("controls.jump", jump.getValue().toString());
         properties.put("controls.takeScreenshot", takeScreenshot.getValue().toString());
         properties.put("language", Translator.getLanguage());
+        properties.put("volume", Float.toString(Sounds.getVolume()));
         writeOptions();
     }
 

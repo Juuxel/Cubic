@@ -14,6 +14,7 @@ import juuxel.cubic.render.GameWindow;
 import juuxel.cubic.render.Graphics;
 import juuxel.cubic.render.sprite.Sprite;
 import juuxel.cubic.util.Direction;
+import juuxel.cubic.util.Sounds;
 
 import java.awt.geom.AffineTransform;
 import java.util.concurrent.ThreadLocalRandom;
@@ -45,6 +46,7 @@ public final class EnemyFireMonster extends Enemy
         {
             fireballDelay = random.nextInt(200) + 350;
             new Fireball();
+            Sounds.FIREBALL.start();
         }
     }
 

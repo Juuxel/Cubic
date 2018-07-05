@@ -56,7 +56,9 @@ public final class OptionsMenu extends CPanel
         volumeTitle.setFont(CubicLookAndFeel.FONT.deriveFont(24F));
         volumeTitle.setIcon(new ImageIcon(Images.volume));
 
-        JSlider slider = new JSlider(Math.max(-40, (int) Sounds.minVolume), (int) Sounds.maxVolume, 0);
+        JSlider slider = new JSlider(Math.max(-40, (int) Sounds.minVolume),
+                                     (int) Sounds.maxVolume,
+                                     (int) Sounds.getVolume());
         slider.setPaintLabels(false);
         slider.addChangeListener(e -> {
             float volume = slider.getValue();

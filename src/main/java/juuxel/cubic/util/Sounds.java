@@ -23,8 +23,10 @@ public final class Sounds
     public static final Clip GRASSY_LANDS_LOOP = load("grassy_lands_loop");
     public static final Clip ENEMY_KILLED = load("enemy_killed");
     public static final Clip PLAYER_KILLED = load("player_killed");
+    public static final Clip FIREBALL = load("fireball");
     public static float minVolume;
     public static float maxVolume;
+    private static float volume = 0;
     private static boolean hasVolumeBeenSet = false;
 
     /**
@@ -76,8 +78,14 @@ public final class Sounds
             setVolume(c, volume);
     }
 
+    public static float getVolume()
+    {
+        return volume;
+    }
+
     private static void setVolume(Clip c, float volume)
     {
+        Sounds.volume = volume;
         FloatControl control = (FloatControl) c.getControl(FloatControl.Type.MASTER_GAIN);
         control.setValue(Utils.clamp(volume, control.getMinimum(), control.getMaximum()));
     }
