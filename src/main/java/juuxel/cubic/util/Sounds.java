@@ -26,6 +26,7 @@ public final class Sounds
     public static final Clip FIREBALL = load("fireball");
     public static final Clip CRYSTAL_CAVE_LOOP = load("crystal_cave_loop");
     public static final Clip GAME_OVER = load("game_over");
+    public static final Clip POOP = load("poop");
     public static float minVolume;
     public static float maxVolume;
     private static float volume = 0;

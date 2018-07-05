@@ -8,3 +8,4 @@ player_killed.wav: "Hit_03.wav" by https://freesound.org/people/LittleRobotSound
 fireball.wav: "Fireball Explosion.wav" by https://freesound.org/people/HighPixel
 crystal_cave_loop.wav: "clinthammermusic-gamerstep-chords-2" by https://freesound.org/people/Clinthammer
 game_over.wav: "Jingle_Lose_00.wav" by https://freesound.org/people/LittleRobotSoundFactory
+poop.wav: "FingerPlop1.flac" by https://freesound.org/people/acclivity

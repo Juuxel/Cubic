@@ -11,6 +11,7 @@ import juuxel.cubic.lib.Images;
 import juuxel.cubic.render.GameWindow;
 import juuxel.cubic.render.sprite.Sprite;
 import juuxel.cubic.util.Direction;
+import juuxel.cubic.util.Sounds;
 
 public final class EnemyBird extends Enemy
 {
@@ -48,6 +49,7 @@ public final class EnemyBird extends Enemy
         {
             poopDelay = random.nextInt(200) + 350;
             new Poop();
+            Sounds.POOP.start();
         }
     }
 
