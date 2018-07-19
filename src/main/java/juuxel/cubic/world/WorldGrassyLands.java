@@ -67,7 +67,7 @@ public final class WorldGrassyLands extends World
                                  (int) Utils.yOnScreen(cloud.y),
                                  80 * cloud.size,
                                  40 * cloud.size,
-                                 cloud.baseAlpha * cloud.lifeAlpha);
+                                 Utils.clamp(cloud.baseAlpha * cloud.lifeAlpha, 0f, 1f));
         }
 
         for (int i = 0; i < GameWindow.getWidth() / 32 + 1; i++)
