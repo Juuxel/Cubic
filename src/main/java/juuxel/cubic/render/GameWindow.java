@@ -18,6 +18,8 @@ import juuxel.cubic.world.WorldGrassyLands;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.CardLayout;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -86,6 +88,11 @@ public final class GameWindow
             setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
             setSize(640, 480);
             setIconImage(Images.ICON);
+            getRootPane().setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
+                    Images.cursor,
+                    new Point(0, 0),
+                    "Cubic cursor"
+            ));
         }
     }
 

@@ -61,6 +61,7 @@ public final class Images
     public static Image newsButton;
     public static Image world;
     public static Image volume;
+    public static Image cursor;
 
     public static BufferedImage load(String file)
     {
@@ -125,8 +126,17 @@ public final class Images
         newsButton = SpriteLoader.load("gui/news").getImage().getScaledInstance(32, 32, Image.SCALE_FAST);
         world = SpriteLoader.load("gui/world").getImage().getScaledInstance(32, 32, Image.SCALE_FAST);
         volume = SpriteLoader.load("gui/volume").getImage().getScaledInstance(32, 32, Image.SCALE_FAST);
+        cursor = SpriteLoader.load("gui/cursor").getImage().getScaledInstance(32, 32, Image.SCALE_FAST);
 
-        backButton = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
+        backButton = createBackButton();
+        moveLeft = backButton;
+        moveRight = flip(moveLeft);
+        jump = createJumpIcon();
+    }
+
+    private static BufferedImage createBackButton()
+    {
+        var backButton = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
 
         var graphics = backButton.createGraphics();
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -135,15 +145,24 @@ public final class Images
         graphics.fillRect(11, 11, 12, 3);
         graphics.dispose();
 
-        moveLeft = backButton;
-        moveRight = new BufferedImage(moveLeft.getWidth(), moveLeft.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        return backButton;
+    }
 
-        var g = Graphics.fromGraphics2D(moveRight.createGraphics());
-        g.drawFlippedImage(moveLeft, 0, 0, 25, 25);
+    private static BufferedImage flip(BufferedImage image)
+    {
+        var output = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+        var g = Graphics.fromGraphics2D(output.createGraphics());
+        g.drawFlippedImage(image, 0, 0, image.getWidth(), image.getHeight());
         g.getGraphics2D().dispose();
 
-        jump = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
-        graphics = jump.createGraphics();
+        return output;
+    }
+
+    private static BufferedImage createJumpIcon()
+    {
+        var jump = new BufferedImage(25, 25, BufferedImage.TYPE_INT_ARGB);
+        var graphics = jump.createGraphics();
 
         graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         graphics.setColor(Color.BLACK);
@@ -162,5 +181,7 @@ public final class Images
         // The triangle
         graphics.fillPolygon(new int[] { 16, 16, 25 }, new int[] { 5, 21, 12 }, 3);
         graphics.dispose();
+
+        return jump;
     }
 }
