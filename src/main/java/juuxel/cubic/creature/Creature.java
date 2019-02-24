@@ -15,7 +15,7 @@ import juuxel.cubic.render.sprite.Sprite;
 import juuxel.cubic.util.Direction;
 import juuxel.cubic.util.Utils;
 
-import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 public abstract class Creature
@@ -44,7 +44,7 @@ public abstract class Creature
     public void kill()
     {}
 
-    private void drawCreature(Graphics g, Image image, int width, int height)
+    private void drawCreature(Graphics g, BufferedImage image, int width, int height)
     {
         int dx = (int) x, dy = (int) yOnScreen();
 
@@ -55,7 +55,9 @@ public abstract class Creature
     }
 
     protected void drawCreature(Graphics g, Sprite sprite)
-    { drawCreature(g, sprite.getImage(this), spriteWidth, spriteHeight); }
+    {
+        drawCreature(g, sprite.getImage(this), spriteWidth, spriteHeight);
+    }
 
     public final void executeLogic()
     {
