@@ -30,8 +30,12 @@ public final class Cubic
     public static Player player;
     public static World world;
     public static boolean inStartScreen = true, moveKeyDown, jumpKeyDown;
+
+    @Deprecated // Replace with EntityManager
     public static final List<Creature> CREATURES = new CopyOnWriteArrayList<>();
+    @Deprecated // Replace with EnemyComponent
     public static final List<Enemy> ENEMIES = new CopyOnWriteArrayList<>();
+    @Deprecated // Replace with EnemyComponent, CollisionBoxComponent
     public static final List<Enemy> COLLIDING_ENEMIES = new CopyOnWriteArrayList<>();
 
     private static boolean hasTimerBeenCreated = false;

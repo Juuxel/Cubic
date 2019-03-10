@@ -10,6 +10,7 @@ import juuxel.cubic.Cubic;
 import juuxel.cubic.creature.Creature;
 import juuxel.cubic.creature.fx.EffectLife;
 import juuxel.cubic.creature.fx.EffectNumber;
+import juuxel.cubic.ecs.components.Components;
 import juuxel.cubic.render.GameWindow;
 import juuxel.cubic.util.Direction;
 import juuxel.cubic.util.Sounds;
@@ -17,11 +18,21 @@ import juuxel.cubic.util.Sounds;
 public abstract class Enemy extends Creature
 {
     public boolean sliding = false, slidable = true, edgeMove = true, collidesWithPlayer = true;
+
+    @Deprecated // SlidingComponent
     protected static final int SLIDE_DISTANCE = 32;
 
     public Enemy()
     {
         collidesWithGround = true;
+    }
+
+    @Override
+    protected void attachComponents()
+    {
+        super.attachComponents();
+        attachComponent(Components.ENEMY);
+        attachComponent(Components.GROUND_COLLISION);
     }
 
     public abstract void move();
@@ -72,6 +83,7 @@ public abstract class Enemy extends Creature
         Cubic.COLLIDING_ENEMIES.remove(this);
         ySpeed = -2;
         collidesWithGround = false;
+        onComponent(Components.GROUND_COLLISION, comp -> comp.active = false);
 
         if (Cubic.ENEMIES.size() == 0)
             Cubic.player.levelUp();
