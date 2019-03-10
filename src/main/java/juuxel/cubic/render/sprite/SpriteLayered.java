@@ -21,7 +21,7 @@ public final class SpriteLayered extends Sprite
 {
     private final Map<Object, BufferedImage> imageMap;
 
-    public SpriteLayered(Properties props)
+    public SpriteLayered(Map<String, String> props)
     {
         super(props);
 

@@ -19,19 +19,19 @@ public final class SpriteAnimated extends Sprite
     private final double slowness;
     private double framesPerAgePoint = -1;
 
-    public SpriteAnimated(Properties props)
+    public SpriteAnimated(Map<String, String> props)
     {
         super(props);
 
         if (props.containsKey("autoFind"))
         {
-            int amount = Integer.parseInt(props.getProperty("autoFind"));
+            int amount = Integer.parseInt(props.get("autoFind"));
 
             sprites = new Sprite[amount];
 
             for (int i = 0; i < amount; i++)
             {
-                sprites[i] = SpriteLoader.load(props.getProperty("textures") + i);
+                sprites[i] = SpriteLoader.load(props.get("textures") + i);
             }
         }
         else
@@ -46,7 +46,7 @@ public final class SpriteAnimated extends Sprite
         }
 
         if (props.containsKey("speed"))
-            slowness = 1 / Double.parseDouble(props.getProperty("speed"));
+            slowness = 1 / Double.parseDouble(props.get("speed"));
         else
             slowness = 1;
     }

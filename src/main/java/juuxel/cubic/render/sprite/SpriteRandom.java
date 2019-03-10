@@ -25,7 +25,7 @@ public final class SpriteRandom extends Sprite implements EventHandler<CreatureC
     private final Map<Object, Sprite> spriteMap = new HashMap<>();
     private final Sprite[] subsprites;
 
-    public SpriteRandom(Properties props)
+    public SpriteRandom(Map<String, String> props)
     {
         super(props);
 

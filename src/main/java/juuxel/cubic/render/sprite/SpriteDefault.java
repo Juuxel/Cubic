@@ -9,6 +9,7 @@ package juuxel.cubic.render.sprite;
 import juuxel.cubic.lib.Images;
 
 import java.awt.image.BufferedImage;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -18,7 +19,7 @@ public final class SpriteDefault extends Sprite
 {
     private final BufferedImage image;
 
-    public SpriteDefault(Properties props)
+    public SpriteDefault(Map<String, String> props)
     {
         super(props);
 

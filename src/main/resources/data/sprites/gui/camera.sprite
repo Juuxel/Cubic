@@ -1,5 +1,5 @@
-type=multi
-size=16
-textures=gui_buttons
-xPos=3
-yPos=1
+((type multi)
+ (size 16)
+ (textures gui_buttons)
+ (xPos 3)
+ (yPos 1))

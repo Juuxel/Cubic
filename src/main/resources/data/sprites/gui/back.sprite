@@ -1,6 +1,5 @@
-type=multi
-textures=gui_buttons
-xPos=1
-yPos=0
-width=16
-height=16
+((type multi)
+ (size 16)
+ (textures gui_buttons)
+ (xPos 1)
+ (yPos 0))

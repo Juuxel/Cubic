@@ -6,9 +6,8 @@
  */
 package juuxel.cubic.render.sprite;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Properties;
+import java.util.Map;
 
 /**
  * A sprite represents a texture object.
@@ -16,21 +15,21 @@ import java.util.Properties;
 public abstract class Sprite
 {
     private final String texture;
-    private final Properties props;
+    private final Map<String, String> props;
     private final boolean flippable;
 
     /**
-     * The constructor. Please use {@link SpriteLoader#load(String)}
+     * The constructor. Use {@link SpriteLoader#load(String)}
      * for loading sprites from files.
      *
      * @param props the sprite properties
      * @see SpriteLoader#load(String) SpriteLoader.load(String)
      */
-    public Sprite(Properties props)
+    public Sprite(Map<String, String> props)
     {
         this.props = props;
-        this.texture = props.getProperty("textures");
-        this.flippable = Boolean.parseBoolean(props.getOrDefault("flippable", "false").toString());
+        this.texture = props.get("textures");
+        this.flippable = Boolean.parseBoolean(props.getOrDefault("flippable", "false"));
     }
 
     /**
@@ -67,7 +66,7 @@ public abstract class Sprite
      *
      * @return the value of {@code props}
      */
-    public Properties getProps()
+    public Map<String, String> getProps()
     { return props; }
 
     /**

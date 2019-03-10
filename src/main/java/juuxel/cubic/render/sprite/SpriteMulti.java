@@ -9,6 +9,7 @@ package juuxel.cubic.render.sprite;
 import juuxel.cubic.lib.Images;
 
 import java.awt.image.BufferedImage;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -18,22 +19,22 @@ public final class SpriteMulti extends Sprite
 {
     private BufferedImage image;
 
-    public SpriteMulti(Properties props)
+    public SpriteMulti(Map<String, String> props)
     {
         super(props);
 
-        int x = Integer.valueOf(props.getProperty("xPos"));
-        int y = Integer.valueOf(props.getProperty("yPos"));
+        int x = Integer.valueOf(props.get("xPos"));
+        int y = Integer.valueOf(props.get("yPos"));
         int width = 8, height = 8;
 
         if (props.containsKey("width"))
-            width = Integer.valueOf(props.getProperty("width"));
+            width = Integer.valueOf(props.get("width"));
 
         if (props.containsKey("height"))
-            height = Integer.valueOf(props.getProperty("height"));
+            height = Integer.valueOf(props.get("height"));
 
         if (props.containsKey("size"))
-            width = height = Integer.valueOf(props.getProperty("size"));
+            width = height = Integer.valueOf(props.get("size"));
 
         BufferedImage spriteSheet = Images.load(getTexture() + ".png");
         image = spriteSheet.getSubimage(x * width, y * height, width, height);

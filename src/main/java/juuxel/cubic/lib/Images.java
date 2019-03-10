@@ -91,6 +91,7 @@ public final class Images
 
     public static void init()
     {
+        // TODO Convert sprite files to s-exp
         player = SpriteLoader.load("player");
         enemy = SpriteLoader.load("enemy");
         bouncingEnemy = SpriteLoader.load("bouncing_enemy");

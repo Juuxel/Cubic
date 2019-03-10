@@ -30,17 +30,13 @@ public final class Utils
 
     /**
      * Splits the given string with comma (',') as the separator.
-     * If a comma is not found, returns <code>new String[] { str }</code>.
      *
      * @param str the string to be split
      * @return the split string
      */
     public static String[] commaSplit(String str)
     {
-        if (str.contains(","))
-            return str.split(", *");
-
-        return new String[] { str };
+        return str.split(", *");
     }
 
     /**
@@ -91,5 +87,35 @@ public final class Utils
         float[] components = color.getRGBComponents(null);
 
         return new Color(components[0], components[1], components[2], alpha);
+    }
+
+    public static <R> R unchecked(ThrowingSupplier<R> supplier)
+    {
+        try
+        {
+            return supplier.get();
+        }
+        catch (Exception e)
+        {
+            throw Utils.<RuntimeException>unsafeCastException(e);
+        }
+    }
+
+    public static void unchecked(ThrowingRunnable runnable)
+    {
+        try
+        {
+            runnable.run();
+        }
+        catch (Exception e)
+        {
+            throw Utils.<RuntimeException>unsafeCastException(e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private static <E extends Exception> E unsafeCastException(Exception e)
+    {
+        return (E) e;
     }
 }

@@ -6,18 +6,22 @@
  */
 package juuxel.cubic.render.sprite;
 
+import de.tudresden.inf.lat.jsexp.*;
+
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.io.InputStream;
+import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * SpriteLoader loads sprites from the classpath.
  */
 public final class SpriteLoader
 {
-    private static final Map<String, Function<Properties, Sprite>> SPRITE_PROVIDERS = new HashMap<>();
+    private static final Map<String, Function<Map<String, String>, Sprite>> SPRITE_PROVIDERS = new HashMap<>();
 
     /**
      * Registers a sprite provider for a type name.
@@ -27,7 +31,7 @@ public final class SpriteLoader
      * @param type the type name
      * @param provider the sprite provider
      */
-    public static void registerSprite(String type, Function<Properties, Sprite> provider)
+    public static void registerSprite(String type, Function<Map<String, String>, Sprite> provider)
     {
         SPRITE_PROVIDERS.put(type, provider);
     }
@@ -48,28 +52,58 @@ public final class SpriteLoader
     {
         try
         {
-            Properties props = new Properties();
+            Map<String, String> props = new HashMap<>();
             String path = "/data/sprites/" + sprite + ".sprite";
 
             if (SpriteLoader.class.getResource(path) == null)
             {
                 // Try to construct the missing sprite from the texture
 
-                Properties p = new Properties();
-                p.setProperty("type", "default");
-                p.setProperty("textures", sprite);
+                props.put("type", "default");
+                props.put("textures", sprite);
 
-                return new SpriteDefault(p);
+                return new SpriteDefault(props);
             }
 
-            props.load(SpriteLoader.class.getResourceAsStream(path));
+            InputStream stream = SpriteLoader.class.getResourceAsStream(path);
+            Sexp sexp = SexpFactory.parse(stream);
 
-            String type = props.getProperty("type");
+            if (sexp.isAtomic())
+            {
+                props.put("textures", sexp.toString());
+            }
+            else
+            {
+                for (Sexp inner : sexp)
+                {
+                    if (inner.isAtomic())
+                    {
+                        props.put(inner.toString(), "true");
+                    }
+                    else
+                    {
+                        Iterator<Sexp> iterator = inner.iterator();
+                        iterator.next(); // Drop first element
+                        Sexp tail = new SexpList() {{
+                            // I'm using this dirty syntax for a reason,
+                            // the constructor is protected.
+
+                            while (iterator.hasNext()) {
+                                add(iterator.next());
+                            }
+                        }};
+
+                        props.put(inner.get(0).toString(), sexpToString(tail));
+                    }
+                }
+            }
+
+            String type = props.get("type");
 
             if (type == null)
                 type = "default";
 
-            for (Map.Entry<String, Function<Properties, Sprite>> entry : SPRITE_PROVIDERS.entrySet())
+            for (Map.Entry<String, Function<Map<String, String>, Sprite>> entry : SPRITE_PROVIDERS.entrySet())
             {
                 if (entry.getKey().equals(type))
                 {
@@ -79,9 +113,9 @@ public final class SpriteLoader
 
             throw new IllegalArgumentException(String.format("Invalid type '%s' in sprite %s. %n", type, sprite));
         }
-        catch (IOException e)
+        catch (Exception e)
         {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Exception while loading sprite " + sprite, e);
         }
     }
 
@@ -96,5 +130,15 @@ public final class SpriteLoader
         registerSprite("multi", SpriteMulti::new);
         registerSprite("layered", SpriteLayered::new);
         registerSprite("animated", SpriteAnimated::new);
+    }
+
+    private static String sexpToString(Sexp sexp) {
+        if (sexp.isAtomic()) {
+            return sexp.toString();
+        } else {
+            return StreamSupport.stream(sexp.spliterator(), false)
+                    .map(SpriteLoader::sexpToString)
+                    .collect(Collectors.joining(","));
+        }
     }
 }

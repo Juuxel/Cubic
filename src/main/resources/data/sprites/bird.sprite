@@ -1,3 +1,3 @@
-type=random
-textures=bird_white, bird_red, bird_green, bird_black, bird_yellow
-flippable=true
+((type random)
+ (textures bird_white bird_red bird_green bird_black bird_yellow)
+ (flippable))
