@@ -6,9 +6,17 @@
  */
 package juuxel.cubic.util;
 
+import com.google.common.base.Objects;
+import com.google.common.collect.*;
+import de.tudresden.inf.lat.jsexp.Sexp;
+import de.tudresden.inf.lat.jsexp.SexpList;
 import juuxel.cubic.render.GameWindow;
 
 import java.awt.Color;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 /**
  * {@code Utils} contains different utility methods.
@@ -117,5 +125,46 @@ public final class Utils
     private static <E extends Exception> E unsafeCastException(Exception e)
     {
         return (E) e;
+    }
+
+    public static String sexpToString(Sexp sexp) {
+        if (sexp.isAtomic()) {
+            return sexp.toString();
+        } else {
+            return StreamSupport.stream(sexp.spliterator(), false)
+                                .map(Utils::sexpToString)
+                                .collect(Collectors.joining(","));
+        }
+    }
+
+    public static ImmutableListMultimap<String, String> sexpToMultimap(Sexp sexp) {
+        if (sexp.isAtomic()) {
+            return ImmutableListMultimap.of(sexp.toString(), "");
+        } else {
+            ImmutableListMultimap.Builder<String, String> builder = ImmutableListMultimap.builder();
+
+            for (Sexp child : sexp) {
+                Pair<Sexp, ImmutableList<Sexp>> pair = splitSexp(child);
+                String key = sexpToString(pair.first);
+
+                pair.second.stream()
+                           .map(Utils::sexpToString)
+                           .forEach(value -> builder.put(key, value));
+            }
+
+            return builder.build();
+        }
+    }
+
+    public static Pair<Sexp, ImmutableList<Sexp>> splitSexp(Sexp sexp)
+    {
+        if (sexp.getLength() < 1)
+            throw new IllegalArgumentException("Sexp length must be at least 1");
+
+        Iterator<Sexp> iterator = sexp.iterator();
+        Sexp head = iterator.next();
+        ImmutableList<Sexp> tail = ImmutableList.copyOf(iterator);
+
+        return new Pair<>(head, tail);
     }
 }

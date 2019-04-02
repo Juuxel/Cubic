@@ -6,6 +6,9 @@
  */
 package juuxel.cubic.util;
 
+import com.google.common.collect.ListMultimap;
+import com.google.common.collect.Multimap;
+import de.tudresden.inf.lat.jsexp.SexpFactory;
 import juuxel.cubic.event.EventBus;
 import juuxel.cubic.event.LanguageChangeEvent;
 
@@ -37,7 +40,7 @@ public final class Translator
             throw new IllegalStateException("Translator has already been initialized.");
 
         InputStreamProvider provider = new InputStreamProvider();
-        provider.loadTranslation(Translator.class.getResourceAsStream("/data/lang/provider.properties"), "/data/lang/");
+        provider.loadTranslation(Translator.class.getResourceAsStream("/data/lang/provider.sexpr"), "/data/lang/");
         addProvider(provider);
 
         languages = new ArrayList<>();
@@ -229,18 +232,16 @@ public final class Translator
         public void loadTranslation(InputStream stream, String location)
         {
             this.location = location;
-            Properties properties = new Properties();
 
             try
             {
-                properties.load(stream);
-                String languageArray = properties.getProperty("languages");
-                name = properties.getProperty("name");
-                languages = Arrays.asList(Utils.commaSplit(languageArray));
-                internal = properties.containsKey("internal") ? Boolean.valueOf(properties.getProperty("internal")) : false;
+                ListMultimap<String, String> props = Utils.sexpToMultimap(SexpFactory.parse(stream));
+                name = props.get("name").get(0);
+                languages = props.get("languages");
+                internal = props.containsKey("internal") ? Boolean.valueOf(props.get("internal").get(0)) : false;
                 stream.close();
             }
-            catch (IOException e)
+            catch (Exception e)
             {
                 e.printStackTrace();
             }

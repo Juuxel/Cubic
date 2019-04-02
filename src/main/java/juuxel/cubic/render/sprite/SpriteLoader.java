@@ -7,14 +7,11 @@
 package juuxel.cubic.render.sprite;
 
 import de.tudresden.inf.lat.jsexp.*;
+import juuxel.cubic.util.Utils;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import java.util.stream.StreamSupport;
 
 /**
  * SpriteLoader loads sprites from the classpath.
@@ -93,7 +90,7 @@ public final class SpriteLoader
                             }
                         }};
 
-                        props.put(inner.get(0).toString(), sexpToString(tail));
+                        props.put(inner.get(0).toString(), Utils.sexpToString(tail));
                     }
                 }
             }
@@ -132,13 +129,4 @@ public final class SpriteLoader
         registerSprite("animated", SpriteAnimated::new);
     }
 
-    private static String sexpToString(Sexp sexp) {
-        if (sexp.isAtomic()) {
-            return sexp.toString();
-        } else {
-            return StreamSupport.stream(sexp.spliterator(), false)
-                    .map(SpriteLoader::sexpToString)
-                    .collect(Collectors.joining(","));
-        }
-    }
 }
