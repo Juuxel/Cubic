@@ -14,11 +14,16 @@ public interface Entity
     /**
      * @return true if attached
      */
-    boolean attachComponent(ComponentType<?> componentType);
+    <T> boolean attachComponent(ComponentId<T> componentId, T component);
 
-    <T> Optional<T> getComponent(ComponentType<T> componentType);
+    default <T> boolean attachComponent(ComponentId.Producer<T> componentId)
+    {
+        return attachComponent(componentId, componentId.create());
+    }
 
-    default <T> void onComponent(ComponentType<T> componentType, Consumer<? super T> consumer) {
-        getComponent(componentType).ifPresent(consumer);
+    <T> Optional<T> getComponent(ComponentId<T> componentId);
+
+    default <T> void onComponent(ComponentId<T> componentId, Consumer<? super T> consumer) {
+        getComponent(componentId).ifPresent(consumer);
     }
 }

@@ -6,7 +6,7 @@
  */
 package juuxel.cubic.ecs.components;
 
-import juuxel.cubic.ecs.ComponentType;
+import juuxel.cubic.ecs.ComponentId;
 import juuxel.cubic.util.tuple.DoublePair;
 
 public final class Components
@@ -14,10 +14,11 @@ public final class Components
     private Components()
     {}
 
-    public static final ComponentType<DoublePair> POSITION = new ComponentType<>(DoublePair::new);
-    public static final ComponentType<DoublePair> SPEED = new ComponentType<>(DoublePair::new);
-    public static final ComponentType<Toggleable> GROUND_COLLISION = new ComponentType<>(Toggleable::new);
-    public static final ComponentType<Toggleable> SLIDING = new ComponentType<>(Toggleable::new);
-    public static final ComponentType<Void> ENEMY = new ComponentType<>(() -> null);
-    public static final ComponentType<Toggleable> ALIVE = new ComponentType<>(Toggleable::new);
+    public static final ComponentId.Producer<DoublePair> POSITION = new ComponentId.Producer<>("position", DoublePair.class, DoublePair::new);
+    public static final ComponentId.Producer<DoublePair> SPEED = new ComponentId.Producer<>("speed", DoublePair.class, DoublePair::new);
+    public static final ComponentId.Producer<Toggleable> GROUND_COLLISION = new ComponentId.Producer<>("ground collision", Toggleable.class, Toggleable::new);
+    public static final ComponentId.Producer<Toggleable> SLIDING = new ComponentId.Producer<>("sliding", Toggleable.class, Toggleable::new);
+    public static final ComponentId.Producer<Void> ENEMY = new ComponentId.Producer<>("enemy", Void.class, () -> null);
+    public static final ComponentId.Producer<Toggleable> ALIVE = new ComponentId.Producer<>("alive", Toggleable.class, Toggleable::new);
+    public static final ComponentId<CollisionBoxComponent> COLLISION_BOX = new ComponentId<>("collision box", CollisionBoxComponent.class);
 }

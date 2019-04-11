@@ -6,8 +6,6 @@
  */
 package juuxel.cubic.ecs.components;
 
-import juuxel.cubic.ecs.ComponentType;
-
 public final class CollisionBoxComponent
 {
     public final int width;
@@ -17,10 +15,5 @@ public final class CollisionBoxComponent
     {
         this.width = width;
         this.height = height;
-    }
-
-    public static ComponentType<CollisionBoxComponent> createComponentType(int width, int height)
-    {
-        return new ComponentType<>(() -> new CollisionBoxComponent(width, height));
     }
 }

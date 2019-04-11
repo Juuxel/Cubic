@@ -10,7 +10,7 @@ import java.util.*;
 
 public abstract class AbstractEntity implements Entity
 {
-    private final Map<ComponentType<?>, Object> componentMap = new HashMap<>();
+    private final Map<ComponentId<?>, Object> componentMap = new HashMap<>();
 
     protected AbstractEntity()
     {
@@ -21,26 +21,25 @@ public abstract class AbstractEntity implements Entity
     protected abstract void attachComponents();
 
     @Override
-    public final boolean attachComponent(ComponentType<?> componentType)
+    public final <T> boolean attachComponent(ComponentId<T> componentId, T component)
     {
-        Objects.requireNonNull(componentType);
-
-        if (!componentMap.containsKey(componentType))
+        Objects.requireNonNull(componentId);
+        if (componentMap.containsKey(componentId))
         {
-            componentMap.put(componentType, componentType.createComponent());
-            return true;
+            return false;
         }
 
-        return false;
+        componentMap.put(componentId, component);
+        return true;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public final <T> Optional<T> getComponent(ComponentType<T> componentType)
+    public final <T> Optional<T> getComponent(ComponentId<T> componentId)
     {
-        if (componentMap.containsKey(componentType)) {
+        if (componentMap.containsKey(componentId)) {
             return Optional.of(
-                    (T) componentMap.get(componentType)
+                    (T) componentMap.get(componentId)
             );
         }
 
