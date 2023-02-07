@@ -9,11 +9,6 @@ version =  '0.5.0'
 sourceCompatibility = JavaVersion.VERSION_1_10
 targetCompatibility = JavaVersion.VERSION_1_10
 
-wrapper {
-    distributionType = Wrapper.DistributionType.ALL
-    gradleVersion = '5.2.1'
-}
-
 jar {
     manifest {
         attributes 'Main-Class': 'juuxel.cubic.Cubic'
